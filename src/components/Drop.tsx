@@ -1,4 +1,5 @@
-import drop from "./Drop.module.css"
+import drop from "./Drop.module.css";
+import React from "react";
 
 export default function Drop(){
 
@@ -70,5 +71,5 @@ export default function Drop(){
       </ul>
     </div>
    
-  )
+  );
 }

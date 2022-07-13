@@ -1,6 +1,7 @@
-import header from "./Header.module.css"
-import Drop from "./Drop"
-import San from "./San"
+import header from "./Header.module.css";
+import Drop from "./Drop";
+import San from "./San";
+import React from "react";
 
 
 export default function Header(){
@@ -33,7 +34,7 @@ export default function Header(){
       </div>
     </div>
   </div>
-  )
+  );
 }
 
 

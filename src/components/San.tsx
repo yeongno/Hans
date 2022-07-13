@@ -1,4 +1,5 @@
-import san from "./San.module.css"
+import san from "./San.module.css";
+import React from "react";
 
 export default function San(){
   return(
@@ -12,5 +13,5 @@ export default function San(){
         </div>
       </div>
     </div>
-  )
+  );
 }
