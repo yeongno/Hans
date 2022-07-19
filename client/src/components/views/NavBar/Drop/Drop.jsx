@@ -1,12 +1,18 @@
 import drop from "./Drop.module.css";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Drop() {
+  const navigate = useNavigate();
+
+  const goPost = () => {
+    navigate("/post");
+  };
   return (
     <div>
       <ul className={drop.main_menu}>
         <li className={drop.item}>
-          <div className={drop.item__name}>소통하기1</div>
+          <div className={drop.item__name}>상진규</div>
           <div className={drop.item__contents}>
             <div className={drop.contents__menu}>
               <ul className={drop.drop_inner}>
@@ -31,11 +37,26 @@ export default function Drop() {
           </div>
         </li>
         <li className={drop.item}>
-          <div className={drop.item__name}>소통하기2</div>
+          <div className={drop.item__name}>이영노</div>
           <div className={drop.item__contents}>
             <div className={drop.contents__menu}>
               <ul className={drop.drop_inner}>
-                <li></li>
+                <li>
+                  <h4>게시글</h4>
+                  <ul>
+                    <li onClick={goPost}>01</li>
+                    <li>02</li>
+                    <li>03</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>채팅하기</h4>
+                  <ul>
+                    <li>01</li>
+                    <li>02</li>
+                    <li>03</li>
+                  </ul>
+                </li>
               </ul>
             </div>
           </div>
