@@ -8,6 +8,9 @@ export default function Drop() {
   const goPost = () => {
     navigate("/post");
   };
+  const goMovie = () => {
+    navigate("/movie");
+  };
   return (
     <div>
       <ul className={drop.main_menu}>
@@ -44,8 +47,8 @@ export default function Drop() {
                 <li>
                   <h4>게시글</h4>
                   <ul>
-                    <li onClick={goPost}>01</li>
-                    <li>02</li>
+                    <li onClick={goPost}>게시글</li>
+                    <li onClick={goMovie}>무비</li>
                     <li>03</li>
                   </ul>
                 </li>
@@ -62,7 +65,7 @@ export default function Drop() {
           </div>
         </li>
         <li className={drop.item}>
-          <div className={drop.item__name}>소통하기3</div>
+          <div className={drop.item__name}>이지원</div>
           <div className={drop.item__contents}>
             <div className={drop.contents__menu}>
               <div className={drop.drop_inner}>소통하기1</div>

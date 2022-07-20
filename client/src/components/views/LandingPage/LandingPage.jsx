@@ -4,10 +4,6 @@ import { Outlet, useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 
 function LandingPage() {
-  useEffect(() => {
-    axios.get("/api/hello").then((response) => console.log(response));
-  }, []);
-
   return (
     <div>
       <NavBar />
