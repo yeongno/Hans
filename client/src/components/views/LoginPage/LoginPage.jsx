@@ -31,6 +31,7 @@ function LoginPage(props) {
     };
 
     dispatch(loginUser(body)).then((response) => {
+      window.localStorage.setItem("userId", response.payload.userId);
       if (response.payload.loginSuccess) {
         navigate("/");
       } else {
