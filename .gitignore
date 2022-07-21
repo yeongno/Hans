@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
@@ -25,3 +26,8 @@ package-lock.json
 yarn.lock
 
 commit.sh
+=======
+node_modules
+
+dev.js
+>>>>>>> e396fb3de1ee29b22b0bbdcd376c429eed9ac71c
