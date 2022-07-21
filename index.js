@@ -38,6 +38,15 @@ app.post("/api/users/register", (req, res) => {
   });
 });
 
+app.post("/api/bdsrc", (req, res) => {
+  const post = new Post(req.body);
+  if (err) return res.json({ success: false, err });
+  return res.status(200).json({
+    success: true,
+    content: post.content,
+  });
+});
+
 app.post("/api/posts/post", (req, res) => {
   //회원 가입 할 때 필요한 정보들을 client에서 가져오면
   //그것들을 데이터 베이스에 넣어준다.
