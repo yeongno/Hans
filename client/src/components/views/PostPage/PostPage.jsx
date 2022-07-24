@@ -10,6 +10,7 @@ function PostPage() {
   const [Title, setTitle] = useState("");
   const [Content, setContent] = useState("");
   const [Contentset, setContents] = useState("");
+  const [goodset, setGood] = useState("");
 
   const onTitleHandler = (event) => {
     setTitle(event.currentTarget.value);
@@ -22,13 +23,19 @@ function PostPage() {
   const navigate = useNavigate();
 
   const getmongo = (event) => {
+    let body = {
+      title: Title,
+      content: Content,
+    };
     event.preventDefault();
 
-    const mongodb = axios.get("/api/dbsrc").then(function (response) {
-      return response.data;
+    axios.post("/api/dbsrc", body).then(function (response) {
+      if (response.data.success) {
+        setGood(response.data.content);
+      } else {
+        alert("omg");
+      }
     });
-
-    return mongodb;
   };
   const onContent = (event) => {
     setContents(event.currentTarget.value);
@@ -64,10 +71,9 @@ function PostPage() {
           <label>Content</label>
           <input type="text" value={Content} onChange={onContentHandler} />
         </div>
-        <button onClick={onSubmitHandler}>Submit</button>
+        <button onClick={onSubmitHandler}>Submit1</button>
         <input type="text" value={Contentset} onChange={onContent} />
       </form>
-      <button onClick={getmongo}>gd</button>
     </div>
   );
 }

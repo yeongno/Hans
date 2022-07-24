@@ -21,9 +21,8 @@ export default function a(SpecificComponent, option, adminRoute = null) {
           } else {
             //로그인한 상태
             if (adminRoute && !response.payload.isAdmin) {
-              navigate("/");
             } else {
-              if (option === false) navigate("/");
+              if (option === false) navigate("/login");
             }
           }
         }

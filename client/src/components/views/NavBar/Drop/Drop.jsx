@@ -11,6 +11,9 @@ export default function Drop() {
   const goMovie = () => {
     navigate("/movie");
   };
+  const goFavorite = () => {
+    navigate("/favorite");
+  };
   return (
     <div>
       <ul className={drop.main_menu}>
@@ -49,7 +52,7 @@ export default function Drop() {
                   <ul>
                     <li onClick={goPost}>게시글</li>
                     <li onClick={goMovie}>무비</li>
-                    <li>03</li>
+                    <li onClick={goFavorite}>Favorite Page</li>
                   </ul>
                 </li>
                 <li>

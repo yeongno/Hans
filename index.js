@@ -152,6 +152,22 @@ app.post("/api/favorite/addToFavorite", (req, res) => {
   });
 });
 
+app.post("/api/favorite/getFavoredMovie", (req, res) => {
+  Favorite.find({ userFrom: req.body.userFrom }).exec((err, favorites) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, favorites });
+  });
+});
+app.post("/api/favorite/removeFromFavorite", (req, res) => {
+  Favorite.findOneAndDelete({
+    movieId: req.body.movieId,
+    userFrom: req.body.userFrom,
+  }).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
+
 const port = 5000;
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
