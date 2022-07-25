@@ -6,7 +6,7 @@ export default function Drop() {
   const navigate = useNavigate();
 
   const goPost = () => {
-    navigate("/post");
+    navigate("/postList");
   };
   const goMovie = () => {
     navigate("/movie");

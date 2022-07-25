@@ -168,6 +168,23 @@ app.post("/api/favorite/removeFromFavorite", (req, res) => {
   });
 });
 
+app.post("/api/posts/getPost", (req, res) => {
+  Post.find({ userFrom: req.body.userFrom }).exec((err, posts) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, posts });
+  });
+});
+
+app.post("/api/posts/removePost", (req, res) => {
+  Post.findOneAndDelete({
+    title: req.body.title,
+    userFrom: req.body.userFrom,
+  }).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
+
 const port = 5000;
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

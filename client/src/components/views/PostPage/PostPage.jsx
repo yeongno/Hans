@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postGo } from "../../../_actions/post_action";
+import "./Post.css";
 
 function PostPage() {
   const dispatch = useDispatch();
@@ -22,24 +23,27 @@ function PostPage() {
 
   const navigate = useNavigate();
 
-  const getmongo = (event) => {
-    let body = {
-      title: Title,
-      content: Content,
-    };
-    event.preventDefault();
+  // const getmongo = (event) => {
+  //   let body = {
+  //     title: Title,
+  //     content: Content,
+  //     userFrom,
+  //   };
+  //   event.preventDefault();
 
-    axios.post("/api/dbsrc", body).then(function (response) {
-      if (response.data.success) {
-        setGood(response.data.content);
-      } else {
-        alert("omg");
-      }
-    });
-  };
+  //   axios.post("/api/dbsrc", body).then(function (response) {
+  //     if (response.data.success) {
+  //       setGood(response.data.content);
+  //     } else {
+  //       alert("omg");
+  //     }
+  //   });
+  // };
   const onContent = (event) => {
     setContents(event.currentTarget.value);
   };
+  const userFrom = localStorage.getItem("userId");
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
@@ -48,6 +52,7 @@ function PostPage() {
     let body = {
       title: Title,
       content: Content,
+      userFrom: userFrom,
     };
     dispatch(postGo(body)).then((response) => {
       if (response.payload.success) {
