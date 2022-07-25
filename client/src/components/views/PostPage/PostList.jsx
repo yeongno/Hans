@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import LPost from "./LPost";
+import { getPost } from "../../../_actions/post_action";
 
 function PostList() {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const goPost = () => {
     navigate("/postPage");
@@ -13,18 +16,30 @@ function PostList() {
     fetchPostList();
   }, []);
 
+  // const fetchPostList = () => {
+  //   axios
+  //     .post("/api/posts/getPost", {
+  //       userFrom: localStorage.getItem("userId"),
+  //     })
+  //     .then((response) => {
+  //       if (response.data.success) {
+  //         setPosts(response.data.posts);
+  //       } else {
+  //         alert("게시글 정보를 가져오는데 실패하였습니다.");
+  //       }
+  //     });
+  // };
+
   const fetchPostList = () => {
-    axios
-      .post("/api/posts/getPost", {
-        userFrom: localStorage.getItem("userId"),
-      })
-      .then((response) => {
-        if (response.data.success) {
-          setPosts(response.data.posts);
+    dispatch(getPost({ userFrom: localStorage.getItem("userId") })).then(
+      (response) => {
+        if (response.payload.success) {
+          setPosts(response.payload.posts);
         } else {
           alert("게시글 정보를 가져오는데 실패하였습니다.");
         }
-      });
+      }
+    );
   };
 
   const onClickDelete = (title, userFrom) => {
