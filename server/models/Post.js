@@ -5,13 +5,16 @@ const postSchema = mongoose.Schema(
   {
     userFrom: {
       type: Schema.Types.ObjectId,
-      ref: "User",
     },
     title: {
       type: String,
     },
     content: {
       type: String,
+    },
+    ownerSelect: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

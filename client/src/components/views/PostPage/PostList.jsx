@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getPost } from "../../../_actions/post_action";
 
 function PostList() {
@@ -35,6 +35,7 @@ function PostList() {
       (response) => {
         if (response.payload.success) {
           setPosts(response.payload.posts);
+          console.log(Posts[0]);
         } else {
           alert("게시글 정보를 가져오는데 실패하였습니다.");
         }
@@ -56,16 +57,30 @@ function PostList() {
       }
     });
   };
-  const onClickArticle = () => {
-    navigate("/LPost");
+  const onClickArticle = (title, userFrom) => {
+    const variables = {
+      title,
+      userFrom,
+    };
+    axios.post("/api/posts/LPost", variables).then((response) => {
+      if (response.data.success) {
+        navigate("/LPost");
+      } else {
+        alert("페이지 이동 실패");
+      }
+    });
   };
   const renderCards = Posts.map((posts, index) => {
     return (
       <tr key={index}>
-        <td>{posts.title} </td>
+        <td>
+          <a href={`/postPage/${posts._id}`}>{posts._id}</a>
+        </td>
         <td>{posts.content} </td>
         <td>
-          <button onClick={onClickArticle}>글보기</button>
+          <button onClick={() => onClickArticle(posts.title, posts.userFrom)}>
+            글보기
+          </button>
           <button onClick={() => onClickDelete(posts.title, posts.userFrom)}>
             Remove
           </button>
