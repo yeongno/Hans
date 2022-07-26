@@ -21,6 +21,7 @@ const connect = mongoose
 app.use("/api/users", require("./routes/users"));
 app.use("/api/posts", require("./routes/posts"));
 app.use("/api/favorite", require("./routes/favorites"));
+app.use("/api/favoriteList", require("./routes/favoriteList"));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

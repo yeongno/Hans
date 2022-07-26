@@ -40,6 +40,42 @@ router.post("/LPost", (req, res) => {
   });
 });
 
+router.post("/downToFavorite", (req, res) => {
+  Post.findOneAndUpdate(
+    { _id: req.body._id, userFrom: req.body.userFrom },
+    {
+      favoriteNumber: 0,
+    }
+  ).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
+
+router.post("/upToFavorite", (req, res) => {
+  Post.findOneAndUpdate(
+    { _id: req.body._id, userFrom: req.body.userFrom },
+    {
+      favoriteNumber: 1,
+    }
+  ).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
+
+router.post("/updateFavorite", (req, res) => {
+  Post.findOneAndUpdate(
+    { _id: req.body._id, userFrom: req.body.userFrom },
+    {
+      favoriteNumber: req.body.favoriteNumber,
+    }
+  ).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
+
 router.post("/post", (req, res) => {
   //회원 가입 할 때 필요한 정보들을 client에서 가져오면
   //그것들을 데이터 베이스에 넣어준다.

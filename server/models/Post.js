@@ -16,6 +16,10 @@ const postSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    favoriteNumber: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
