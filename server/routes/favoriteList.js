@@ -21,4 +21,40 @@ router.post("/removeFavorite", (req, res) => {
   });
 });
 
+router.post("/getList", (req, res) => {
+  FavoriteList.find({ userFrom: req.body.userFrom }).exec((err, posts) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, posts });
+  });
+});
+
+router.post("/favorited", (req, res) => {
+  FavoriteList.find({
+    userFrom: req.body.userFrom,
+    postFrom: req.body.postFrom,
+    favorited: true,
+  }).exec((err, posts) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
+router.post("/removeFavorite", (req, res) => {
+  FavoriteList.findOneAndDelete({
+    postFrom: req.body.postFrom,
+    userFrom: req.body.userFrom,
+  }).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
+
+router.post("/removeFavorites", (req, res) => {
+  FavoriteList.deleteMany({
+    postFrom: req.body.postFrom,
+  }).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
+
 module.exports = router;

@@ -1,8 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { getPost, postGo } from "../../../_actions/post_action";
+import { postGo } from "../../../_actions/post_action";
 import "./Post.css";
 
 function PostPage() {
@@ -11,7 +9,6 @@ function PostPage() {
   const [Title, setTitle] = useState("");
   const [Content, setContent] = useState("");
   const [Contentset, setContents] = useState("");
-  const [goodset, setGood] = useState("");
 
   const onTitleHandler = (event) => {
     setTitle(event.currentTarget.value);
@@ -20,8 +17,6 @@ function PostPage() {
   const onContentHandler = (event) => {
     setContent(event.currentTarget.value);
   };
-
-  const navigate = useNavigate();
 
   // const getmongo = (event) => {
   //   let body = {
@@ -54,10 +49,7 @@ function PostPage() {
       userFrom: userFrom,
     };
     dispatch(postGo(body)).then((response) => {
-      // window.localStorage.setItem("postId", response.payload.postId);
       if (response.payload.success) {
-        // const postId = localStorage.getItem("postId")
-        // dispatch(getPost({ createdAt: postId }));
         alert("Successed to post up");
         console.log(response);
       } else {

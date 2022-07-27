@@ -1,18 +1,12 @@
+import { Button } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { getPost } from "../../../_actions/post_action";
+import { useNavigate, useParams } from "react-router-dom";
 
-function PostList() {
-  const dispatch = useDispatch();
-
+function MyFavoriteList() {
   const navigate = useNavigate();
   const goPost = () => {
     navigate("/postPage");
-  };
-  const goFavoriteList = () => {
-    navigate("/myFavoriteList");
   };
   const [Posts, setPosts] = useState([]);
   useEffect(() => {
@@ -20,16 +14,18 @@ function PostList() {
   }, []);
 
   const fetchPostList = () => {
-    dispatch(getPost({ userFrom: localStorage.getItem("userId") })).then(
-      (response) => {
-        if (response.payload.success) {
-          setPosts(response.payload.posts);
+    axios
+      .post("/api/favoriteList/getList", {
+        userFrom: localStorage.getItem("userId"),
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setPosts(response.data.posts);
           console.log(Posts[0]);
         } else {
           alert("게시글 정보를 가져오는데 실패하였습니다.");
         }
-      }
-    );
+      });
   };
 
   const onClickDelete = (title, userFrom, postFrom) => {
@@ -39,36 +35,31 @@ function PostList() {
       postFrom,
     };
 
-    axios.post("/api/posts/removePost", variables).then((response) => {
-      if (response.data.success) {
-        fetchPostList();
-      } else {
-        alert("리스트에서 지우는데 실패 했습니다.");
-      }
-    });
     axios
-      .post("/api/favoriteList/removeFavorites", variables)
-      .then((response) => {});
+      .post("/api/favoriteList/removeFavorite", variables)
+      .then((response) => {
+        if (response.data.success) {
+          fetchPostList();
+        } else {
+          alert("리스트에서 지우는데 실패 했습니다.");
+        }
+      });
   };
 
   const renderCards = Posts.map((posts, index) => {
+    console.log(posts);
     return (
       <tr key={index}>
         <td>{posts.title}</td>
         <td>{posts.content} </td>
         <td>
-          {/* <button onClick={() => onClickArticle(posts.title, posts.userFrom)}> */}
-          <Link to={`/postPage/${posts._id}`}>
-            <button>글 보기 </button>
-          </Link>
-          {/* </button> */}
-          <button
+          <Button
             onClick={() =>
               onClickDelete(posts.title, posts.userFrom, posts.postFrom)
             }
           >
-            Remove
-          </button>
+            remove
+          </Button>
         </td>
       </tr>
     );
@@ -77,9 +68,8 @@ function PostList() {
   return (
     <div>
       <button onClick={goPost}>게시글 작성</button>
-      <button onClick={goFavoriteList}>My FavoriteList</button>
       <div style={{ width: "85", margin: "3rem auto" }}>
-        <h2>게시글 목록</h2>
+        <h2>My Favorite List</h2>
         <hr />
         <table>
           <thead>
@@ -96,4 +86,4 @@ function PostList() {
   );
 }
 
-export default PostList;
+export default MyFavoriteList;

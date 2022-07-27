@@ -11,6 +11,7 @@ import PostList from "./views/PostPage/PostList";
 import PostPage from "./views/PostPage/PostPage";
 import LPost from "./views/PostPage/LPost";
 import DetailPost from "./views/PostPage/DetailPost";
+import MyFavoriteList from "./views/PostPage/MyFavoriteList";
 function App() {
   const LandingPage1 = Auth(LandingPage, null);
   const LoginPage1 = Auth(LoginPage, null);
@@ -18,6 +19,7 @@ function App() {
   const MoviePage1 = Auth(MoviePage, true);
   const MovieDetail1 = Auth(MovieDetail, true);
   const FavoritePage1 = Auth(FavoritePage, true);
+  const MyFavoriteList1 = Auth(MyFavoriteList, true);
   return (
     <BrowserRouter>
       <Routes>
@@ -25,6 +27,7 @@ function App() {
           <Route path="login" element={<LoginPage1 />} />
           <Route path="/register" element={<RegisterPage1 />} />
           <Route path="/postList" element={<PostList />} />
+          <Route path="/myFavoriteList" element={<MyFavoriteList1 />} />
           <Route path="/PostPage" element={<PostPage />} />
           <Route path="/PostPage/:postId" element={<DetailPost />} />
           <Route path="/LPost" element={<LPost />} />

@@ -17,6 +17,10 @@ const favoriteListSchema = mongoose.Schema(
     title: {
       type: String,
     },
+    favorited: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );

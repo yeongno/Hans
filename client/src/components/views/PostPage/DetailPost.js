@@ -37,6 +37,18 @@ function DetailPost() {
         alert("게시글 정보를 가져오는데 실패하였습니다.");
       }
     });
+    axios
+      .post("/api/favoriteList/favorited", {
+        postFrom: postId,
+        userFrom: UserFrom,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setFavorited(Favorited);
+        } else {
+          alert("Favorited를 가져오는데 실패했습니다.");
+        }
+      });
   };
 
   const onClickFavorite = () => {
@@ -69,14 +81,16 @@ function DetailPost() {
         title: Title,
         content: Content,
       };
-      axios.post("/api/favorite/addToFavorite", variable).then((response) => {
-        if (response.data.success) {
-          setFavoriteNumber(FavoriteNumber + 1);
-          setFavorited(!Favorited);
-        } else {
-          alert("Favorite 리스트에서 추가하는 걸 실패했습니다.");
-        }
-      });
+      axios
+        .post("/api/favoriteList/addToFavorite", variable)
+        .then((response) => {
+          if (response.data.success) {
+            setFavoriteNumber(FavoriteNumber + 1);
+            setFavorited(!Favorited);
+          } else {
+            alert("Favorite 리스트에서 추가하는 걸 실패했습니다.");
+          }
+        });
       axios
         .post("/api/posts/updateFavorite", {
           _id: postId,
