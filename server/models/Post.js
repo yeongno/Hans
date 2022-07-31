@@ -20,6 +20,10 @@ const postSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    topic: {
+      type: String,
+      default: "public",
+    },
   },
   { timestamps: true }
 );

@@ -12,6 +12,7 @@ export default function NavBar() {
   const goToLogout = () => {
     axios.get("/api/users/logout").then((response) => {
       if (response.data.success) {
+        window.localStorage.setItem("userId", " ");
         navigate("./login");
         alert("로그아웃 하는데 성공했습니다.");
       } else {

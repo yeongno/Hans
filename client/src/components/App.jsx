@@ -12,6 +12,9 @@ import PostPage from "./views/PostPage/PostPage";
 import LPost from "./views/PostPage/LPost";
 import DetailPost from "./views/PostPage/DetailPost";
 import MyFavoriteList from "./views/PostPage/MyFavoriteList";
+import MyProfile from "./views/ProFiles/MyProfile";
+import ProFileList from "./views/ProFiles/ProFileList";
+import ProFile from "./views/ProFiles/ProFile";
 function App() {
   const LandingPage1 = Auth(LandingPage, null);
   const LoginPage1 = Auth(LoginPage, null);
@@ -20,6 +23,9 @@ function App() {
   const MovieDetail1 = Auth(MovieDetail, true);
   const FavoritePage1 = Auth(FavoritePage, true);
   const MyFavoriteList1 = Auth(MyFavoriteList, true);
+  const MyProfile1 = Auth(MyProfile, true);
+  const ProFileList1 = Auth(ProFileList, true);
+  const ProFile1 = Auth(ProFile, true);
   return (
     <BrowserRouter>
       <Routes>
@@ -34,6 +40,9 @@ function App() {
           <Route path="/movie" element={<MoviePage1 />} />
           <Route path="/favorite" element={<FavoritePage1 />} />
           <Route path="/movie/:movieId" element={<MovieDetail1 />} />
+          <Route path="/myProFile" element={<MyProfile1 />} />
+          <Route path="/proFileList" element={<ProFileList1 />} />
+          <Route path="/:profileId" element={<ProFile1 />} />
         </Route>
       </Routes>
     </BrowserRouter>

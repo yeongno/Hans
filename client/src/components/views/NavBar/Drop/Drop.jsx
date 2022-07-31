@@ -14,6 +14,14 @@ export default function Drop() {
   const goFavorite = () => {
     navigate("/favorite");
   };
+
+  const goMyProfile = () => {
+    navigate("/myProFile");
+  };
+  const goUserFiles = () => {
+    navigate("/proFileList");
+  };
+
   return (
     <div>
       <ul className={drop.main_menu}>
@@ -56,10 +64,10 @@ export default function Drop() {
                   </ul>
                 </li>
                 <li>
-                  <h4>채팅하기</h4>
+                  <h4>회원 정보</h4>
                   <ul>
-                    <li>01</li>
-                    <li>02</li>
+                    <li onClick={goMyProfile}>프로필</li>
+                    <li onClick={goUserFiles}>유저 목록</li>
                     <li>03</li>
                   </ul>
                 </li>

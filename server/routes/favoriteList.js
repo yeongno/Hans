@@ -17,7 +17,7 @@ router.post("/removeFavorite", (req, res) => {
     userFrom: req.body.userFrom,
   }).exec((err, result) => {
     if (err) return res.status(400).send(err);
-    return res.status(200).json({ success: true, result });
+    return res.status(200).json({ success: true });
   });
 });
 
@@ -35,16 +35,7 @@ router.post("/favorited", (req, res) => {
     favorited: true,
   }).exec((err, posts) => {
     if (err) return res.status(400).send(err);
-    return res.status(200).json({ success: true });
-  });
-});
-router.post("/removeFavorite", (req, res) => {
-  FavoriteList.findOneAndDelete({
-    postFrom: req.body.postFrom,
-    userFrom: req.body.userFrom,
-  }).exec((err, result) => {
-    if (err) return res.status(400).send(err);
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, favorited: true });
   });
 });
 

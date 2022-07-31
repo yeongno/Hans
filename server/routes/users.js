@@ -72,4 +72,18 @@ router.get("/logout", auth, (req, res) => {
   });
 });
 
+router.post("/getProFile", (req, res) => {
+  User.find({ userFrom: req.body.userFrom }).exec((err, userInfo) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, userInfo });
+  });
+});
+
+router.get("/getUsers", (req, res) => {
+  User.find({ role: 0 }).exec((err, userInfo) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, userInfo });
+  });
+});
+
 module.exports = router;

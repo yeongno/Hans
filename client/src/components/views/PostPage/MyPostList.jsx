@@ -20,35 +20,36 @@ function PostList() {
   }, []);
 
   const fetchPostList = () => {
-    dispatch(getPost({ topic: "public" })).then((response) => {
-      if (response.payload.success) {
-        setPosts(response.payload.posts);
-        console.log(Posts[0]);
-      } else {
-        alert("게시글 정보를 가져오는데 실패하였습니다.");
+    dispatch(getPost({ userFrom: localStorage.getItem("userId") })).then(
+      (response) => {
+        if (response.payload.success) {
+          setPosts(response.payload.posts);
+          console.log(Posts[0]);
+        } else {
+          alert("게시글 정보를 가져오는데 실패하였습니다.");
+        }
       }
-    });
+    );
   };
 
-  //해당 기능은 상세페이지에서 구현
-  // const onClickDelete = (title, userFrom, postFrom) => {
-  //   const variables = {
-  //     title,
-  //     userFrom,
-  //     postFrom,
-  //   };
+  const onClickDelete = (title, userFrom, postFrom) => {
+    const variables = {
+      title,
+      userFrom,
+      postFrom,
+    };
 
-  //   axios.post("/api/posts/removePost", variables).then((response) => {
-  //     if (response.data.success) {
-  //       fetchPostList();
-  //     } else {
-  //       alert("리스트에서 지우는데 실패 했습니다.");
-  //     }
-  //   });
-  //   axios
-  //     .post("/api/favoriteList/removeFavorites", variables)
-  //     .then((response) => {});
-  // };
+    axios.post("/api/posts/removePost", variables).then((response) => {
+      if (response.data.success) {
+        fetchPostList();
+      } else {
+        alert("리스트에서 지우는데 실패 했습니다.");
+      }
+    });
+    axios
+      .post("/api/favoriteList/removeFavorites", variables)
+      .then((response) => {});
+  };
 
   const renderCards = Posts.map((posts, index) => {
     return (
@@ -61,13 +62,13 @@ function PostList() {
             <button>글 보기 </button>
           </Link>
           {/* </button> */}
-          {/* <button
+          <button
             onClick={() =>
               onClickDelete(posts.title, posts.userFrom, posts.postFrom)
             }
           >
             Remove
-          </button> */}
+          </button>
         </td>
       </tr>
     );

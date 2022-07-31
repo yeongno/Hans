@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOnePost, getPost } from "../../../_actions/post_action";
 
-function DetailPost() {
+function MyProfile() {
   const postId = useParams().postId;
   const dispatch = useDispatch();
   const [Posts, setPosts] = useState([]);
@@ -122,4 +122,4 @@ function DetailPost() {
     </div>
   );
 }
-export default DetailPost;
+export default MyProfile;
