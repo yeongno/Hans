@@ -45,14 +45,8 @@ function DetailPost() {
       .then((response) => {
         if (response.data.favorited === true) {
           setFavorited(true);
-          console.log("set");
-          console.log(response.data);
-          console.log(variable);
         } else if (response.data.favorited !== true) {
           setFavorited(false);
-          console.log("no");
-          console.log(response.data);
-          console.log(variable);
         }
       });
   };

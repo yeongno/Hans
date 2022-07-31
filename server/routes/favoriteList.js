@@ -38,7 +38,7 @@ router.post("/favorited", (req, res) => {
     if (info.length === 0) {
       result = false;
     }
-    return res.status(200).json({ success: true, favorited: result, info });
+    return res.status(200).json({ success: true, favorited: result });
   });
 });
 

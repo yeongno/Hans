@@ -47,7 +47,9 @@ function PostList() {
     });
     axios
       .post("/api/favoriteList/removeFavorites", variables)
-      .then((response) => {});
+      .then((response) => {
+        console.log(variables);
+      });
   };
 
   const renderCards = Posts.map((posts, index) => {
@@ -63,7 +65,7 @@ function PostList() {
           {/* </button> */}
           <button
             onClick={() =>
-              onClickDelete(posts.title, posts.userFrom, posts.postFrom)
+              onClickDelete(posts.title, posts.userFrom, posts._id)
             }
           >
             Remove
