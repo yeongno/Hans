@@ -5,12 +5,12 @@ const favoriteListSchema = mongoose.Schema(
   {
     userFrom: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      // ref: "User",
       // unique: 1,
     },
     postFrom: {
       type: Schema.Types.ObjectId,
-      ref: "Post",
+      // ref: "Post",
     },
     content: {
       type: String,

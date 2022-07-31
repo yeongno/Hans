@@ -22,21 +22,6 @@ function DetailPost() {
     content: Content,
   };
   useEffect(() => {
-    axios
-      .post("/api/favoriteList/favorited", {
-        postFrom: postId,
-        userFrom: UserFrom,
-      })
-      .then((response) => {
-        if (response.data.favorited === true) {
-          setFavorited(true);
-          console.log("set");
-        } else if (response.data.favorited !== true) {
-          setFavorited(false);
-          console.log("no");
-          console.log(response.data.favorited);
-        }
-      });
     fetchPostList();
   }, []);
 
@@ -52,6 +37,24 @@ function DetailPost() {
         alert("게시글 정보를 가져오는데 실패하였습니다.");
       }
     });
+    axios
+      .post("/api/favoriteList/favorited", {
+        userFrom: window.localStorage.getItem("userId"),
+        postFrom: postId,
+      })
+      .then((response) => {
+        if (response.data.favorited === true) {
+          setFavorited(true);
+          console.log("set");
+          console.log(response.data);
+          console.log(variable);
+        } else if (response.data.favorited !== true) {
+          setFavorited(false);
+          console.log("no");
+          console.log(response.data);
+          console.log(variable);
+        }
+      });
   };
 
   const onClickFavorite = () => {
