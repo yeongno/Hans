@@ -66,7 +66,7 @@ export default function Drop() {
                 <li>
                   <h4>회원 정보</h4>
                   <ul>
-                    <li onClick={goMyProfile}>프로필</li>
+                    <li onClick={goMyProfile}>내 프로필</li>
                     <li onClick={goUserFiles}>유저 목록</li>
                     <li>03</li>
                   </ul>

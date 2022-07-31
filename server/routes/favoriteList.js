@@ -32,10 +32,13 @@ router.post("/favorited", (req, res) => {
   FavoriteList.find({
     userFrom: req.body.userFrom,
     postFrom: req.body.postFrom,
-    favorited: true,
-  }).exec((err, posts) => {
+  }).exec((err, info) => {
     if (err) return res.status(400).send(err);
-    return res.status(200).json({ success: true, favorited: true });
+    let result = true;
+    if (info.length === 0) {
+      result = false;
+    }
+    return res.status(200).json({ success: true, favorited: result });
   });
 });
 

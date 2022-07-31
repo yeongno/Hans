@@ -6,6 +6,7 @@ const favoriteListSchema = mongoose.Schema(
     userFrom: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      // unique: 1,
     },
     postFrom: {
       type: Schema.Types.ObjectId,
@@ -19,12 +20,11 @@ const favoriteListSchema = mongoose.Schema(
     },
     favorited: {
       type: Boolean,
-      default: true,
     },
   },
   { timestamps: true }
 );
 
-const FavoriteList = mongoose.model("FavoriteList3", favoriteListSchema);
+const FavoriteList = mongoose.model("FavoriteList123", favoriteListSchema);
 
 module.exports = { FavoriteList };

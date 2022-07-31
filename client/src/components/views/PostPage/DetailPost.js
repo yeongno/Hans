@@ -22,6 +22,21 @@ function DetailPost() {
     content: Content,
   };
   useEffect(() => {
+    axios
+      .post("/api/favoriteList/favorited", {
+        postFrom: postId,
+        userFrom: UserFrom,
+      })
+      .then((response) => {
+        if (response.data.favorited === true) {
+          setFavorited(true);
+          console.log("set");
+        } else if (response.data.favorited !== true) {
+          setFavorited(false);
+          console.log("no");
+          console.log(response.data.favorited);
+        }
+      });
     fetchPostList();
   }, []);
 
@@ -37,17 +52,6 @@ function DetailPost() {
         alert("게시글 정보를 가져오는데 실패하였습니다.");
       }
     });
-    console.log(Favorited);
-    axios
-      .post("/api/favoriteList/favorited", {
-        postFrom: postId,
-        userFrom: UserFrom,
-      })
-      .then((response) => {
-        if (response.data.favorited === true) {
-          setFavorited(true);
-        } else setFavorited(false);
-      });
   };
 
   const onClickFavorite = () => {
@@ -57,7 +61,7 @@ function DetailPost() {
         .then((response) => {
           if (response.data.success) {
             setFavoriteNumber(FavoriteNumber - 1);
-            setFavorited(!Favorited);
+            setFavorited(false);
           } else {
             alert("Favorite 리스트에서 지우는 걸 실패했습니다.");
           }
@@ -70,21 +74,22 @@ function DetailPost() {
         })
         .then((response) => {
           if (response.data.success) {
+            console.log(`"지우기"${FavoriteNumber}`);
           }
         });
-    } else {
-      let variable = {
+    } else if (!Favorited) {
+      let variables = {
         userFrom: UserFrom,
         postFrom: postId,
         title: Title,
         content: Content,
       };
       axios
-        .post("/api/favoriteList/addToFavorite", variable)
+        .post("/api/favoriteList/addToFavorite", variables)
         .then((response) => {
           if (response.data.success) {
             setFavoriteNumber(FavoriteNumber + 1);
-            setFavorited(Favorited);
+            setFavorited(true);
           } else {
             alert("Favorite 리스트에서 추가하는 걸 실패했습니다.");
           }
@@ -97,17 +102,17 @@ function DetailPost() {
         })
         .then((response) => {
           if (response.data.success) {
+            console.log(`"추가하기 "${FavoriteNumber}`);
           }
         });
     }
   };
-
   return (
     <div>
       <hr />
       <div>
         <Button onClick={onClickFavorite}>
-          {Favorited ? "Not Favorite  " : "Add to Favorite  "}
+          {Favorited ? "Not Favorite  " : "Add to Favorite "}
           {FavoriteNumber}
         </Button>
       </div>

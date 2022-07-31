@@ -22,6 +22,7 @@ export function getPost(dataToSubmit1) {
     payload: request,
   };
 }
+
 export function getOnePost(dataToSubmit1) {
   const request = axios
     .post("/api/posts/getOnePost", dataToSubmit1)

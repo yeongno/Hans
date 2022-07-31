@@ -54,7 +54,7 @@ function ProFileList() {
             <tr>
               <th>name</th>
               <th>email</th>
-              <th>Go to user's profile</th>
+              <th>Click the button</th>
             </tr>
           </thead>
           <tbody>{renderCards}</tbody>
