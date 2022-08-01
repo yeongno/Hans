@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import { postGo } from "../../../_actions/post_action";
 import "./Post.css";
 
 function PostPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [Title, setTitle] = useState("");
   const [Content, setContent] = useState("");
   const [Contentset, setContents] = useState("");
 
+  const Cancel1 = () => {
+    navigate("../PostList");
+  };
   const onTitleHandler = (event) => {
     setTitle(event.currentTarget.value);
   };
@@ -52,6 +57,7 @@ function PostPage() {
       if (response.payload.success) {
         alert("Successed to post up");
         console.log(response);
+        navigate("../PostList");
       } else {
         console.log(response.payload);
         alert("Failed to post up");
@@ -68,9 +74,11 @@ function PostPage() {
         </div>
         <div>
           <label>Content</label>
-          <input type="text" value={Content} onChange={onContentHandler} />
+          <textarea value={Content} onChange={onContentHandler} />
         </div>
         <button onClick={onSubmitHandler}>Submit1</button>
+        <button onClick={Cancel1}>Cancel</button>
+        <input type="file" accept="image/*"></input>
         <input type="text" value={Contentset} onChange={onContent} />
       </form>
     </div>

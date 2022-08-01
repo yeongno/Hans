@@ -4,3 +4,6 @@ export const AUTH_USER = "auth_user";
 export const POST_GO = "post_go";
 export const POST_GET = "post_get";
 export const POST_ONEGET = "post_oneget";
+export const COMMENT_GO = "comment_go";
+export const POST_CMT_GET = "post_cmt_get";
+export const CMT_USER_GET = "cmt_user_get";

@@ -13,6 +13,7 @@ export default function NavBar() {
     axios.get("/api/users/logout").then((response) => {
       if (response.data.success) {
         navigate("./login");
+        window.localStorage.setItem("userId", " ");
         alert("로그아웃 하는데 성공했습니다.");
       } else {
         navigate("./login");

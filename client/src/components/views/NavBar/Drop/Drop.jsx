@@ -71,7 +71,14 @@ export default function Drop() {
           <div className={drop.item__name}>이지원</div>
           <div className={drop.item__contents}>
             <div className={drop.contents__menu}>
-              <div className={drop.drop_inner}>소통하기1</div>
+              <ul className={drop.drop_inner}>
+                <li>
+                  <h4>게시판</h4>
+                  <ul>
+                    <li onClick={goPost}>게시글</li>
+                  </ul>
+                </li>
+              </ul>
             </div>
           </div>
         </li>

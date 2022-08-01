@@ -5,6 +5,8 @@ import {
   POST_GO,
   POST_ONEGET,
   UPDATE_FAVORITE,
+  COMMENT_GO,
+  POST_CMT_GET,
 } from "../_actions/types";
 
 export default function a(state = {}, action) {
@@ -16,6 +18,12 @@ export default function a(state = {}, action) {
       return { ...state, postSuc: action.payload };
       break;
     case POST_ONEGET:
+      return { ...state, postSuc: action.payload };
+      break;
+    case COMMENT_GO:
+      return { ...state, postSuc: action.payload };
+      break;
+    case POST_CMT_GET:
       return { ...state, postSuc: action.payload };
       break;
     default:
