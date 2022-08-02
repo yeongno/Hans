@@ -72,4 +72,11 @@ router.get("/logout", auth, (req, res) => {
   });
 });
 
+router.post("/getUserName", (req, res) => {
+  User.find({ _id: req.user._id }).exec((err, user) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, user });
+  });
+});
+
 module.exports = router;

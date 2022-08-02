@@ -5,7 +5,6 @@ import {
   POST_ONEGET,
   COMMENT_GO,
   POST_CMT_GET,
-  CMT_USER_GET,
 } from "./types";
 
 export function postGo(dataToSubmit1) {
@@ -58,17 +57,6 @@ export function getThisComments(dataToSubmit1) {
 
   return {
     type: POST_CMT_GET,
-    payload: request,
-  };
-}
-
-export function getUser(dataToSubmit1) {
-  const request = axios
-    .post("/api/auth/userNameLoad", dataToSubmit1)
-    .then((response) => response.data);
-
-  return {
-    type: CMT_USER_GET,
     payload: request,
   };
 }

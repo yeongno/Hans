@@ -9,7 +9,6 @@ import MovieDetail from "./views/MoviePage/MovieDetail/MovieDetail";
 import FavoritePage from "./views/FavoritePage/FavoritePage";
 import PostList from "./views/PostPage/PostList";
 import PostPage from "./views/PostPage/PostPage";
-import LPost from "./views/PostPage/LPost";
 import DetailPost from "./views/PostPage/DetailPost";
 import MyFavoriteList from "./views/PostPage/MyFavoriteList";
 function App() {
@@ -30,7 +29,6 @@ function App() {
           <Route path="/myFavoriteList" element={<MyFavoriteList1 />} />
           <Route path="/PostPage" element={<PostPage />} />
           <Route path="/PostPage/:postId" element={<DetailPost />} />
-          <Route path="/LPost" element={<LPost />} />
           <Route path="/movie" element={<MoviePage1 />} />
           <Route path="/favorite" element={<FavoritePage1 />} />
           <Route path="/movie/:movieId" element={<MovieDetail1 />} />

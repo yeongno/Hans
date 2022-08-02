@@ -9,8 +9,8 @@ import {
   getPost,
   commentGo,
   getThisComments,
-  getUser,
 } from "../../../_actions/post_action";
+import { getUser } from "../../../_actions/user_action";
 
 function DetailPost() {
   const postId = useParams().postId;
@@ -26,12 +26,24 @@ function DetailPost() {
   //댓글 내용(댓글 등록)
   const [Comment, setComment] = useState("");
   //댓글 작성자
-  const [CName, setCName] = useState("");
+  const [CName, setCName] = useState([]);
   //댓글 로드(해당 게시글에 저장된 댓글 불러오기)
   const [Comments, setComments] = useState([]);
   useEffect(() => {
     fetchCommentList();
+    fetchloadUser();
   }, []);
+  //로그인 정보 불러오기
+  const fetchloadUser = () => {
+    dispatch(getUser({ _id: localStorage.getItem("userId") })).then(
+      (response) => {
+        if (response.payload.success) {
+          setCName(response.payload.users);
+        }
+      }
+    );
+  };
+  const LUName = CName.map((users, index) => {});
 
   const fetchCommentList = () => {
     dispatch(getThisComments({ thisPostID: postId })).then((response) => {
@@ -85,7 +97,6 @@ function DetailPost() {
       </tr>
     );
   });
-
   const backList = () => {
     navigate("/PostList");
   };
@@ -103,8 +114,14 @@ function DetailPost() {
   useEffect(() => {
     fetchPostList();
   }, []);
-
   const fetchPostList = () => {
+    dispatch(getUser({ _id: postId })).then((response) => {
+      if (response.payload.success) {
+        setCName(response.payload.posts.name);
+      } else {
+        alert("error");
+      }
+    });
     dispatch(getOnePost({ _id: postId })).then((response) => {
       if (response.payload.success) {
         setPosts(response.payload.posts);
@@ -134,7 +151,7 @@ function DetailPost() {
     event.preventDefault();
     console.log("Comment", Comment);
     let body = {
-      cName: CName,
+      cName: userFrom,
       thisPostID: postId,
       comment: Comment,
       userFrom: userFrom,
@@ -216,10 +233,12 @@ function DetailPost() {
       <table>
         <thead>
           <tr>
-            <th>Title : {Title} </th>
+            <th>{Title} </th>
           </tr>
         </thead>
-        <tbody>Content : {Content}</tbody>
+        <tbody>
+          <div dangerouslySetInnerHTML={{ __html: Content }}></div>
+        </tbody>
         <tr>
           <tr>Comments</tr>
           <tbody>{renderComments}</tbody>
