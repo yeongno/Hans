@@ -18,10 +18,15 @@ const connect = mongoose
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
-app.use("/api/users", require("./routes/users"));
+// app.use("/api/users", require("./routes/users"));
 app.use("/api/posts", require("./routes/posts"));
 app.use("/api/favorite", require("./routes/favorites"));
 app.use("/api/favoriteList", require("./routes/favoriteList"));
+app.use("/api/users", require("./routes/users"));
+app.use("/api/video", require("./routes/video"));
+
+//static files path of polder
+app.use("/uploads", express.static("uploads"));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

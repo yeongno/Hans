@@ -19,6 +19,7 @@ function ProFile() {
       .post("/api/users/getProFile", { userFrom: profileId })
       .then((response) => {
         if (response.data.success) {
+          console.log(response.data.userInfo);
           setName(response.data.userInfo[0].name);
           setEmail(response.data.userInfo[0].email);
         } else {

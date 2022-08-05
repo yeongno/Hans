@@ -11,6 +11,9 @@ function PostList() {
   const goPost = () => {
     navigate("/postPage");
   };
+  const goUploadVideo = () => {
+    navigate("/uploadVideoPage");
+  };
   const goFavoriteList = () => {
     navigate("/myFavoriteList");
   };
@@ -79,6 +82,7 @@ function PostList() {
     <div>
       <button onClick={goPost}>게시글 작성</button>
       <button onClick={goFavoriteList}>My FavoriteList</button>
+      <button onClick={goUploadVideo}>비디오 업로드</button>
       <div style={{ width: "85", margin: "3rem auto" }}>
         <h2>게시글 목록</h2>
         <hr />
