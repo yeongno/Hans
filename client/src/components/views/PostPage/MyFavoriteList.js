@@ -67,7 +67,7 @@ function MyFavoriteList() {
 
   return (
     <div>
-      <button onClick={goPost}>게시글 작성</button>
+      <Button onClick={goPost}>게시글 작성</Button>
       <div style={{ width: "85", margin: "3rem auto" }}>
         <h2>My Favorite List</h2>
         <hr />

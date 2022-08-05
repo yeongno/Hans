@@ -9,8 +9,10 @@ import MovieDetail from "./views/MoviePage/MovieDetail/MovieDetail";
 import FavoritePage from "./views/FavoritePage/FavoritePage";
 import PostList from "./views/PostPage/PostList";
 import PostPage from "./views/PostPage/PostPage";
+import PostUpdatePage from "./views/PostPage/PostUpdatePage";
 import DetailPost from "./views/PostPage/DetailPost";
 import MyFavoriteList from "./views/PostPage/MyFavoriteList";
+import TopicManagementPage from "../topic/TopicManagement";
 function App() {
   const LandingPage1 = Auth(LandingPage, null);
   const LoginPage1 = Auth(LoginPage, null);
@@ -19,6 +21,7 @@ function App() {
   const MovieDetail1 = Auth(MovieDetail, true);
   const FavoritePage1 = Auth(FavoritePage, true);
   const MyFavoriteList1 = Auth(MyFavoriteList, true);
+  const TopicManagementPage1 = Auth(TopicManagementPage, true);
   return (
     <BrowserRouter>
       <Routes>
@@ -28,9 +31,11 @@ function App() {
           <Route path="/postList" element={<PostList />} />
           <Route path="/myFavoriteList" element={<MyFavoriteList1 />} />
           <Route path="/PostPage" element={<PostPage />} />
+          <Route path="/PostUpdatePage" element={<PostUpdatePage />} />
           <Route path="/PostPage/:postId" element={<DetailPost />} />
           <Route path="/movie" element={<MoviePage1 />} />
           <Route path="/favorite" element={<FavoritePage1 />} />
+          <Route path="/topic" element={<TopicManagementPage1 />} />
           <Route path="/movie/:movieId" element={<MovieDetail1 />} />
         </Route>
       </Routes>

@@ -40,10 +40,11 @@ router.post("/login", (req, res) => {
         if (err) return res.status(400).send(err);
 
         //토큰을 저장한다. 어디에? -> 쿠키, 로컬스토리지 둘중 하나를 쓴다. 우리는 쿠키
-        res
-          .cookie("x_auth", user.token)
-          .status(200)
-          .json({ loginSuccess: true, userId: user._id });
+        res.cookie("x_auth", user.token).status(200).json({
+          loginSuccess: true,
+          userId: user._id,
+          name: user.name,
+        });
       });
     });
   });
@@ -72,11 +73,12 @@ router.get("/logout", auth, (req, res) => {
   });
 });
 
-router.post("/getUserName", (req, res) => {
-  User.find({ _id: req.user._id }).exec((err, user) => {
+//프로필 사진 설정 라우트
+/*router.post("/getUserProfile", (req, res) => {
+  User.findOne({ _id: localStorage.getItem("userId") }).exec((err, user) => {
     if (err) return res.status(400).send(err);
     return res.status(200).json({ success: true, user });
   });
-});
+});*/
 
 module.exports = router;

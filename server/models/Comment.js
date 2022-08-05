@@ -20,7 +20,7 @@ const commentSchema = mongoose.Schema(
     thisPostID: {
       type: String,
     },
-    cName: {
+    writer: {
       type: String,
     },
   },

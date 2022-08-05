@@ -24,6 +24,9 @@ const postSchema = mongoose.Schema(
       type: String,
       default: "public",
     },
+    writer: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

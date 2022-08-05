@@ -33,9 +33,9 @@ export function auth() {
   };
 }
 
-export function getUser(dataToSubmit1) {
+export function getUserProfile(dataToSubmit1) {
   const request = axios
-    .post("/api/users/getUserName", dataToSubmit1)
+    .post("/api/users/getUserProfile", dataToSubmit1)
     .then((response) => response.data);
 
   return {

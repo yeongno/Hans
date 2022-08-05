@@ -32,6 +32,13 @@ const userSchema = mongoose.Schema({
   tokenExp: {
     type: Number,
   },
+  //프로필 설정
+  profileImage: {
+    type: String,
+    default:
+      "http://localhost:3000/images/c9de67e2-7d7c-4d14-a3f5-b850c3dd17be.png",
+    //기본 프로필 파일
+  },
 });
 
 userSchema.pre("save", function (next) {

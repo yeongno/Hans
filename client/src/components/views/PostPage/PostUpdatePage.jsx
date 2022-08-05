@@ -1,24 +1,14 @@
+//게시글 수정하는 페이지
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import { postGo, getTopic } from "../../../_actions/post_action";
+import { postGo } from "../../../_actions/post_action";
 import "./Post.css";
-//에디터 생성에 필요한 모듈을 불러오기
 import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-//텍스트 에디터로 CK에디터5를 사용했습니다
-//CKEditor를 사용하기 위해서는 아래 명령어를 통해 해당 모듈을 설치해야 합니다.
-//종합설치
-//npm install --save multer dotenv path mime-types uuid
-//개별 설치
-//npm install multer --save
-//npm install dotenv --save
-//npm install path --save
-//npm install mime-types --save
-//npm install uuid --save
-//*클라이언트 폴더에도 설치할 것
+import { getUser } from "../../../_actions/user_action";
 
 function PostPage() {
   const dispatch = useDispatch();
@@ -27,27 +17,12 @@ function PostPage() {
   const [Title, setTitle] = useState("제목을 입력하세요"); //제목 변수
   const [Content, setContent] = useState("내용을 입력하세요"); //내용 변수
   const [image, setImage] = useState(""); //이미지 첨부 관련 변수
-  const [Topics, setTopics] = useState([]); //토픽 데이터 불러오기 위한 변수
-  const [Topic, setTopic] = useState(""); //토픽 설정 변수
 
   const [flag, setFlag] = useState(false);
   const imgLink = "http://localhost:3000/images"; //이미지 경로 설정 변수
   const userFrom = localStorage.getItem("userId"); //ID불러오기
   const userName = localStorage.getItem("name"); //이름(닉네임) 불러오기
 
-  //토픽 불러오기
-  useEffect(() => {
-    fetchTopicList();
-  }, []);
-  const fetchTopicList = () => {
-    dispatch(getTopic({ type: "TOPIC" })).then((response) => {
-      if (response.payload.success) {
-        setTopics(response.payload.topics);
-      } else {
-        alert("Load Error");
-      }
-    });
-  };
   //이미지 첨부하기 위한 코드입니다.
   //어뎁터 정의 함수
   const customUploadAdapter = (loader) => {
@@ -89,16 +64,9 @@ function PostPage() {
   function Cancel1() {
     navigate("../PostList");
   }
-  const onTopicHandler = (event) => {
-    setTopic(event.currentTarget.value);
-  };
   const onTitleHandler = (event) => {
     setTitle(event.currentTarget.value);
   };
-
-  const topicList = Topics.map((topics, index) => {
-    return <option value={topics.topicName}>{topics.topicName}</option>;
-  });
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -106,7 +74,6 @@ function PostPage() {
     console.log("Title", Title);
     console.log("Content", Content);
     let body = {
-      topic: Topic,
       title: Title,
       content: Content,
       userFrom: userFrom,
@@ -128,10 +95,6 @@ function PostPage() {
       <form>
         <div>
           <h2>Write Page</h2>
-          <select onChange={onTopicHandler} value={Topic}>
-            <option>Select Topic</option>
-            {topicList}
-          </select>
           <input
             type="text"
             size="100"

@@ -29,21 +29,13 @@ function DetailPost() {
   const [CName, setCName] = useState([]);
   //댓글 로드(해당 게시글에 저장된 댓글 불러오기)
   const [Comments, setComments] = useState([]);
+  const userFrom = localStorage.getItem("userId");
+  const userName = localStorage.getItem("name");
+
+  const [display, setDisplay] = useState(false);
   useEffect(() => {
     fetchCommentList();
-    fetchloadUser();
   }, []);
-  //로그인 정보 불러오기
-  const fetchloadUser = () => {
-    dispatch(getUser({ _id: localStorage.getItem("userId") })).then(
-      (response) => {
-        if (response.payload.success) {
-          setCName(response.payload.users);
-        }
-      }
-    );
-  };
-  const LUName = CName.map((users, index) => {});
 
   const fetchCommentList = () => {
     dispatch(getThisComments({ thisPostID: postId })).then((response) => {
@@ -58,42 +50,68 @@ function DetailPost() {
 
   //댓글 삭제
   const onClickDelete = (comment, userFrom, commentFrom) => {
-    const variables = {
-      comment,
-      userFrom,
-      commentFrom,
-    };
-
-    axios.post("/api/comments/removeComment", variables).then((response) => {
-      if (response.data.success) {
-        fetchCommentList();
-      } else {
-        alert("댓글을 지우는데 실패 했습니다.");
-      }
-    });
+    //삭제 확인창
+    if (window.confirm("댓글을 삭제하시겠습니까?")) {
+      const variables = {
+        comment,
+        userFrom,
+        commentFrom,
+      };
+      axios.post("/api/comments/removeComment", variables).then((response) => {
+        if (response.data.success) {
+          fetchCommentList();
+        } else {
+          alert("댓글을 지우는데 실패 했습니다.");
+        }
+      });
+    }
   };
-
+  //대댓글
+  const ansComment = (writer) => {
+    return (
+      <div>
+        <label>{writer}님에게 답글</label>
+        <form>
+          <div>
+            <form>
+              <label>{userName}</label>
+              <textarea rows="3" cols="60"></textarea>
+              <button>확인</button>
+            </form>
+          </div>
+        </form>
+      </div>
+    );
+  };
   //댓글 목록 표시
   const renderComments = Comments.map((comments, index) => {
+    const isAuthor = comments.userFrom === userFrom; //로그인 체크 변수
     return (
       <tr key={index}>
-        <td></td>
+        <td>{comments.writer}</td>
         <td>
           <font size="1">{comments.createdAt}</font>
           <br />
           {comments.comment}
         </td>
-        <button
-          onClick={() =>
-            onClickDelete(
-              comments.comment,
-              comments.userFrom,
-              comments.commentFrom
-            )
-          }
-        >
-          삭제
-        </button>
+        {/*댓글 작성자와 로그인한 사용자가 일치할때 버튼 표시*/}
+        <button onClick={ansComment(comments.writer)}>답글</button>
+        {isAuthor && (
+          <>
+            <button>수정</button>
+            <button
+              onClick={() =>
+                onClickDelete(
+                  comments.comment,
+                  comments.userFrom,
+                  comments.commentFrom
+                )
+              }
+            >
+              삭제
+            </button>
+          </>
+        )}
       </tr>
     );
   });
@@ -103,7 +121,6 @@ function DetailPost() {
   const onComment = (event) => {
     setComment(event.currentTarget.value);
   };
-  const userFrom = localStorage.getItem("userId");
   const variable = {
     userFrom: UserFrom,
     postFrom: postId,
@@ -115,13 +132,6 @@ function DetailPost() {
     fetchPostList();
   }, []);
   const fetchPostList = () => {
-    dispatch(getUser({ _id: postId })).then((response) => {
-      if (response.payload.success) {
-        setCName(response.payload.posts.name);
-      } else {
-        alert("error");
-      }
-    });
     dispatch(getOnePost({ _id: postId })).then((response) => {
       if (response.payload.success) {
         setPosts(response.payload.posts);
@@ -151,7 +161,7 @@ function DetailPost() {
     event.preventDefault();
     console.log("Comment", Comment);
     let body = {
-      cName: userFrom,
+      writer: userName,
       thisPostID: postId,
       comment: Comment,
       userFrom: userFrom,
@@ -239,17 +249,19 @@ function DetailPost() {
         <tbody>
           <div dangerouslySetInnerHTML={{ __html: Content }}></div>
         </tbody>
+        <hr />
         <tr>
           <tr>Comments</tr>
           <tbody>{renderComments}</tbody>
           <div>
             <form>
+              <label>{userName}</label>
               <textarea rows="3" cols="60" onChange={onComment}></textarea>
               <button onClick={onCSubmitHandler}>확인</button>
             </form>
           </div>
           <tr>
-            <button onClick={backList}>목록보기</button>
+            <Button onClick={backList}>목록보기</Button>
           </tr>
         </tr>
       </table>

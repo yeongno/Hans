@@ -66,6 +66,7 @@ app.use("/api/posts", require("./routes/posts"));
 app.use("/api/comments", require("./routes/comments"));
 app.use("/api/favorite", require("./routes/favorites"));
 app.use("/api/favoriteList", require("./routes/favoriteList"));
+app.use("/api/topics", require("./routes/topics"));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

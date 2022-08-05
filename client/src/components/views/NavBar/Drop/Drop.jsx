@@ -8,6 +8,9 @@ export default function Drop() {
   const goPost = () => {
     navigate("/postList");
   };
+  const goTopic = () => {
+    navigate("/topic");
+  };
   const goMovie = () => {
     navigate("/movie");
   };
@@ -76,6 +79,7 @@ export default function Drop() {
                   <h4>게시판</h4>
                   <ul>
                     <li onClick={goPost}>게시글</li>
+                    <li onClick={goTopic}>Topic</li>
                   </ul>
                 </li>
               </ul>

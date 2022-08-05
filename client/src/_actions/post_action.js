@@ -5,6 +5,10 @@ import {
   POST_ONEGET,
   COMMENT_GO,
   POST_CMT_GET,
+  TOPIC_GET,
+  TOPIC_GO,
+  POST_TOPIC_SEARCH,
+  POST_GET_TOPIC,
 } from "./types";
 
 export function postGo(dataToSubmit1) {
@@ -28,6 +32,39 @@ export function commentGo(dataToSubmit1) {
     payload: request,
   };
 }
+//토픽 전송
+export function topicGo(dataToSubmit1) {
+  const request = axios
+    .post("/api/topics/topic", dataToSubmit1)
+    .then((response) => response.data);
+
+  return {
+    type: TOPIC_GO,
+    payload: request,
+  };
+}
+
+//토픽 전송
+export function topicSearch(dataToSubmit1) {
+  const request = axios
+    .post("/api/topics/getPostTopic", dataToSubmit1)
+    .then((response) => response.data);
+
+  return {
+    type: POST_TOPIC_SEARCH,
+    payload: request,
+  };
+}
+export function getTopic(dataToSubmit1) {
+  const request = axios
+    .post("/api/topics/getTopic", dataToSubmit1)
+    .then((response) => response.data);
+
+  return {
+    type: TOPIC_GET,
+    payload: request,
+  };
+}
 
 export function getPost(dataToSubmit1) {
   const request = axios
@@ -36,6 +73,16 @@ export function getPost(dataToSubmit1) {
 
   return {
     type: POST_GET,
+    payload: request,
+  };
+}
+export function getPostTopic(dataToSubmit1) {
+  const request = axios
+    .post("/api/posts/getPostTopic", dataToSubmit1)
+    .then((response) => response.data);
+
+  return {
+    type: POST_GET_TOPIC,
     payload: request,
   };
 }

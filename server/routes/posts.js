@@ -14,6 +14,13 @@ router.post("/getPost", (req, res) => {
     return res.status(200).json({ success: true, posts });
   });
 });
+//특정 토픽에 속한 글만 표시하기
+router.post("/getPostTopic", (req, res) => {
+  Post.find({ public: req.body.public }).exec((err, posts) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, posts });
+  });
+});
 
 router.post("/getOnePost", (req, res) => {
   Post.find({ _id: req.body._id }).exec((err, posts) => {
