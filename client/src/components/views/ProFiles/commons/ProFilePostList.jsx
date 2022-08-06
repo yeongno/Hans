@@ -1,5 +1,10 @@
-import { OrderedListOutlined } from "@ant-design/icons";
-import { Button, Menu, Upload } from "antd";
+import {
+  EllipsisOutlined,
+  LikeOutlined,
+  MessageOutlined,
+  OrderedListOutlined,
+} from "@ant-design/icons";
+import { Button, Col, Input, Menu, Upload } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -50,30 +55,81 @@ function ProFilePostList(props) {
 
   const renderCards = Posts.map((posts, index) => {
     return (
-      <tr key={index}>
-        <td>{posts.title}</td>
-        <td>{posts.content} </td>
-        <td>
-          {/* <button onClick={() => onClickArticle(posts.title, posts.userFrom)}> */}
-          <Link to={`/postPage/${posts._id}`}>
-            <button>글 보기 </button>
-          </Link>
-          {/* </button> */}
-          <button
-            onClick={() =>
-              onClickDelete(posts.title, posts.userFrom, posts._id)
-            }
-          >
-            Remove
-          </button>
-        </td>
-      </tr>
+      <Col key={index}>
+        <div
+          style={{
+            background: "white",
+            width: "100%",
+            height: "100%",
+            marginRight: "10%",
+            borderRadius: "2.5px",
+            boxShadow: "0px 0px 0px 1px #E2E2E2",
+          }}
+        >
+          <div>
+            <div style={{ display: "flex" }}>
+              <Input
+                style={{
+                  border: "none",
+                  fontSize: "17px",
+                  background: "none",
+                }}
+                value={posts.title}
+              />
+              <Button style={{ border: "none" }}>
+                <EllipsisOutlined />
+              </Button>
+            </div>
+
+            <Input
+              style={{
+                marginLeft: "10px",
+                border: "none",
+                fontSize: "12px",
+                background: "none",
+              }}
+              value={posts.content}
+            />
+            <div
+              style={{ background: "gray", height: "0.3px", width: "100%" }}
+            />
+            <div style={{ justifyContent: "center", display: "flex" }}>
+              <Button style={{ width: "50%", border: "none" }}>
+                <LikeOutlined />
+                좋아요
+              </Button>
+              <Button style={{ width: "50%", border: "none" }}>
+                <MessageOutlined />
+                댓글 달기
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Col>
+      // <tr key={index}>
+      //   <td>{posts.title}</td>
+      //   <td>{posts.content} </td>
+      //   <td>
+      //     {/* <button onClick={() => onClickArticle(posts.title, posts.userFrom)}> */}
+      //     <Link to={`/postPage/${posts._id}`}>
+      //       <button>글 보기 </button>
+      //     </Link>
+      //     {/* </button> */}
+      //     <button
+      //       onClick={() =>
+      //         onClickDelete(posts.title, posts.userFrom, posts._id)
+      //       }
+      //     >
+      //       Remove
+      //     </button>
+      //   </td>
+      // </tr>
     );
   });
 
   return (
     <div>
-      <div style={{ width: "85" }}>
+      {/* <div style={{ width: "85" }}>
         <table>
           <thead>
             <tr>
@@ -84,7 +140,9 @@ function ProFilePostList(props) {
           </thead>
           <tbody>{renderCards}</tbody>
         </table>
-      </div>
+      </div> */}
+
+      <div>{renderCards}</div>
     </div>
   );
 }

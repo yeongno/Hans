@@ -89,7 +89,7 @@ function MyProFile() {
     <div>
       <div
         // className={Container}
-        style={{ marginLeft: "10%" }}
+        style={{ marginLeft: "10%", marginRight: "10%" }}
       >
         <Form>
           <div
@@ -223,14 +223,15 @@ function MyProFile() {
           </div>{" "}
           <div
             style={{
-              width: "1000px",
+              width: "100%",
               height: "100px",
               // display: "flex",
-              // justifyContent: "space-between",
+              justifyContent: "center",
               position: "relative",
               backgroundColor: "red",
             }}
           >
+            <div></div>
             <Button onClick={onMyPostList}>MyPostList</Button>
             <Button onClick={onMyFavoriteList}>FavoriteList</Button>
             {OnPost && <div>{OnPostList && <ProFilePostList />}</div>}
