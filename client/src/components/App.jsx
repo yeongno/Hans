@@ -18,6 +18,7 @@ import ModiFyProFile from "./views/ProFiles/ModifyProFile";
 import Buttons from "./views/ProFiles/commons/Buttons";
 import UploadVideoPage from "./views/UploadVideoPage/UploadVideoPage";
 import VideoList from "./views/PostPage/VideoList";
+import ProFilePostList from "./views/ProFiles/commons/ProFilePostList";
 function App() {
   const LandingPage1 = Auth(LandingPage, null);
   const LoginPage1 = Auth(LoginPage, null);

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ProFilePostList from "./commons/ProFilePostList";
 
 function MyProFile() {
   const [Name, setName] = useState("");
@@ -14,6 +15,7 @@ function MyProFile() {
   const [FilePath, setFilePath] = useState("");
   const navigate = useNavigate();
   const [OnPost, setOnPost] = useState(false);
+  const [Posts, setPosts] = useState([]);
 
   const onPostList = () => {
     setOnPost(true);
@@ -190,7 +192,7 @@ function MyProFile() {
               backgroundColor: "red",
             }}
           >
-            {OnPost && <div>aa </div>}
+            {OnPost && <ProFilePostList />}
           </div>
         </Form>
       </div>

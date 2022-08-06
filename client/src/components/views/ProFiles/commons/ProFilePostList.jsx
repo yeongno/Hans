@@ -3,11 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getPost } from "../../../_actions/post_action";
 
 function ProFilePostList(props) {
-  const dispatch = useDispatch();
-
   const navigate = useNavigate();
   const goPost = () => {
     navigate("/postPage");
@@ -27,14 +24,18 @@ function ProFilePostList(props) {
   }, []);
 
   const fetchPostList = () => {
-    dispatch(getPost({ topic: "public" })).then((response) => {
-      if (response.payload.success) {
-        setPosts(response.payload.posts);
-        console.log(Posts[0]);
-      } else {
-        alert("게시글 정보를 가져오는데 실패하였습니다.");
-      }
-    });
+    axios
+      .post("/api/posts/getOnePost", {
+        userFrom: localStorage.getItem("userId"),
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setPosts(response.data.posts);
+          console.log(Posts[0]);
+        } else {
+          alert("게시글 정보를 가져오는데 실패하였습니다.");
+        }
+      });
   };
 
   // 해당 기능은 상세페이지에서 구현
