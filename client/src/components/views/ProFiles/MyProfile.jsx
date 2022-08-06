@@ -1,10 +1,19 @@
-import { SyncOutlined } from "@ant-design/icons";
+import {
+  CameraOutlined,
+  InfoCircleOutlined,
+  OrderedListOutlined,
+  PictureOutlined,
+  PlaySquareOutlined,
+  SyncOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ProFileFavoriteList from "./commons/ProFileFavoriteList";
 import ProFilePostList from "./commons/ProFilePostList";
 
 function MyProFile() {
@@ -14,11 +23,20 @@ function MyProFile() {
 
   const [FilePath, setFilePath] = useState("");
   const navigate = useNavigate();
-  const [OnPost, setOnPost] = useState(false);
-  const [Posts, setPosts] = useState([]);
+  const [OnPost, setOnPost] = useState(true);
+  const [OnPostList, setOnPostList] = useState(true);
+  const [OnFavoritList, setOnFavoritList] = useState(false);
 
   const onPostList = () => {
     setOnPost(true);
+  };
+  const onMyPostList = () => {
+    setOnFavoritList(false);
+    setOnPostList(true);
+  };
+  const onMyFavoriteList = () => {
+    setOnPostList(false);
+    setOnFavoritList(true);
   };
 
   const onDrop = (files) => {
@@ -93,7 +111,7 @@ function MyProFile() {
                 display: "flex",
                 justifyContent: "center",
                 position: "relative",
-                backgroundColor: "black",
+                backgroundColor: "white",
               }}
               // className={top.dropZone}
             >
@@ -107,6 +125,7 @@ function MyProFile() {
                       alignItems: "center",
                       justifyContent: "center",
                       borderRadius: "50px",
+                      boxShadow: "1px 1px 1px 1px inset",
                     }}
                     src={`http://localhost:5000/${FilePath}`}
                     alt="thumbnail"
@@ -130,7 +149,7 @@ function MyProFile() {
                   >
                     <input {...getInputProps()} />
                     <Button
-                      icon={<SyncOutlined />}
+                      icon={<CameraOutlined />}
                       style={{ fontSize: "3rem" }}
                     />
                   </div>
@@ -149,18 +168,23 @@ function MyProFile() {
                   position: "relative",
                   width: "190px",
                   background: "yellow",
+                  marginTop: "15px",
                 }}
               >
                 <Input
-                  style={{ width: "calc(50%)" }}
+                  style={{
+                    width: "calc(99%)",
+                    fontSize: "17px",
+                    border: "none",
+                  }}
                   placeholder="Name"
                   value={`이름 : ${Name}`}
                 />
                 <br />
                 <Input
-                  style={{ width: "calc(50%)" }}
+                  style={{ width: "calc(99%)", border: "none" }}
                   placeholder="Name"
-                  value={`친구 : ${Name}`}
+                  value={`친구 : ${Name}명`}
                 />
               </div>
             </div>
@@ -175,11 +199,26 @@ function MyProFile() {
             }}
           >
             <hr />
-            <Button onClick={onPostList}>게시물</Button>
-            <Button>정보</Button>
-            <Button>친구</Button>
-            <Button>사진</Button>
-            <Button>동영상</Button>
+            <Button onClick={onPostList}>
+              {" "}
+              <OrderedListOutlined /> 게시물
+            </Button>
+            <Button>
+              <InfoCircleOutlined />
+              정보
+            </Button>
+            <Button>
+              <TeamOutlined />
+              친구
+            </Button>
+            <Button>
+              <PictureOutlined />
+              사진
+            </Button>
+            <Button>
+              <PlaySquareOutlined />
+              동영상
+            </Button>
             <hr />
           </div>{" "}
           <div
@@ -192,7 +231,10 @@ function MyProFile() {
               backgroundColor: "red",
             }}
           >
-            {OnPost && <ProFilePostList />}
+            <Button onClick={onMyPostList}>MyPostList</Button>
+            <Button onClick={onMyFavoriteList}>FavoriteList</Button>
+            {OnPost && <div>{OnPostList && <ProFilePostList />}</div>}
+            {OnPost && <div>{OnFavoritList && <ProFileFavoriteList />}</div>}
           </div>
         </Form>
       </div>

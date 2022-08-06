@@ -1,11 +1,11 @@
-import { OrderedListOutlined } from "@ant-design/icons";
-import { Button, Menu, Upload } from "antd";
+import { Button } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function ProFilePostList(props) {
+function ProFileFavoriteList() {
+  const navigate = useNavigate();
+
   const [Posts, setPosts] = useState([]);
   useEffect(() => {
     fetchPostList();
@@ -13,7 +13,7 @@ function ProFilePostList(props) {
 
   const fetchPostList = () => {
     axios
-      .post("/api/posts/getOnePost", {
+      .post("/api/favoriteList/getList", {
         userFrom: localStorage.getItem("userId"),
       })
       .then((response) => {
@@ -26,7 +26,6 @@ function ProFilePostList(props) {
       });
   };
 
-  // 해당 기능은 상세페이지에서 구현
   const onClickDelete = (title, userFrom, postFrom) => {
     const variables = {
       title,
@@ -34,38 +33,31 @@ function ProFilePostList(props) {
       postFrom,
     };
 
-    axios.post("/api/posts/removePost", variables).then((response) => {
-      if (response.data.success) {
-        fetchPostList();
-      } else {
-        alert("리스트에서 지우는데 실패 했습니다.");
-      }
-    });
     axios
-      .post("/api/favoriteList/removeFavorites", variables)
+      .post("/api/favoriteList/removeFavorite", variables)
       .then((response) => {
-        console.log(variables);
+        if (response.data.success) {
+          fetchPostList();
+        } else {
+          alert("리스트에서 지우는데 실패 했습니다.");
+        }
       });
   };
 
   const renderCards = Posts.map((posts, index) => {
+    console.log(posts);
     return (
       <tr key={index}>
         <td>{posts.title}</td>
         <td>{posts.content} </td>
         <td>
-          {/* <button onClick={() => onClickArticle(posts.title, posts.userFrom)}> */}
-          <Link to={`/postPage/${posts._id}`}>
-            <button>글 보기 </button>
-          </Link>
-          {/* </button> */}
-          <button
+          <Button
             onClick={() =>
-              onClickDelete(posts.title, posts.userFrom, posts._id)
+              onClickDelete(posts.title, posts.userFrom, posts.postFrom)
             }
           >
-            Remove
-          </button>
+            remove
+          </Button>
         </td>
       </tr>
     );
@@ -89,4 +81,4 @@ function ProFilePostList(props) {
   );
 }
 
-export default ProFilePostList;
+export default ProFileFavoriteList;
