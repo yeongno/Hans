@@ -1,8 +1,10 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Typography } from "antd";
+import { Button, Form, Input, message, Typography } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -21,7 +23,10 @@ const CategoryOptions = [
   { value: 3, label: "pets & Animals" },
 ];
 
-function UploadVideoPage() {
+function UploadVideoPage(props) {
+  //redux의 state에 있는 모든 user 정보들이 선언한 해당 변수에 담긴다.
+  const user = useSelector((state) => state.user);
+
   const [VideoTitle, setVideoTitle] = useState("");
   const [Description, setDescription] = useState("");
   const [Private, setPrivate] = useState(0);
@@ -29,6 +34,7 @@ function UploadVideoPage() {
   const [FilePath, setFilePath] = useState("");
   const [Duration, setDuration] = useState("");
   const [ThumbnailPath, setThumbnailPath] = useState("");
+  const navigate = useNavigate();
 
   const onTitleChange = (e) => {
     setVideoTitle(e.currentTarget.value);
@@ -44,7 +50,7 @@ function UploadVideoPage() {
     };
     formData.append("file", files[0]);
 
-    axios.post("/api/video/uploadVideo", formData, config).then((response) => {
+    axios.post("/api/video/uploadfiles", formData, config).then((response) => {
       if (response.data.success) {
         console.log(response.data);
 
@@ -67,13 +73,38 @@ function UploadVideoPage() {
     });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const variables = {
+      writer: user.userData._id,
+      title: VideoTitle,
+      descripttion: Description,
+      privacy: Private,
+      filePath: FilePath,
+      Category: Category,
+      duration: Duration,
+      thumbnail: ThumbnailPath,
+    };
+    console.log(variables);
+    axios.post("api/video/uploadVideo", variables).then((response) => {
+      if (response.data.success) {
+        message.success("성공적으로 업로드를 했습니다.");
+
+        setTimeout(() => {
+          navigate("/postlist");
+        }, 3000);
+      } else alert("비디오 업로드에 실패 했습니다.");
+    });
+  };
+
   return (
     <div>
       <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <Title level={2}>Upload Video</Title>
         </div>
-        <Form onSubmit>
+        <Form onSubmit={onSubmit}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             {/* Drop Zone */}
             <Dropzone onDrop={onDrop} multiple={false} maxSize={10000000}>
@@ -136,7 +167,7 @@ function UploadVideoPage() {
           </select>
           <br />
           <br />{" "}
-          <Button type="primary" size="large" onClick>
+          <Button type="primary" size="large" onClick={onSubmit}>
             Submit
           </Button>
         </Form>

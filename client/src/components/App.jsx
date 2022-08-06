@@ -17,6 +17,7 @@ import ProFile from "./views/ProFiles/ProFile";
 import ModiFyProFile from "./views/ProFiles/ModifyProFile";
 import Buttons from "./views/ProFiles/commons/Buttons";
 import UploadVideoPage from "./views/UploadVideoPage/UploadVideoPage";
+import VideoList from "./views/PostPage/VideoList";
 function App() {
   const LandingPage1 = Auth(LandingPage, null);
   const LoginPage1 = Auth(LoginPage, null);
@@ -30,6 +31,8 @@ function App() {
   const ProFile1 = Auth(ProFile, true);
   const ModiFyProFile1 = Auth(ModiFyProFile, true);
   const UploadVideoPage1 = Auth(UploadVideoPage, true);
+  const VideoList1 = Auth(VideoList, true);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -50,6 +53,7 @@ function App() {
           <Route path="/buttons" element={<Buttons />} />
           <Route path="/myProFile" element={<MyProfile1 />} />
           <Route path="/uploadVideoPage" element={<UploadVideoPage1 />} />
+          <Route path="/videoList" element={<VideoList1 />} />
         </Route>
       </Routes>
     </BrowserRouter>

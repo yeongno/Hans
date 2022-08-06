@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 
+const { Video } = require("../models/Video");
+
 //STORAGE MULTER CONFIG
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -18,11 +20,9 @@ let storage = multer.diskStorage({
     cb(null, true);
   },
 });
-
 var upload = multer({ storage: storage }).single("file");
 var ffmpeg = require("fluent-ffmpeg");
-
-router.post("/uploadVideo", (req, res) => {
+router.post("/uploadfiles", (req, res) => {
   upload(req, res, (err) => {
     if (err) {
       return res.json({ success: false, err });
@@ -35,6 +35,22 @@ router.post("/uploadVideo", (req, res) => {
   });
 });
 
+router.post("/uploadVideo", (req, res) => {
+  const video = new Video(req.body);
+  video.save((err, doc) => {
+    if (err) return res.json({ success: false, err });
+    res.status(200).json({ success: true });
+  });
+});
+router.get("/getVideos", (req, res) => {
+  //비디오를 DB에서 가져와 클라이언트에 보낸다.
+  Video.find()
+    .populate("writer")
+    .exec((err, videos) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, videos });
+    });
+});
 //thumbnail of video
 router.post("/thumbnail", (req, res) => {
   //썸네일 생성 하고 비디오 러닝타임도 가져오기

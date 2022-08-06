@@ -1,3 +1,4 @@
+import { Button, Menu, Upload } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -16,6 +17,9 @@ function PostList() {
   };
   const goFavoriteList = () => {
     navigate("/myFavoriteList");
+  };
+  const goVideoList = () => {
+    navigate("/videoList");
   };
   const [Posts, setPosts] = useState([]);
   useEffect(() => {
@@ -83,6 +87,7 @@ function PostList() {
       <button onClick={goPost}>게시글 작성</button>
       <button onClick={goFavoriteList}>My FavoriteList</button>
       <button onClick={goUploadVideo}>비디오 업로드</button>
+      <button onClick={goVideoList}>비디오 리스트</button>
       <div style={{ width: "85", margin: "3rem auto" }}>
         <h2>게시글 목록</h2>
         <hr />
