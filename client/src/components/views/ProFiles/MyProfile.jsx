@@ -23,7 +23,7 @@ function MyProFile() {
 
   const [FilePath, setFilePath] = useState("");
   const navigate = useNavigate();
-  const [OnPost, setOnPost] = useState(true);
+  const [OnPost, setOnPost] = useState(false);
   const [OnPostList, setOnPostList] = useState(true);
   const [OnFavoritList, setOnFavoritList] = useState(false);
 

@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 function ProFilePostList(props) {
+  const [FilePath, setFilePath] = useState("");
   const [Posts, setPosts] = useState([]);
   useEffect(() => {
     fetchPostList();
@@ -27,6 +28,13 @@ function ProFilePostList(props) {
           console.log(Posts[0]);
         } else {
           alert("게시글 정보를 가져오는데 실패하였습니다.");
+        }
+      });
+    axios
+      .post("/api/users/getProFileImg", { _id: localStorage.getItem("userId") })
+      .then((response) => {
+        if (response.data.success) {
+          setFilePath(response.data.proFileImg);
         }
       });
   };
@@ -67,6 +75,25 @@ function ProFilePostList(props) {
           }}
         >
           <div>
+            <div style={{ display: "flex", marginBottom: "10px" }}>
+              <img
+                style={{
+                  width: "35px",
+                  height: "35px",
+                  border: "1px solid lightgray",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "50px",
+                  boxShadow: "1px 1px 1px 1px inset",
+                  marginTop: "5px",
+                  marginLeft: "5px",
+                  marginRight: "10px",
+                }}
+                src={`http://localhost:5000/${FilePath}`}
+                alt="proFileImg"
+              />
+              <div></div>
+            </div>
             <div style={{ display: "flex" }}>
               <Input
                 style={{
