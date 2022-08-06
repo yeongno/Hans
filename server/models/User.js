@@ -25,7 +25,9 @@ const userSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  profileImg: String,
+  proFileImg: {
+    String,
+  },
   token: {
     type: String,
   },

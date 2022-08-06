@@ -2,7 +2,58 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
+const multer = require("multer");
 
+//STORAGE MULTER CONFIG
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/proFileImg/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+  fileFilter: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    if (ext !== ".jpg" || ext !== ".png") {
+      return cb(res.status(400).end("only jpg, png, mp4 is allowed"), false);
+    }
+    cb(null, true);
+  },
+});
+var upload = multer({ storage: storage }).single("file");
+router.post("/uploadfiles", (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+    return res.json({
+      success: true,
+      url: res.req.file.path,
+      fileName: res.req.file.filename,
+    });
+  });
+});
+
+router.post("/uploadProFileImg", (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.body._id },
+    {
+      proFileImg: req.body.proFileImg,
+    }
+  ).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, result });
+  });
+});
+router.get("/getVideos", (req, res) => {
+  //비디오를 DB에서 가져와 클라이언트에 보낸다.
+  Video.find()
+    .populate("writer")
+    .exec((err, videos) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, videos });
+    });
+});
 router.post("/register", (req, res) => {
   //회원 가입 할 때 필요한 정보들을 client에서 가져오면
   //그것들을 데이터 베이스에 넣어준다.
