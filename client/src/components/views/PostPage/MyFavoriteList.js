@@ -21,7 +21,7 @@ function MyFavoriteList() {
       .then((response) => {
         if (response.data.success) {
           setPosts(response.data.posts);
-          console.log(Posts[0]);
+          console.log(response.data.posts);
         } else {
           alert("게시글 정보를 가져오는데 실패하였습니다.");
         }

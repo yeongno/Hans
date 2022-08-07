@@ -26,13 +26,14 @@ function DetailPost() {
   }, []);
 
   const fetchPostList = () => {
-    dispatch(getOnePost({ _id: postId })).then((response) => {
-      if (response.payload.success) {
-        setPosts(response.payload.posts);
-        setTitle(response.payload.posts[0].title);
-        setContent(response.payload.posts[0].content);
-        setuserFrom(response.payload.posts[0].userFrom);
-        setFavoriteNumber(response.payload.posts[0].favoriteNumber);
+    axios.post("/api/posts/getOnePost", { _id: postId }).then((response) => {
+      if (response.data.success) {
+        setPosts(response.data.posts);
+        setTitle(response.data.posts[0].title);
+        setContent(response.data.posts[0].content);
+        setuserFrom(response.data.posts[0].userFrom);
+        setFavoriteNumber(response.data.posts[0].favoriteNumber);
+        console.log(response.data.posts[0]);
       } else {
         alert("게시글 정보를 가져오는데 실패하였습니다.");
       }
@@ -76,7 +77,7 @@ function DetailPost() {
         });
     } else if (!Favorited) {
       let variables = {
-        userFrom: UserFrom,
+        userFrom: localStorage.getItem("userId"),
         postFrom: postId,
         title: Title,
         content: Content,
@@ -85,6 +86,7 @@ function DetailPost() {
         .post("/api/favoriteList/addToFavorite", variables)
         .then((response) => {
           if (response.data.success) {
+            console.log(response.data.req);
             setFavoriteNumber(FavoriteNumber + 1);
             setFavorited(true);
           } else {
@@ -119,7 +121,11 @@ function DetailPost() {
             <th>Title : {Title} </th>
           </tr>
         </thead>
-        <tbody>Content : {Content}</tbody>
+        <tbody>
+          <tr>
+            <td>Content : {Content}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   );

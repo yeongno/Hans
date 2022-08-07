@@ -7,7 +7,7 @@ router.post("/addToFavorite", (req, res) => {
 
   Favoritelist.save((err, req) => {
     if (err) return res.status(400).send(err);
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, req });
   });
 });
 

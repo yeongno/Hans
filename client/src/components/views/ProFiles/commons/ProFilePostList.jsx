@@ -3,6 +3,7 @@ import {
   LikeOutlined,
   MessageOutlined,
   OrderedListOutlined,
+  SmileOutlined,
 } from "@ant-design/icons";
 import { Button, Col, Input, Menu, Upload } from "antd";
 import axios from "axios";
@@ -15,20 +16,16 @@ import moment from "moment";
 function ProFilePostList(props) {
   const [FilePath, setFilePath] = useState("");
   const [Posts, setPosts] = useState([]);
+  const [Ondefault, setdefault] = useState(false);
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
     fetchPostList();
   }, []);
-  // const onChangeDate = (createdAt) => {
-  //   setCreatedAt(createdAt);
-  //   setMonth(CreatedAt.slice(5, 7));
-  //   console.log(Date_Month);
-  // };
 
   const fetchPostList = () => {
     axios
-      .post("/api/posts/getOnePost", {
+      .post("/api/posts/getPostList", {
         userFrom: localStorage.getItem("userId"),
       })
       .then((response) => {
@@ -69,12 +66,21 @@ function ProFilePostList(props) {
         console.log(variables);
       });
   };
+  const onClickLike = (id) => {
+    console.log(id);
+  };
+  // const [Favorited, setFavorited] = useState(false);
 
   const renderCards = Posts.map((posts, index) => {
-    // if (posts.index) {
-    //   onChangeDate(posts.createdAt);
-    // }
-    // setCreatedAt(posts.createdAt);
+    // axios
+    //   .post("/api/favoriteList/favorited", {
+    //     postFrom: posts._id,
+    //     userFrom: posts.userFrom,
+    //   })
+    //   .then((response) => {
+    //     setFavorited(response.data.favorited);
+    //     console.log(Favorited);
+    //   });
     return (
       <Col key={index}>
         <div
@@ -107,20 +113,6 @@ function ProFilePostList(props) {
                 alt="proFileImg"
               />
               <div style={{ display: "flex", flexDirection: "column" }}>
-                {/* <Input
-                  readOnly
-                  value={`${user.userData.name}`}
-                  style={{
-                    height: "15px",
-                    fontSize: "15px",
-                    paddingLeft: "1px",
-                    border: "none",
-                    fontWeight: "bold",
-                    marginTop: "10px",
-                    padding: "0",
-                    background: "red",
-                  }}
-                /> */}
                 <span
                   style={{
                     height: "15px",
@@ -133,16 +125,6 @@ function ProFilePostList(props) {
                 >
                   {user.userData.name}
                 </span>
-                {/* <Input
-                  readOnly
-                  value={`${moment(posts.createdAt).format("M[월] D[일]")}`}
-                  style={{
-                    height: "9px",
-                    fontSize: "5px",
-                    border: "none",
-                    padding: "0",
-                  }}
-                /> */}
                 <span
                   style={{
                     height: "10px",
@@ -171,14 +153,6 @@ function ProFilePostList(props) {
               </div>
             </div>
             <div style={{ display: "flex" }}>
-              {/* <Input
-                style={{
-                  border: "none",
-                  fontSize: "17px",
-                  background: "none",
-                }}
-                value={posts.title}
-              /> */}
               <span
                 style={{
                   border: "none",
@@ -220,13 +194,34 @@ function ProFilePostList(props) {
               {posts.content}
             </span>
             <div
-              style={{ background: "gray", height: "0.3px", width: "100%" }}
+              style={{ width: "100%", height: "0.3px", background: "#cccccc" }}
+            />
+            <div
+              style={{ marginLeft: "2%", marginBottom: "1%", marginTop: "1%" }}
+            >
+              <SmileOutlined /> {posts.favoriteNumber}
+            </div>
+            <div
+              style={{
+                marginLeft: "2%",
+                background: "#cccccc",
+                height: "0.3px",
+                width: "96%",
+              }}
             />
             <div style={{ justifyContent: "center", display: "flex" }}>
-              <Button style={{ width: "50%", border: "none" }}>
-                <LikeOutlined />
-                좋아요
-              </Button>
+              {posts.userFrom === 1 ?? (
+                <Button
+                  style={{ width: "50%", border: "none" }}
+                  onClick={() => {
+                    onClickLike(posts._id);
+                  }}
+                >
+                  <LikeOutlined style={{ backgroundColor: "red" }} />
+                  좋아요
+                </Button>
+              )}
+              <Button>sfd</Button>
               <Button style={{ width: "50%", border: "none" }}>
                 <MessageOutlined />
                 댓글 달기
@@ -235,42 +230,11 @@ function ProFilePostList(props) {
           </div>
         </div>
       </Col>
-      // <tr key={index}>
-      //   <td>{posts.title}</td>
-      //   <td>{posts.content} </td>
-      //   <td>
-      //     {/* <button onClick={() => onClickArticle(posts.title, posts.userFrom)}> */}
-      //     <Link to={`/postPage/${posts._id}`}>
-      //       <button>글 보기 </button>
-      //     </Link>
-      //     {/* </button> */}
-      //     <button
-      //       onClick={() =>
-      //         onClickDelete(posts.title, posts.userFrom, posts._id)
-      //       }
-      //     >
-      //       Remove
-      //     </button>
-      //   </td>
-      // </tr>
     );
   });
 
   return (
     <div>
-      {/* <div style={{ width: "85" }}>
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Content</th>
-              <th>Remove from Articles</th>
-            </tr>
-          </thead>
-          <tbody>{renderCards}</tbody>
-        </table>
-      </div> */}
-
       <div>{renderCards}</div>
     </div>
   );

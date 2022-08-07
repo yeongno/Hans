@@ -21,9 +21,14 @@ router.post("/getPost", (req, res) => {
     return res.status(200).json({ success: true, posts });
   });
 });
-
-router.post("/getOnePost", (req, res) => {
+router.post("/getPostList", (req, res) => {
   Post.find({ userFrom: req.body.userFrom }).exec((err, posts) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, posts });
+  });
+});
+router.post("/getOnePost", (req, res) => {
+  Post.find({ _id: req.body._id }).exec((err, posts) => {
     if (err) return res.status(400).send(err);
     return res.status(200).json({ success: true, posts });
   });
