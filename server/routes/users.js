@@ -45,6 +45,18 @@ router.post("/uploadProFileImg", (req, res) => {
     return res.status(200).json({ success: true, result });
   });
 });
+
+router.post("/uploadFileImg", (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.body._id },
+    {
+      tempImg: req.body.tempImg,
+    }
+  ).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, result });
+  });
+});
 router.get("/getVideos", (req, res) => {
   //비디오를 DB에서 가져와 클라이언트에 보낸다.
   Video.find()

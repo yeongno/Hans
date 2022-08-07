@@ -24,6 +24,12 @@ const postSchema = mongoose.Schema(
       type: String,
       default: "public",
     },
+    createdDate: {
+      type: String,
+    },
+    imagePath: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

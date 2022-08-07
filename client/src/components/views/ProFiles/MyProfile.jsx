@@ -98,7 +98,6 @@ function MyProFile() {
               height: "100px",
               display: "flex",
               position: "relative",
-              backgroundColor: "blue",
               marginTop: "10px",
             }}
             // className={topContainer}
@@ -111,7 +110,6 @@ function MyProFile() {
                 display: "flex",
                 justifyContent: "center",
                 position: "relative",
-                backgroundColor: "white",
               }}
               // className={top.dropZone}
             >
@@ -160,18 +158,17 @@ function MyProFile() {
               style={{
                 position: "relative",
                 width: "200px",
-                background: "red",
               }}
             >
               <div
                 style={{
                   position: "relative",
                   width: "190px",
-                  background: "yellow",
                   marginTop: "15px",
                 }}
               >
                 <Input
+                  readOnly
                   style={{
                     width: "calc(99%)",
                     fontSize: "17px",
@@ -182,6 +179,7 @@ function MyProFile() {
                 />
                 <br />
                 <Input
+                  readOnly
                   style={{ width: "calc(99%)", border: "none" }}
                   placeholder="Name"
                   value={`친구 : ${Name}명`}
@@ -195,12 +193,10 @@ function MyProFile() {
               height: "50px",
               // justifyContent: "space-between",
               position: "relative",
-              backgroundColor: "yellow",
             }}
           >
-            <hr />
+            <br />
             <Button onClick={onPostList}>
-              {" "}
               <OrderedListOutlined /> 게시물
             </Button>
             <Button>
@@ -219,8 +215,7 @@ function MyProFile() {
               <PlaySquareOutlined />
               동영상
             </Button>
-            <hr />
-          </div>{" "}
+          </div>
           <div
             style={{
               width: "100%",
@@ -228,12 +223,17 @@ function MyProFile() {
               // display: "flex",
               justifyContent: "center",
               position: "relative",
-              backgroundColor: "red",
             }}
           >
             <div></div>
-            <Button onClick={onMyPostList}>MyPostList</Button>
-            <Button onClick={onMyFavoriteList}>FavoriteList</Button>
+            <Button onClick={onMyPostList} style={{ width: "50%" }}>
+              MyPostList
+            </Button>
+            <Button onClick={onMyFavoriteList} style={{ width: "50%" }}>
+              FavoriteList
+            </Button>
+            <br />
+            <br />
             {OnPost && <div>{OnPostList && <ProFilePostList />}</div>}
             {OnPost && <div>{OnFavoritList && <ProFileFavoriteList />}</div>}
           </div>

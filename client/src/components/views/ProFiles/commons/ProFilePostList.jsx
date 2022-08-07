@@ -6,16 +6,25 @@ import {
 } from "@ant-design/icons";
 import { Button, Col, Input, Menu, Upload } from "antd";
 import axios from "axios";
+import { slice } from "lodash";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import moment from "moment";
 
 function ProFilePostList(props) {
   const [FilePath, setFilePath] = useState("");
   const [Posts, setPosts] = useState([]);
+  const user = useSelector((state) => state.user);
+
   useEffect(() => {
     fetchPostList();
   }, []);
+  // const onChangeDate = (createdAt) => {
+  //   setCreatedAt(createdAt);
+  //   setMonth(CreatedAt.slice(5, 7));
+  //   console.log(Date_Month);
+  // };
 
   const fetchPostList = () => {
     axios
@@ -62,6 +71,10 @@ function ProFilePostList(props) {
   };
 
   const renderCards = Posts.map((posts, index) => {
+    // if (posts.index) {
+    //   onChangeDate(posts.createdAt);
+    // }
+    // setCreatedAt(posts.createdAt);
     return (
       <Col key={index}>
         <div
@@ -72,6 +85,7 @@ function ProFilePostList(props) {
             marginRight: "10%",
             borderRadius: "2.5px",
             boxShadow: "0px 0px 0px 1px #E2E2E2",
+            marginBottom: "10px",
           }}
         >
           <div>
@@ -92,31 +106,119 @@ function ProFilePostList(props) {
                 src={`http://localhost:5000/${FilePath}`}
                 alt="proFileImg"
               />
-              <div></div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {/* <Input
+                  readOnly
+                  value={`${user.userData.name}`}
+                  style={{
+                    height: "15px",
+                    fontSize: "15px",
+                    paddingLeft: "1px",
+                    border: "none",
+                    fontWeight: "bold",
+                    marginTop: "10px",
+                    padding: "0",
+                    background: "red",
+                  }}
+                /> */}
+                <span
+                  style={{
+                    height: "15px",
+                    fontSize: "15px",
+                    paddingLeft: "1px",
+                    border: "none",
+                    fontWeight: "bold",
+                    marginTop: "4px",
+                  }}
+                >
+                  {user.userData.name}
+                </span>
+                {/* <Input
+                  readOnly
+                  value={`${moment(posts.createdAt).format("M[월] D[일]")}`}
+                  style={{
+                    height: "9px",
+                    fontSize: "5px",
+                    border: "none",
+                    padding: "0",
+                  }}
+                /> */}
+                <span
+                  style={{
+                    height: "10px",
+                    fontSize: "10px",
+                    paddingLeft: "1px",
+                    marginTop: "1px",
+                    border: "none",
+                  }}
+                >
+                  {moment(posts.createdAt).format("M[월] D[일]")}
+                </span>
+              </div>
+              <div
+                style={{
+                  border: "none",
+                  alignContent: "end",
+                  display: "flex",
+                  width: "100%",
+                  justifyContent: "end",
+                  marginTop: "5px",
+                }}
+              >
+                <Button style={{ border: "none" }}>
+                  <EllipsisOutlined />
+                </Button>
+              </div>
             </div>
             <div style={{ display: "flex" }}>
-              <Input
+              {/* <Input
                 style={{
                   border: "none",
                   fontSize: "17px",
                   background: "none",
                 }}
                 value={posts.title}
-              />
-              <Button style={{ border: "none" }}>
-                <EllipsisOutlined />
-              </Button>
+              /> */}
+              <span
+                style={{
+                  border: "none",
+                  fontSize: "17px",
+                  background: "none",
+                  marginLeft: "1%",
+                }}
+              >
+                {posts.title}
+              </span>
+            </div>
+            <div
+              style={{
+                justifyContent: "center",
+                marginLeft: "7%",
+              }}
+            >
+              {posts.imagePath && (
+                <img
+                  style={{
+                    maxWidth: "50%",
+                    maxHeight: "50%",
+                  }}
+                  src={`http://localhost:5000/${posts.imagePath}`}
+                  alt="FileImg"
+                />
+              )}
             </div>
 
-            <Input
+            <span
               style={{
                 marginLeft: "10px",
                 border: "none",
                 fontSize: "12px",
                 background: "none",
+                marginLeft: "1%",
               }}
-              value={posts.content}
-            />
+            >
+              {posts.content}
+            </span>
             <div
               style={{ background: "gray", height: "0.3px", width: "100%" }}
             />

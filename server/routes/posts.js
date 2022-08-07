@@ -3,6 +3,18 @@ const router = express.Router();
 
 const { Post } = require("../models/Post");
 
+// router.post("/uploadFileImg", (req, res) => {
+//   User.findOneAndUpdate(
+//     { _id: req.body._id },
+//     {
+//       proFileImg: req.body.proFileImg,
+//     }
+//   ).exec((err, result) => {
+//     if (err) return res.status(400).send(err);
+//     return res.status(200).json({ success: true, result });
+//   });
+// });
+
 router.post("/getPost", (req, res) => {
   Post.find({ public: req.body.public }).exec((err, posts) => {
     if (err) return res.status(400).send(err);
@@ -84,9 +96,7 @@ router.post("/post", (req, res) => {
 
   post.save((err, req) => {
     if (err) return res.json({ success: false, err });
-    return res.status(200).json({
-      success: true,
-    });
+    return res.status(200).json({ success: true });
   });
 });
 
