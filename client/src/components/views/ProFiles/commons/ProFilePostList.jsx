@@ -13,13 +13,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import LikeButton from "./LikeButton";
+import ReplyButton from "./ReplyButton";
+import ReplySection from "./ReplySection";
 
 function ProFilePostList(props) {
   const [FilePath, setFilePath] = useState("");
   const [Posts, setPosts] = useState([]);
   const [Ondefault, setdefault] = useState(false);
   const user = useSelector((state) => state.user);
-
+  const [replyOpen, setreplyOpen] = useState(false);
+  const onReply = () => {
+    setreplyOpen(true);
+  };
   useEffect(() => {
     fetchPostList();
   }, []);
@@ -104,7 +109,13 @@ function ProFilePostList(props) {
                 src={`http://localhost:5000/${FilePath}`}
                 alt="proFileImg"
               />
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                }}
+              >
                 <span
                   style={{
                     height: "15px",
@@ -122,7 +133,7 @@ function ProFilePostList(props) {
                     height: "10px",
                     fontSize: "10px",
                     paddingLeft: "1px",
-                    marginTop: "1px",
+                    marginTop: "2px",
                     border: "none",
                   }}
                 >
@@ -173,7 +184,6 @@ function ProFilePostList(props) {
                 />
               )}
             </div>
-
             <span
               style={{
                 marginLeft: "10px",
@@ -192,7 +202,6 @@ function ProFilePostList(props) {
                 background: "#cccccc",
               }}
             />
-
             <div style={{ justifyContent: "center", display: "flex" }}>
               <div style={{ width: "50%", border: "none" }}>
                 <LikeButton
@@ -222,13 +231,16 @@ function ProFilePostList(props) {
                     }}
                   />
                 </div>
-
-                <Button style={{ width: "100%", border: "none" }}>
+                {/* <Button
+                  style={{ width: "100%", border: "none" }}
+                  onClick={onReply}
+                >
                   <MessageOutlined />
                   댓글 달기
-                </Button>
+                </Button> */}
+                <ReplyButton postFrom={posts._id} />
               </div>
-            </div>
+            </div>{" "}
           </div>
         </div>
       </Col>

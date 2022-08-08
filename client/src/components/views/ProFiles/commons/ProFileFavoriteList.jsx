@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 function ProFileFavoriteList() {
   const navigate = useNavigate();
-
   const [Posts, setPosts] = useState([]);
   useEffect(() => {
     fetchPostList();
