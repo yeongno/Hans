@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
+import LikeButton from "./LikeButton";
 
 function ProFilePostList(props) {
   const [FilePath, setFilePath] = useState("");
@@ -69,18 +70,9 @@ function ProFilePostList(props) {
   const onClickLike = (id) => {
     console.log(id);
   };
-  // const [Favorited, setFavorited] = useState(false);
+  const [Favorited, setFavorited] = useState(0);
 
   const renderCards = Posts.map((posts, index) => {
-    // axios
-    //   .post("/api/favoriteList/favorited", {
-    //     postFrom: posts._id,
-    //     userFrom: posts.userFrom,
-    //   })
-    //   .then((response) => {
-    //     setFavorited(response.data.favorited);
-    //     console.log(Favorited);
-    //   });
     return (
       <Col key={index}>
         <div
@@ -194,10 +186,18 @@ function ProFilePostList(props) {
               {posts.content}
             </span>
             <div
-              style={{ width: "100%", height: "0.3px", background: "#cccccc" }}
+              style={{
+                width: "100%",
+                height: "0.3px",
+                background: "#cccccc",
+              }}
             />
             <div
-              style={{ marginLeft: "2%", marginBottom: "1%", marginTop: "1%" }}
+              style={{
+                marginLeft: "2%",
+                marginBottom: "1%",
+                marginTop: "1%",
+              }}
             >
               <SmileOutlined /> {posts.favoriteNumber}
             </div>
@@ -205,27 +205,20 @@ function ProFilePostList(props) {
               style={{
                 marginLeft: "2%",
                 background: "#cccccc",
-                height: "0.3px",
+                height: "1px",
                 width: "96%",
               }}
             />
             <div style={{ justifyContent: "center", display: "flex" }}>
-              {posts.userFrom === 1 ?? (
-                <Button
-                  style={{ width: "50%", border: "none" }}
-                  onClick={() => {
-                    onClickLike(posts._id);
-                  }}
-                >
-                  <LikeOutlined style={{ backgroundColor: "red" }} />
-                  좋아요
+              <div style={{ width: "50%", border: "none" }}>
+                <LikeButton style={{ border: "none" }} postFrom={posts._id} />
+              </div>
+              <div style={{ width: "50%", border: "none" }}>
+                <Button style={{ width: "100%", border: "none" }}>
+                  <MessageOutlined />
+                  댓글 달기
                 </Button>
-              )}
-              <Button>sfd</Button>
-              <Button style={{ width: "50%", border: "none" }}>
-                <MessageOutlined />
-                댓글 달기
-              </Button>
+              </div>
             </div>
           </div>
         </div>
