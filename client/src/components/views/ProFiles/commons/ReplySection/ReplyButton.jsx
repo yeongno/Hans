@@ -8,6 +8,7 @@ function ReplyButton(props) {
   const onReply = () => {
     setreplyOpen(true);
   };
+  console.log("Button", props.postFrom);
   return (
     <div
       style={{
@@ -23,14 +24,14 @@ function ReplyButton(props) {
         댓글 달기
       </Button>
       <Modal
-        title="Modal 1000px width"
+        title="Modal height width"
         centered
         visible={replyOpen}
-        onOk={() => setreplyOpen(false)}
         onCancel={() => setreplyOpen(false)}
-        width={1000}
+        footer=""
+        width="80%"
       >
-        <ReplySection />
+        <ReplySection postFrom={props.postFrom} />
       </Modal>
     </div>
   );

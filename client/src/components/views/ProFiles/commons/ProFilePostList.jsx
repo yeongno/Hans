@@ -13,8 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import LikeButton from "./LikeButton";
-import ReplyButton from "./ReplyButton";
-import ReplySection from "./ReplySection";
+import ReplyButton from "./ReplySection/ReplyButton";
 
 function ProFilePostList(props) {
   const [FilePath, setFilePath] = useState("");
