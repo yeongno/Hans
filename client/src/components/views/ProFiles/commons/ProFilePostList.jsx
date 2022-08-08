@@ -211,7 +211,12 @@ function ProFilePostList(props) {
             />
             <div style={{ justifyContent: "center", display: "flex" }}>
               <div style={{ width: "50%", border: "none" }}>
-                <LikeButton style={{ border: "none" }} postFrom={posts._id} />
+                <LikeButton
+                  style={{ border: "none" }}
+                  postFrom={posts._id}
+                  title={posts.title}
+                  content={posts.content}
+                />
               </div>
               <div style={{ width: "50%", border: "none" }}>
                 <Button style={{ width: "100%", border: "none" }}>
