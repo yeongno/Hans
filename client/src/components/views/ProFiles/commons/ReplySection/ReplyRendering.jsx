@@ -1,11 +1,12 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-function ReplyRendering() {
-  const user = useSelector((state) => state.user);
+function ReplyRendering(props) {
   const [UserImg, setUserImg] = useState("");
   const [UserName, setUserName] = useState("");
+  const [UserFrom, setUserFrom] = useState("");
   const [Contentset, setContents] = useState("");
-  const userId = user.userData._id;
+  const [OnReply, setOnReply] = useState(false);
 
   useEffect(() => {
     fetchUserList();
@@ -13,16 +14,20 @@ function ReplyRendering() {
   const fetchUserList = () => {
     axios
       .post("/api/reply/getReply", {
-        postFrom: props.postFrom,
+        postFrom: props.reply.postFrom,
       })
       .then((response) => {
-        if (response.data.req) {
+        if (response.data.req[0]) {
+          console.log(response.data.req);
           setUserImg(response.data.req[0].proFileImg);
           setUserName(response.data.req[0].userName);
+          setUserFrom(response.data.req[0].userFrom);
           setOnReply(true);
+          console.log("req", response.data.req);
+          console.log("postFrom", props.reply.postFrom);
         } else {
           setOnReply(false);
-          console.log("null");
+          console.log("nope");
         }
       });
   };

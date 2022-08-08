@@ -1,10 +1,11 @@
 import { MessageOutlined } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
+import { Button, Col, Form, Input } from "antd";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import ReplyRendering from "./ReplyRendering";
 
 function ReplySection(props) {
   const [replyOpen, setreplyOpen] = useState(false);
@@ -12,7 +13,9 @@ function ReplySection(props) {
   const [FilePath, setFilePath] = useState("");
   const [UserImg, setUserImg] = useState("");
   const [UserName, setUserName] = useState("");
+  const [UserFrom, setUserFrom] = useState("");
   const [Contentset, setContents] = useState("");
+  const [Reply, setReply] = useState([]);
   const [OnReply, setOnReply] = useState(false);
   const userId = user.userData._id;
   const userName = user.userData.name;
@@ -51,6 +54,7 @@ function ReplySection(props) {
           alert("유저 정보를 가져오는데 실패하였습니다.");
         }
       });
+
     axios
       .post("/api/reply/getReply", {
         postFrom: props.postFrom,
@@ -60,6 +64,8 @@ function ReplySection(props) {
           console.log(response.data.req);
           setUserImg(response.data.req[0].proFileImg);
           setUserName(response.data.req[0].userName);
+          setUserFrom(response.data.req[0].userFrom);
+          setReply(response.data.req);
           setOnReply(true);
           console.log("req", response.data.req);
           console.log("postFrom", props.postFrom);
@@ -69,6 +75,16 @@ function ReplySection(props) {
         }
       });
   };
+  const renderCards = Reply.map((reply, index) => {
+    return (
+      <Col key={index}>
+        <div>
+          <ReplyRendering reply={reply} />
+        </div>
+      </Col>
+    );
+  });
+
   return (
     <div
       style={{
@@ -85,19 +101,25 @@ function ReplySection(props) {
         {/* reply rendering zone */}
         <div>
           {OnReply && (
-            <img
-              style={{
-                width: "5%",
-                height: "5%",
-                border: "1px solid lightgray",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "50px",
-                boxShadow: "1px 1px 1px 1px inset",
-              }}
-              src={`http://localhost:5000/${UserImg}`}
-              alt="프로필"
-            />
+            <div>{renderCards}</div>
+            // <ReplyRendering
+            //   userName={UserName}
+            //   userFrom={UserFrom}
+            //   postFrom={props.postFrom}
+            // />
+            // <img
+            //   style={{
+            //     width: "5%",
+            //     height: "5%",
+            //     border: "1px solid lightgray",
+            //     alignItems: "center",
+            //     justifyContent: "center",
+            //     borderRadius: "50px",
+            //     boxShadow: "1px 1px 1px 1px inset",
+            //   }}
+            //   src={`http://localhost:5000/${UserImg}`}
+            //   alt="프로필"
+            // />
           )}
         </div>
       </div>
