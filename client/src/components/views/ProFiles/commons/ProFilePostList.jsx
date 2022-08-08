@@ -192,23 +192,7 @@ function ProFilePostList(props) {
                 background: "#cccccc",
               }}
             />
-            <div
-              style={{
-                marginLeft: "2%",
-                marginBottom: "1%",
-                marginTop: "1%",
-              }}
-            >
-              <SmileOutlined /> {posts.favoriteNumber}
-            </div>
-            <div
-              style={{
-                marginLeft: "2%",
-                background: "#cccccc",
-                height: "1px",
-                width: "96%",
-              }}
-            />
+
             <div style={{ justifyContent: "center", display: "flex" }}>
               <div style={{ width: "50%", border: "none" }}>
                 <LikeButton
@@ -216,9 +200,29 @@ function ProFilePostList(props) {
                   postFrom={posts._id}
                   title={posts.title}
                   content={posts.content}
+                  favoriteNumber={posts.favoriteNumber}
                 />
               </div>
               <div style={{ width: "50%", border: "none" }}>
+                <div
+                  style={{
+                    marginLeft: "2%",
+                    marginBottom: "1%",
+                    marginTop: "1%",
+                  }}
+                >
+                  <SmileOutlined style={{ border: "none", opacity: "0" }} />
+                </div>
+                <div style={{ marginRight: "2%" }}>
+                  <div
+                    style={{
+                      background: "#cccccc",
+                      height: "1px",
+                      width: "100%",
+                    }}
+                  />
+                </div>
+
                 <Button style={{ width: "100%", border: "none" }}>
                   <MessageOutlined />
                   댓글 달기
