@@ -37,6 +37,7 @@ function ReplySection(props) {
             console.log(response.data.req);
           }
         });
+      setContents("");
     }
     fetchUserList();
   };
@@ -126,7 +127,7 @@ function ReplySection(props) {
           alt="프로필"
         />
         <Input
-          style={{ width: "80%", borderRadius: "10px" }}
+          style={{ width: "80%", borderRadius: "10px", wordBreak: "break-all" }}
           placeholder="댓글을 입력하세요"
           onChange={onContentHandler}
           onPressEnter={onSubmit}
