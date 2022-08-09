@@ -37,13 +37,14 @@ function ProFilePostList(props) {
       .then((response) => {
         if (response.data.success) {
           setPosts(response.data.posts);
-          console.log(Posts[0]);
         } else {
           alert("게시글 정보를 가져오는데 실패하였습니다.");
         }
       });
     axios
-      .post("/api/users/getProFileImg", { _id: localStorage.getItem("userId") })
+      .post("/api/users/getProFileImg", {
+        _id: localStorage.getItem("userId"),
+      })
       .then((response) => {
         if (response.data.success) {
           setFilePath(response.data.proFileImg);
@@ -69,14 +70,8 @@ function ProFilePostList(props) {
     });
     axios
       .post("/api/favoriteList/removeFavorites", variables)
-      .then((response) => {
-        console.log(variables);
-      });
+      .then((response) => {});
   };
-  const onClickLike = (id) => {
-    console.log(id);
-  };
-  const [Favorited, setFavorited] = useState(0);
 
   const renderCards = Posts.map((posts, index) => {
     return (
@@ -94,22 +89,42 @@ function ProFilePostList(props) {
         >
           <div>
             <div style={{ display: "flex", marginBottom: "10px" }}>
-              <img
-                style={{
-                  width: "35px",
-                  height: "35px",
-                  border: "1px solid lightgray",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "50px",
-                  boxShadow: "1px 1px 1px 1px inset",
-                  marginTop: "5px",
-                  marginLeft: "5px",
-                  marginRight: "10px",
-                }}
-                src={`http://localhost:5000/${FilePath}`}
-                alt="proFileImg"
-              />
+              {FilePath && (
+                <img
+                  style={{
+                    width: "35px",
+                    height: "35px",
+                    border: "1px solid lightgray",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "50px",
+                    boxShadow: "1px 1px 1px 1px inset",
+                    marginTop: "5px",
+                    marginLeft: "5px",
+                    marginRight: "10px",
+                  }}
+                  src={`http://localhost:5000/${FilePath}`}
+                  alt="proFileImg"
+                />
+              )}
+              {!FilePath && (
+                <img
+                  style={{
+                    width: "35px",
+                    height: "35px",
+                    border: "1px solid lightgray",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "50px",
+                    boxShadow: "1px 1px 1px 1px inset",
+                    marginTop: "5px",
+                    marginLeft: "5px",
+                    marginRight: "10px",
+                  }}
+                  src="https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927"
+                  alt="proFileImg"
+                />
+              )}
               <div
                 style={{
                   display: "flex",

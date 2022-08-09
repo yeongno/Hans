@@ -82,7 +82,9 @@ router.post("/register", (req, res) => {
 router.post("/getProFileImg", (req, res) => {
   User.findOne({ _id: req.body._id }).exec((err, user) => {
     if (err) return res.status(400).send(err);
-    return res.status(200).json({ success: true, proFileImg: user.proFileImg });
+    return res
+      .status(200)
+      .json({ success: true, proFileImg: user.proFileImg, userInfo: user });
   });
 });
 

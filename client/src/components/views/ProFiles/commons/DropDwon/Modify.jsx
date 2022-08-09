@@ -21,7 +21,6 @@ function Modify(props) {
         }
       });
   };
-  console.log(FilePath);
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
@@ -38,7 +37,6 @@ function Modify(props) {
     axios.post("/api/users/uploadfiles", formData, config).then((response) => {
       if (response.data.success) {
         setFilePath(response.data.url);
-        console.log(FilePath, " sfa");
         axios
           .post("/api/users/uploadFileImg", {
             _id: localStorage.getItem("userId"),
@@ -46,7 +44,6 @@ function Modify(props) {
           })
           .then((response) => {
             if (response.data.success) {
-              console.log(response.data.result);
             }
           });
       } else {

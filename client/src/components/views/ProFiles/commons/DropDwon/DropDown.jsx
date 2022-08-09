@@ -9,7 +9,6 @@ function DropDown(props) {
   const postFrom = props.postFrom;
   const title = props.title;
   const content = props.content;
-  console.log({ title }, " ", { content });
 
   const [OnModal, setOnModal] = useState(false);
   const onCancel = () => {
@@ -22,24 +21,18 @@ function DropDown(props) {
         _id: props.postFrom,
       })
       .then((response) => {
-        if (response.data.success) console.log("success RemovePost");
+        if (response.data.success) message.success("게시글을 삭제하였습니다.");
       });
-    axios
-      .post("/api/favoriteList/removeFavorite", {
-        postFrom: props.postFrom,
-        userFrom: localStorage.getItem("userId"),
-      })
-      .then((response) => {
-        if (response.data.success) console.log("success RemoveFavorite");
-      });
-    axios
-      .post("/api/reply/removeReply", {
-        postFrom: props.postFrom,
-        userFrom: localStorage.getItem("userId"),
-      })
-      .then((response) => {
-        if (response.data.success) console.log("success RemoveReply");
-      });
+    axios.post("/api/favoriteList/removeFavorite", {
+      postFrom: props.postFrom,
+      userFrom: localStorage.getItem("userId"),
+    });
+
+    axios.post("/api/reply/removeReply", {
+      postFrom: props.postFrom,
+      userFrom: localStorage.getItem("userId"),
+    });
+
     window.location.reload();
   };
 

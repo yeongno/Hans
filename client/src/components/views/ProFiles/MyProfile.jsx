@@ -64,7 +64,6 @@ function MyProFile() {
           })
           .then((response) => {
             if (response.data.success) {
-              console.log(response.data.result);
             }
           });
       } else {

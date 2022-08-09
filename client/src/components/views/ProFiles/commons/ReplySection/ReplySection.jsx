@@ -34,7 +34,6 @@ function ReplySection(props) {
         })
         .then((response) => {
           if (response.data.success) {
-            console.log(response.data.req);
           }
         });
       setContents("");
@@ -64,17 +63,13 @@ function ReplySection(props) {
       })
       .then((response) => {
         if (response.data.req[0]) {
-          console.log(response.data.req);
           setUserImg(response.data.req[0].proFileImg);
           setUserName(response.data.req[0].userName);
           setUserFrom(response.data.req[0].userFrom);
           setReply(response.data.req);
           setOnReply(true);
-          console.log("req", response.data.req);
-          console.log("postFrom", props.postFrom);
         } else {
           setOnReply(false);
-          console.log("nope");
         }
       });
   };

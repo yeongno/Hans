@@ -30,7 +30,6 @@ function PostList() {
     dispatch(getPost({ topic: "public" })).then((response) => {
       if (response.payload.success) {
         setPosts(response.payload.posts);
-        console.log(Posts[0]);
       } else {
         alert("게시글 정보를 가져오는데 실패하였습니다.");
       }
@@ -54,9 +53,7 @@ function PostList() {
     });
     axios
       .post("/api/favoriteList/removeFavorites", variables)
-      .then((response) => {
-        console.log(variables);
-      });
+      .then((response) => {});
   };
 
   const renderCards = Posts.map((posts, index) => {

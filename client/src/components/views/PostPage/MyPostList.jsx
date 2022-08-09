@@ -24,7 +24,6 @@ function PostList() {
       (response) => {
         if (response.payload.success) {
           setPosts(response.payload.posts);
-          console.log(Posts[0]);
         } else {
           alert("게시글 정보를 가져오는데 실패하였습니다.");
         }

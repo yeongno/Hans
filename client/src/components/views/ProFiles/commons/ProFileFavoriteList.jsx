@@ -1,11 +1,18 @@
-import { Button } from "antd";
+import { Button, Col, Input, Menu, Upload } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import FavoriteList from "./FavoriteLanderingSection/FavoriteList";
 
-function ProFileFavoriteList() {
-  const navigate = useNavigate();
+function ProFileFavoriteList(props) {
+  const [FilePath, setFilePath] = useState("");
   const [Posts, setPosts] = useState([]);
+  const [Ondefault, setdefault] = useState(false);
+  const user = useSelector((state) => state.user);
+  const [replyOpen, setreplyOpen] = useState(false);
+  const onReply = () => {
+    setreplyOpen(true);
+  };
   useEffect(() => {
     fetchPostList();
   }, []);
@@ -19,64 +26,52 @@ function ProFileFavoriteList() {
         if (response.data.success) {
           setPosts(response.data.posts);
           // console.log(Posts[0]);
-          console.log(response.data.posts);
         } else {
           alert("게시글 정보를 가져오는데 실패하였습니다.");
         }
       });
   };
+  // const onOption = () => {};
 
-  const onClickDelete = (title, userFrom, postFrom) => {
-    const variables = {
-      title,
-      userFrom,
-      postFrom,
-    };
+  // // 해당 기능은 상세페이지에서 구현
+  // const onClickDelete = (title, userFrom, postFrom) => {
+  //   const variables = {
+  //     title,
+  //     userFrom,
+  //     postFrom,
+  //   };
 
-    axios
-      .post("/api/favoriteList/removeFavorite", variables)
-      .then((response) => {
-        if (response.data.success) {
-          fetchPostList();
-        } else {
-          alert("리스트에서 지우는데 실패 했습니다.");
-        }
-      });
-  };
+  //   axios.post("/api/posts/removePost", variables).then((response) => {
+  //     if (response.data.success) {
+  //       fetchPostList();
+  //     } else {
+  //       alert("리스트에서 지우는데 실패 했습니다.");
+  //     }
+  //   });
+  //   axios
+  //     .post("/api/favoriteList/removeFavorites", variables)
+  //     .then((response) => {
+  //        .log(variables);
+  //     });
+  // };
+  // const onClickLike = (id) => {
+  //    .log(id);
+  // };
+  // const [Favorited, setFavorited] = useState(0);
 
   const renderCards = Posts.map((posts, index) => {
-    console.log(posts);
     return (
-      <tr key={index}>
-        <td>{posts.title}</td>
-        <td>{posts.content} </td>
-        <td>
-          <Button
-            onClick={() =>
-              onClickDelete(posts.title, posts.userFrom, posts.postFrom)
-            }
-          >
-            remove
-          </Button>
-        </td>
-      </tr>
+      <Col key={index}>
+        <div>
+          <FavoriteList postFrom={posts.postFrom} userFrom={posts.userFrom} />
+        </div>
+      </Col>
     );
   });
 
   return (
     <div>
-      <div style={{ width: "85" }}>
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Content</th>
-              <th>Remove from Articles</th>
-            </tr>
-          </thead>
-          <tbody>{renderCards}</tbody>
-        </table>
-      </div>
+      <div>{renderCards}</div>
     </div>
   );
 }

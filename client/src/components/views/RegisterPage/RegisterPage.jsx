@@ -61,25 +61,25 @@ function RegisterPage(props) {
         height: "100vh",
       }}
     >
-      <Form
+      <form
         style={{ display: "flex", flexDirection: "column" }}
         onSubmit={onSubmitHandler}
       >
         <label>Email</label>
-        <Input type="email" value={Email} onChange={onEmailHandler} />
+        <input type="email" value={Email} onChange={onEmailHandler} />
         <label>Name</label>
-        <Input type="text" value={Name} onChange={onNameHandler} />
+        <input type="text" value={Name} onChange={onNameHandler} />
         <label>password</label>
-        <Input type="password" value={Password} onChange={onPasswordHandler} />
+        <input type="password" value={Password} onChange={onPasswordHandler} />
         <label>Confirm password</label>
-        <Input
+        <input
           type="password"
           value={ConfirmPassword}
           onChange={onConfirmHandler}
         />
         <br />
-        <Button type="submit">회원가입</Button>
-      </Form>
+        <button type="submit">회원가입</button>
+      </form>
     </div>
   );
 }

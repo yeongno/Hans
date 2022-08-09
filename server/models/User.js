@@ -27,6 +27,7 @@ const userSchema = mongoose.Schema({
   },
   proFileImg: {
     String,
+    default: "",
   },
   tempImg: {
     String,

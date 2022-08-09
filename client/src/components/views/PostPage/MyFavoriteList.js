@@ -21,7 +21,6 @@ function MyFavoriteList() {
       .then((response) => {
         if (response.data.success) {
           setPosts(response.data.posts);
-          console.log(response.data.posts);
         } else {
           alert("게시글 정보를 가져오는데 실패하였습니다.");
         }
@@ -47,7 +46,6 @@ function MyFavoriteList() {
   };
 
   const renderCards = Posts.map((posts, index) => {
-    console.log(posts);
     return (
       <tr key={index}>
         <td>{posts.title}</td>

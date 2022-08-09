@@ -18,8 +18,6 @@ function LikeButton(props) {
       })
       .then((response) => {
         setFavorited(response.data.favorited);
-        console.log(response.data.favorited);
-        console.log(props.postFrom);
       });
     axios
       .post("/api/posts/getOnePost", {
@@ -39,7 +37,6 @@ function LikeButton(props) {
       .then((response) => {
         if (response.data.success) {
           setFavorited(false);
-          console.log(props.postFrom);
         }
       });
     axios.post("/api/posts/updateFavorite", {
@@ -48,8 +45,6 @@ function LikeButton(props) {
       favoriteNumber: FavoriteNumber - 1,
     });
     setFavoriteNumber(FavoriteNumber - 1);
-    console.log(props.favoriteNumber);
-    console.log(props.postFrom, "postFrom");
   };
   const onLike = () => {
     axios

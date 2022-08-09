@@ -8,7 +8,6 @@ function ReplyButton(props) {
   const onReply = () => {
     setreplyOpen(true);
   };
-  console.log("Button", props.postFrom);
   return (
     <div
       style={{
