@@ -1,12 +1,16 @@
 import { Input } from "antd";
 import React from "react";
 import { LightGray } from "../../../../Config";
+import moment from "moment";
+import "moment/locale/ko";
 function ReplyOnRendering(props) {
   const userFrom = props.UserFrom;
   const UserImg = props.UserImg;
   const createdAt = props.CreatedAt;
   const content = props.Content;
   const userName = props.UserName;
+  const createdDate = moment(createdAt);
+
   return (
     <div>
       <div
@@ -35,13 +39,12 @@ function ReplyOnRendering(props) {
             width: "100%",
             marginLeft: "1%",
             lineHeight: "102%",
-            paddingTop: "4px",
-            paddingLeft: "4px",
           }}
         >
           <div
             style={{
               background: "#f0e6e6",
+              padding: "5px 5px 5px 5px",
             }}
           >
             <span
@@ -68,8 +71,14 @@ function ReplyOnRendering(props) {
             </span>
           </div>
 
-          <span style={{ background: "yellow", display: "inline-block" }}>
-            asd
+          <span
+            style={{
+              display: "inline-block",
+              color: "#808080",
+              fontSize: "4px",
+            }}
+          >
+            {moment(createdDate).fromNow()}
           </span>
         </div>
       </div>
