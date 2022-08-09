@@ -29,6 +29,7 @@ function ReplySection(props) {
           userFrom: userId,
           postFrom: props.postFrom,
           proFileImg: FilePath,
+          content: Contentset,
           userName,
         })
         .then((response) => {
@@ -99,29 +100,7 @@ function ReplySection(props) {
     >
       <div style={{ height: "86%" }}>
         {/* reply rendering zone */}
-        <div>
-          {OnReply && (
-            <div>{renderCards}</div>
-            // <ReplyRendering
-            //   userName={UserName}
-            //   userFrom={UserFrom}
-            //   postFrom={props.postFrom}
-            // />
-            // <img
-            //   style={{
-            //     width: "5%",
-            //     height: "5%",
-            //     border: "1px solid lightgray",
-            //     alignItems: "center",
-            //     justifyContent: "center",
-            //     borderRadius: "50px",
-            //     boxShadow: "1px 1px 1px 1px inset",
-            //   }}
-            //   src={`http://localhost:5000/${UserImg}`}
-            //   alt="프로필"
-            // />
-          )}
-        </div>
+        <div>{OnReply && <div>{renderCards}</div>}</div>
       </div>
       <div
         // reply submit zone
