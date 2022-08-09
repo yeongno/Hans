@@ -188,6 +188,8 @@ function Modify(props) {
         >
           <div
             style={{
+              border: "1px solid gray",
+              borderRadius: "5px",
               height: "150px",
               width: "150px",
               position: "absolute",
@@ -213,7 +215,7 @@ function Modify(props) {
                   style={{
                     width: "10px",
                     height: "10px",
-                    margin: "3rem 3rem",
+                    margin: "3.5rem 3.5rem",
                     position: "absolute",
                     opacity: "75%",
                     background: "gray",
