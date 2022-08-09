@@ -22,22 +22,28 @@ function FavoriteList(props) {
   const [Name, setName] = useState("");
   const [FilePath, setFilePath] = useState("");
 
-  axios.post("/api/posts/getOnePost", { _id: postFrom }).then((response) => {
-    setPostImg(response.data.posts[0].imagePath);
-    setPostTitle(response.data.posts[0].title);
-    setPostContent(response.data.posts[0].content);
-    setPostFavoriteNumber(response.data.posts[0].favoriteNumber);
-    setPostCreatedAt(response.data.posts[0].PostCreatedAt);
-    setUserFrom(response.data.posts[0].userFrom);
+  useEffect(() => {
+    fetchPostList();
+  }, []);
 
-    const userFrom1 = response.data.posts[0].userFrom;
-    axios
-      .post("/api/users/getProFileImg", { _id: userFrom1 })
-      .then((response) => {
-        setName(response.data.userInfo.name);
-        setFilePath(response.data.proFileImg);
-      });
-  });
+  const fetchPostList = () => {
+    axios.post("/api/posts/getOnePost", { _id: postFrom }).then((response) => {
+      setPostImg(response.data.posts[0].imagePath);
+      setPostTitle(response.data.posts[0].title);
+      setPostContent(response.data.posts[0].content);
+      setPostFavoriteNumber(response.data.posts[0].favoriteNumber);
+      setPostCreatedAt(response.data.posts[0].PostCreatedAt);
+      setUserFrom(response.data.posts[0].userFrom);
+
+      const userFrom1 = response.data.posts[0].userFrom;
+      axios
+        .post("/api/users/getProFileImg", { _id: userFrom1 })
+        .then((response) => {
+          setName(response.data.userInfo.name);
+          setFilePath(response.data.proFileImg);
+        });
+    });
+  };
 
   return (
     <div>
@@ -223,58 +229,3 @@ function FavoriteList(props) {
 }
 
 export default FavoriteList;
-// import axios from "axios";
-// import React, { useEffect, useState } from "react";
-
-// function FavoriteList(props) {
-//   const postFrom = props.postFrom;
-//   const userFrom = props.userFrom;
-
-//   //postFrom
-//   const [PostImg, setPostImg] = useState("");
-//   const [PostTitle, setPostTitle] = useState("");
-//   const [PostContent, setPostContent] = useState("");
-//   const [PostFavoriteNumber, setPostFavoriteNumber] = useState("");
-//   const [PostCreatedAt, setPostCreatedAt] = useState("");
-//   const [PostUserFrom, setUserFrom] = useState("");
-
-//   // userFrom
-//   const [Name, setName] = useState("");
-//   const [FilePath, setFilePath] = useState("");
-//   useEffect(() => {
-//     fetchlist();
-//   }, [1]);
-
-//   const fetchlist = () => {
-//     axios.post("/api/posts/getOnePost", { _id: postFrom }).then((response) => {
-//       setPostImg(response.data.posts.imagePath);
-//       setPostTitle(response.data.posts.title);
-//       setPostContent(response.data.posts.content);
-//       setPostFavoriteNumber(response.data.posts.favoriteNumber);
-//       setPostCreatedAt(response.data.posts.PostCreatedAt);
-//       setUserFrom(response.data.posts.userFrom);
-//     });
-
-//     axios
-//       .post("/api/users/getProFileImg", { _id: userFrom })
-//       .then((response) => {
-//         if (response.data.success) {
-
-//         }
-//       });
-//   };
-
-//   return (
-//     <div>
-//       <span>{PostImg} </span>
-//       <div>{PostImg}</div>
-//       <span>{PostTitle} </span>
-//       <span>{PostContent} </span>
-//       <span>{PostFavoriteNumber} </span>
-//       <span>{PostCreatedAt} </span>
-//       <span>{FilePath} </span>
-//     </div>
-//   );
-// }
-
-// export default FavoriteList;
