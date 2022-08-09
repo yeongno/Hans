@@ -107,7 +107,7 @@ function ReplySection(props) {
       <div
         style={{
           position: "fixed",
-          width: "700px",
+          width: "70%",
           background: "#b2bec2",
           paddingTop: "1%",
           paddingBottom: "0.5%",

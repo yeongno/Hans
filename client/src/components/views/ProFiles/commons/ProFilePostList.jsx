@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import LikeButton from "./LikeButton";
 import ReplyButton from "./ReplySection/ReplyButton";
+import DropDown from "./DropDwon/DropDown";
 
 function ProFilePostList(props) {
   const [FilePath, setFilePath] = useState("");
@@ -49,6 +50,7 @@ function ProFilePostList(props) {
         }
       });
   };
+  const onOption = () => {};
 
   // 해당 기능은 상세페이지에서 구현
   const onClickDelete = (title, userFrom, postFrom) => {
@@ -149,9 +151,7 @@ function ProFilePostList(props) {
                   marginTop: "5px",
                 }}
               >
-                <Button style={{ border: "none" }}>
-                  <EllipsisOutlined />
-                </Button>
+                <DropDown postFrom={posts._id} title={posts.title} />
               </div>
             </div>
             <div style={{ display: "flex" }}>

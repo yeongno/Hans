@@ -44,6 +44,15 @@ router.post("/removePost", (req, res) => {
   });
 });
 
+router.post("/removeOnePost", (req, res) => {
+  Post.findOneAndDelete({
+    _id: req.body._id,
+  }).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
+
 router.post("/LPost", (req, res) => {
   const lpost = new Post(req.body);
   Post.findOneAndUpdate(

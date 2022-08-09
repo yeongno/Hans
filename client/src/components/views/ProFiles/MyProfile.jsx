@@ -66,6 +66,7 @@ function MyProFile() {
     });
   };
   useEffect(() => {
+    setOnPost(true);
     fetchUserList();
   }, []);
 
@@ -87,10 +88,7 @@ function MyProFile() {
 
   return (
     <div>
-      <div
-        // className={Container}
-        style={{ marginLeft: "10%", marginRight: "10%" }}
-      >
+      <div style={{ marginLeft: "10%", marginRight: "10%" }}>
         <Form>
           <div
             style={{
@@ -111,7 +109,6 @@ function MyProFile() {
                 justifyContent: "center",
                 position: "relative",
               }}
-              // className={top.dropZone}
             >
               {FilePath && (
                 <div>

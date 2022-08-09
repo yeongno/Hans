@@ -18,4 +18,15 @@ router.post("/getReply", (req, res) => {
     return res.status(200).json({ success: true, req });
   });
 });
+
+router.post("/removeReply", (req, res) => {
+  Reply.deleteMany({
+    postFrom: req.body.postFrom,
+    userFrom: req.body.userFrom,
+  }).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
+
 module.exports = router;

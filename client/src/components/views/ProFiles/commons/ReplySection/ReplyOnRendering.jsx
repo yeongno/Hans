@@ -18,6 +18,7 @@ function ReplyOnRendering(props) {
           display: "flex",
           height: "100%",
           marginBottom: "5px",
+          width: "100%",
         }}
       >
         <img
