@@ -105,38 +105,55 @@ function ReplySection(props) {
         <div>{OnReply && <div>{renderCards}</div>}</div>
       </div>
       <div
-        // reply submit zone
         style={{
-          display: "flex",
-          width: "100%",
-          marginLeft: "2%",
-          marginRight: "2%",
+          position: "fixed",
+          width: "700px",
+          background: "#b2bec2",
+          paddingTop: "1%",
+          paddingBottom: "0.5%",
+          borderRadius: " 10px",
         }}
       >
-        <img
+        <div
+          // reply submit zone
           style={{
-            width: "5%",
-            height: "5%",
-            border: "1px solid lightgray",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "75px",
-            boxShadow: "1px 1px 1px 1px inset",
+            display: "flex",
+            width: "100%",
+            marginLeft: "2%",
+            marginRight: "2%",
           }}
-          src={`http://localhost:5000/${FilePath}`}
-          alt="프로필"
-        />
-        <Input
-          style={{ width: "80%", borderRadius: "10px", wordBreak: "break-all" }}
-          placeholder="댓글을 입력하세요"
-          onChange={onContentHandler}
-          onPressEnter={onSubmit}
-          value={Contentset}
-        />
+        >
+          <img
+            style={{
+              width: "50px",
+              height: "50px",
+              border: "1px solid lightgray",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "75px",
+              boxShadow: "1px 1px 1px 1px inset",
+            }}
+            src={`http://localhost:5000/${FilePath}`}
+            alt="프로필"
+          />
+          <Input
+            style={{
+              width: "90%",
+              marginRight: "5%",
+              marginLeft: "2%",
+              borderRadius: "10px",
+              wordBreak: "break-all",
+            }}
+            placeholder="댓글을 입력하세요"
+            onChange={onContentHandler}
+            onPressEnter={onSubmit}
+            value={Contentset}
+          />
+        </div>
+        <span style={{ marginLeft: "11%", color: "white" }}>
+          글을 게시하려면 Enter 키를 누르세요.
+        </span>
       </div>
-      <span style={{ marginLeft: "8%" }}>
-        글을 게시하려면 Enter 키를 누르세요.
-      </span>
     </div>
   );
 }

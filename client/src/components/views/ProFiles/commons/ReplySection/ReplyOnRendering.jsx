@@ -22,8 +22,8 @@ function ReplyOnRendering(props) {
       >
         <img
           style={{
-            width: "50px",
-            height: "50px",
+            width: "35px",
+            height: "35px",
             borderRadius: "100%",
             border: "1px solid lightgray",
             alignItems: "center",
@@ -35,14 +35,14 @@ function ReplyOnRendering(props) {
         />
         <div
           style={{
-            borderRadius: "5px",
-            width: "100%",
+            width: "90%",
             marginLeft: "1%",
             lineHeight: "102%",
           }}
         >
           <div
             style={{
+              borderRadius: "7px",
               background: "#f0e6e6",
               padding: "5px 5px 5px 5px",
             }}

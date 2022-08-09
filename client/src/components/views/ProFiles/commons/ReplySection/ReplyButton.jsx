@@ -24,7 +24,7 @@ function ReplyButton(props) {
         댓글 달기
       </Button>
       <Modal
-        title="Modal height width"
+        title="댓글창"
         centered
         visible={replyOpen}
         onCancel={() => setreplyOpen(false)}
