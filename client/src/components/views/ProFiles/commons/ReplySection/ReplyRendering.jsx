@@ -21,11 +21,11 @@ function ReplyRendering(props) {
       .then((response) => {
         if (response.data.req[0]) {
           console.log(response.data.req);
-          setUserImg(response.data.req[0].proFileImg);
-          setUserName(response.data.req[0].userName);
-          setUserFrom(response.data.req[0].userFrom);
-          setContents(response.data.req[0].content);
-          setDate(response.data.req[0].createdAt);
+          setUserImg(response.data.req[props.index].proFileImg);
+          setUserName(response.data.req[props.index].userName);
+          setUserFrom(response.data.req[props.index].userFrom);
+          setContents(response.data.req[props.index].content);
+          setDate(response.data.req[props.index].createdAt);
           setOnReply(true);
           console.log("req", response.data.req);
           console.log("postFrom", props.reply.postFrom);

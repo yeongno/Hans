@@ -38,6 +38,7 @@ function ReplySection(props) {
           }
         });
     }
+    fetchUserList();
   };
 
   useEffect(() => {
@@ -80,7 +81,7 @@ function ReplySection(props) {
     return (
       <Col key={index}>
         <div>
-          <ReplyRendering reply={reply} />
+          <ReplyRendering reply={reply} index={index} />
         </div>
       </Col>
     );
@@ -118,7 +119,7 @@ function ReplySection(props) {
             border: "1px solid lightgray",
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: "50px",
+            borderRadius: "75px",
             boxShadow: "1px 1px 1px 1px inset",
           }}
           src={`http://localhost:5000/${FilePath}`}
