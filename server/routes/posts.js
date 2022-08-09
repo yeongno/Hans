@@ -33,6 +33,12 @@ router.post("/getOnePost", (req, res) => {
     return res.status(200).json({ success: true, posts });
   });
 });
+router.post("/getImgeFile", (req, res) => {
+  Post.find({ _id: req.body._id }).exec((err, posts) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, posts });
+  });
+});
 
 router.post("/removePost", (req, res) => {
   Post.findOneAndDelete({
@@ -53,16 +59,17 @@ router.post("/removeOnePost", (req, res) => {
   });
 });
 
-router.post("/LPost", (req, res) => {
-  const lpost = new Post(req.body);
+router.post("/updatePost", (req, res) => {
   Post.findOneAndUpdate(
-    { userFrom: req.body.userFrom, title: req.body.title },
+    { _id: req.body._id },
     {
-      ownerSelect: true,
+      title: req.body.title,
+      content: req.body.content,
+      imagePath: req.body.imagePath,
     }
   ).exec((err, result) => {
     if (err) return res.status(400).send(err);
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, result });
   });
 });
 

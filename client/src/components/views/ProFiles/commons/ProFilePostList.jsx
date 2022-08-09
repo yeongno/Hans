@@ -151,7 +151,11 @@ function ProFilePostList(props) {
                   marginTop: "5px",
                 }}
               >
-                <DropDown postFrom={posts._id} title={posts.title} />
+                <DropDown
+                  postFrom={posts._id}
+                  title={posts.title}
+                  content={posts.content}
+                />
               </div>
             </div>
             <div style={{ display: "flex" }}>

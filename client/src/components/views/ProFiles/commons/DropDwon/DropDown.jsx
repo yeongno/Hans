@@ -1,11 +1,21 @@
 import { DownOutlined, EllipsisOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Menu, Space } from "antd";
+import { Button, Dropdown, Menu, message, Modal, Space } from "antd";
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Modify from "./Modify";
 
 function DropDown(props) {
   useEffect(() => {}, []);
+  const postFrom = props.postFrom;
+  const title = props.title;
+  const content = props.content;
+  console.log({ title }, " ", { content });
 
+  const [OnModal, setOnModal] = useState(false);
+  const onCancel = () => {
+    setOnModal(false);
+    message.success("임시저장 되었습니다.");
+  };
   const onDelete = () => {
     axios
       .post("/api/posts/removeOnePost", {
@@ -32,23 +42,23 @@ function DropDown(props) {
       });
     window.location.reload();
   };
+
+  const onModify = () => {
+    setOnModal(true);
+  };
   const menu = (
     <Menu
       items={[
         {
-          label: <a onClick={onDelete}>Delete</a>,
+          label: <a onClick={onDelete}>게시글 삭제하기</a>,
           key: "0",
-        },
-        {
-          label: <a href="https://www.aliyun.com">2nd menu item</a>,
-          key: "1",
         },
         {
           type: "divider",
         },
         {
-          label: "3rd menu item",
-          key: "3",
+          label: <a onClick={onModify}>게시글 수정하기</a>,
+          key: "1",
         },
       ]}
     />
@@ -62,6 +72,24 @@ function DropDown(props) {
           </Button>
         </a>
       </Dropdown>
+      <Modal
+        title="수정하기"
+        centered
+        visible={OnModal}
+        onCancel={() => onCancel()}
+        footer=""
+        width="80%"
+        height="60%"
+      >
+        <Modify
+          // postFrom={props.postFrom}
+          // title={props.title}
+          // content={props.content}
+          postFrom={postFrom}
+          title={props.title}
+          content={props.content}
+        />{" "}
+      </Modal>
     </div>
   );
 }

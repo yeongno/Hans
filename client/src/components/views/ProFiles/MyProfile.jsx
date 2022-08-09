@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProFileFavoriteList from "./commons/ProFileFavoriteList";
 import ProFilePostList from "./commons/ProFilePostList";
+import ModifyProFile from "./ModifyProFile";
 
 function MyProFile() {
   const [Name, setName] = useState("");
@@ -26,8 +27,10 @@ function MyProFile() {
   const [OnPost, setOnPost] = useState(false);
   const [OnPostList, setOnPostList] = useState(true);
   const [OnFavoritList, setOnFavoritList] = useState(false);
+  const [OnInformation, setOnInformation] = useState(false);
 
   const onPostList = () => {
+    setOnInformation(false);
     setOnPost(true);
   };
   const onMyPostList = () => {
@@ -37,6 +40,10 @@ function MyProFile() {
   const onMyFavoriteList = () => {
     setOnPostList(false);
     setOnFavoritList(true);
+  };
+  const onInfor = () => {
+    setOnPost(false);
+    setOnInformation(true);
   };
 
   const onDrop = (files) => {
@@ -196,7 +203,7 @@ function MyProFile() {
             <Button onClick={onPostList}>
               <OrderedListOutlined /> 게시물
             </Button>
-            <Button>
+            <Button onClick={onInfor}>
               <InfoCircleOutlined />
               정보
             </Button>
@@ -233,6 +240,7 @@ function MyProFile() {
             <br />
             {OnPost && <div>{OnPostList && <ProFilePostList />}</div>}
             {OnPost && <div>{OnFavoritList && <ProFileFavoriteList />}</div>}
+            {OnInformation && <ModifyProFile />}
           </div>
         </Form>
       </div>
