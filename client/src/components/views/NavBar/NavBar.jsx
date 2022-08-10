@@ -25,7 +25,7 @@ export default function NavBar() {
     navigate("./register");
   };
   const goToHome = () => {
-    navigate("/");
+    navigate("/homeSection");
   };
   return (
     <div className={navBar.body}>

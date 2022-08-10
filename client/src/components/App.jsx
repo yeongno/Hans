@@ -19,6 +19,7 @@ import Buttons from "./views/ProFiles/commons/Buttons";
 import UploadVideoPage from "./views/UploadVideoPage/UploadVideoPage";
 import VideoList from "./views/PostPage/VideoList";
 import ProFilePostList from "./views/ProFiles/commons/ProFilePostList";
+import HomeSection from "./views/LandingPage/HomeLandering/HomeSection";
 function App() {
   const LandingPage1 = Auth(LandingPage, null);
   const LoginPage1 = Auth(LoginPage, null);
@@ -38,7 +39,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage1 />}>
-          <Route path="login" element={<LoginPage1 />} />
+          <Route path="/login" element={<LoginPage1 />} />
           <Route path="/register" element={<RegisterPage1 />} />
           <Route path="/postList" element={<PostList />} />
           <Route path="/myFavoriteList" element={<MyFavoriteList1 />} />
@@ -55,6 +56,7 @@ function App() {
           <Route path="/myProFile" element={<MyProfile1 />} />
           <Route path="/uploadVideoPage" element={<UploadVideoPage1 />} />
           <Route path="/videoList" element={<VideoList1 />} />
+          <Route path="/homeSection" element={<HomeSection />} />
         </Route>
       </Routes>
     </BrowserRouter>
