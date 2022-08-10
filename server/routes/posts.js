@@ -16,7 +16,7 @@ const { Post } = require("../models/Post");
 // });
 
 router.post("/getPost", (req, res) => {
-  Post.find({ public: req.body.public }).exec((err, posts) => {
+  Post.find({ topic: req.body.public }).exec((err, posts) => {
     if (err) return res.status(400).send(err);
     return res.status(200).json({ success: true, posts });
   });
