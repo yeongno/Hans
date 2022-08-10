@@ -6,11 +6,12 @@ import DropDown from "../DropDwon/DropDown";
 import { ProfileOutlined, SmileOutlined } from "@ant-design/icons";
 import ReplyButton from "../ReplySection/ReplyButton";
 import LikeButton from "../LikeButton";
+import { Default_img } from "../../../../Config";
 
 function FavoriteList(props) {
   const postFrom = props.postFrom;
 
-  //postFrom
+  //posts
   const [PostImg, setPostImg] = useState();
   const [PostTitle, setPostTitle] = useState();
   const [PostContent, setPostContent] = useState();
@@ -18,9 +19,12 @@ function FavoriteList(props) {
   const [PostCreatedAt, setPostCreatedAt] = useState();
   const [userFrom, setUserFrom] = useState();
 
-  // userFrom
+  // users
   const [Name, setName] = useState("");
   const [FilePath, setFilePath] = useState("");
+
+  //DropDown_ compared userId
+  const [Compare, steCompare] = useState(false);
 
   useEffect(() => {
     fetchPostList();
@@ -42,7 +46,15 @@ function FavoriteList(props) {
           setName(response.data.userInfo.name);
           setFilePath(response.data.proFileImg);
         });
+      if (userFrom1 === localStorage.getItem("userId")) {
+        steCompare(true);
+        console.log("yes~~");
+      }
     });
+  };
+  // console.logK(userFrom, " user f ro m");
+  const onErrorHandler = (e) => {
+    e.targetsrc = Default_img;
   };
 
   return (
@@ -75,10 +87,9 @@ function FavoriteList(props) {
                   marginRight: "10px",
                 }}
                 src={`http://localhost:5000/${FilePath}`}
-                alt="proFileImg"
               />
             )}
-            {/* {!FilePath && (
+            {!FilePath && (
               <ProfileOutlined
                 style={{
                   width: "35px",
@@ -93,7 +104,7 @@ function FavoriteList(props) {
                   marginRight: "10px",
                 }}
               />
-            )} */}
+            )}
             <div
               style={{
                 display: "flex",
@@ -135,11 +146,14 @@ function FavoriteList(props) {
                 marginTop: "5px",
               }}
             >
-              <DropDown
-                postFrom={postFrom}
-                title={PostTitle}
-                content={PostContent}
-              />
+              {Compare && (
+                <DropDown
+                  postFrom={postFrom}
+                  title={PostTitle}
+                  content={PostContent}
+                  userFrom={userFrom}
+                />
+              )}
             </div>
           </div>
           <div style={{ display: "flex" }}>
