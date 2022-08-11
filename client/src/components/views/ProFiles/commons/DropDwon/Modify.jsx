@@ -3,16 +3,26 @@ import { Button, Col, Divider, Input, message, Row } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  myFavorite,
+  myProfileModify,
+} from "../../../../../_actions/page_action";
 
 function Modify(props) {
+  const page = useSelector((state) => state.page);
+  let navigate = useNavigate();
   const [Title, setTitle] = useState();
   const [Content, setContent] = useState();
   const [FilePath, setFilePath] = useState("");
+  const dispatch = useDispatch();
   useEffect(() => {
     fetchPostList();
-  }, [1]);
+  }, []);
 
   const fetchPostList = () => {
+    dispatch(myFavorite({ mymodify: "false" }));
     axios
       .post("/api/posts/getImgeFile", { _id: props.postFrom })
       .then((response) => {
@@ -21,6 +31,7 @@ function Modify(props) {
         }
       });
   };
+  console.log(page.myModify1);
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
@@ -68,6 +79,7 @@ function Modify(props) {
     message.success("게시글을 수정하였습니다.");
     window.location.reload();
   };
+
   const { TextArea } = Input;
   return (
     <div style={{ display: "flex", width: "100%" }}>

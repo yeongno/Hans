@@ -1,11 +1,6 @@
 // import react from "React";
 
-import {
-  POST_GET,
-  POST_GO,
-  POST_ONEGET,
-  UPDATE_FAVORITE,
-} from "../_actions/types";
+import { POST_GET, POST_GO, POST_ONEGET } from "../_actions/types";
 
 export default function a(state = {}, action) {
   switch (action.type) {

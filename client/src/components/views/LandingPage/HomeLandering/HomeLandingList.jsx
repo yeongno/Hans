@@ -28,7 +28,6 @@ function HomeLandingList(props) {
   useEffect(() => {
     fetchPostList();
   }, []);
-  console.log(props.postFrom, "postFrom");
   const fetchPostList = () => {
     axios.post("/api/posts/getOnePost", { _id: postFrom }).then((response) => {
       setPostImg(response.data.posts[0].imagePath);

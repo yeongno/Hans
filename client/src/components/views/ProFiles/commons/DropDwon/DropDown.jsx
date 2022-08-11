@@ -2,9 +2,11 @@ import { DownOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Menu, message, Modal, Space } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Modify from "./Modify";
 
 function DropDown(props) {
+  const navigate = useNavigate();
   useEffect(() => {}, []);
   const postFrom = props.postFrom;
   const title = props.title;
@@ -33,7 +35,6 @@ function DropDown(props) {
       postFrom: props.postFrom,
       userFrom: localStorage.getItem("userId"),
     });
-
     window.location.reload();
   };
 

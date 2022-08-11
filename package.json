@@ -35,12 +35,15 @@
     "process": "^0.11.10",
     "react-dropzone": "^14.2.2",
     "react-hook-form": "^7.34.0",
+    "react-refresh": "^0.14.0",
     "react-router-dom": "^6.3.0",
+    "redux-persist": "^6.0.0",
     "url": "^0.11.0",
     "uuid": "^8.3.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "eslint": "^8.19.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1"
