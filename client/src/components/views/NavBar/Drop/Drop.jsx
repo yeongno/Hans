@@ -21,6 +21,9 @@ export default function Drop() {
   const goUserFiles = () => {
     navigate("/proFileList");
   };
+  const gotest = () => {
+    navigate("/testPostPage");
+  };
 
   return (
     <div>
@@ -33,7 +36,8 @@ export default function Drop() {
                 <li>
                   <h4>01</h4>
                   <ul>
-                    <li>01</li>
+                  <li onClick={gotest}>게시글작성</li>
+
                     <li>02</li>
                     <li>03</li>
                   </ul>

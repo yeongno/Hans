@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "../../../_actions/user_action";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
+import Regist from "./Register.module.css";
+import logo from "../../../logo.svg";
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
@@ -52,33 +54,50 @@ function RegisterPage(props) {
     });
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
-      <Form
-        style={{ display: "flex", flexDirection: "column" }}
-        onSubmit={onSubmitHandler}
-      >
-        <label>Email</label>
-        <Input type="email" value={Email} onChange={onEmailHandler} />
-        <label>Name</label>
-        <Input type="text" value={Name} onChange={onNameHandler} />
-        <label>password</label>
-        <Input type="password" value={Password} onChange={onPasswordHandler} />
-        <label>Confirm password</label>
+    <div className={Regist.wrapper}>
+      <Form className={Regist.frm} onSubmit={onSubmitHandler}>
+        <img className={Regist.png} src={logo} />
+        <span style={{ fontWeight: "bold" }}>Email</span>
+        <div className={Regist.check}>
+          <Input
+            type="email"
+            value={Email}
+            onChange={onEmailHandler}
+            placeholder="이메일"
+            className={Regist.email}
+          />
+          <a href="#!" className={Regist.emailck}>
+            <span class="">인증</span>
+          </a>
+        </div>
+        <span style={{ fontWeight: "bold" }}>Name</span>
+        <Input
+          type="text"
+          value={Name}
+          onChange={onNameHandler}
+          placeholder="이름"
+          className={Regist.name}
+        />
+        <span style={{ fontWeight: "bold" }}>Password</span>
+        <Input
+          type="password"
+          value={Password}
+          onChange={onPasswordHandler}
+          placeholder="비밀번호"
+          className={Regist.pwd}
+        />
+        <span style={{ fontWeight: "bold" }}>Confirm Password</span>
         <Input
           type="password"
           value={ConfirmPassword}
           onChange={onConfirmHandler}
+          placeholder="비밀번호 확인"
+          className={Regist.pwdcheck}
         />
         <br />
-        <Button type="submit">회원가입</Button>
+        <Button type="submit" className={Regist.regi}>
+          회원가입
+        </Button>
       </Form>
     </div>
   );

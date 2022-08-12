@@ -19,6 +19,7 @@ import Buttons from "./views/ProFiles/commons/Buttons";
 import UploadVideoPage from "./views/UploadVideoPage/UploadVideoPage";
 import VideoList from "./views/PostPage/VideoList";
 import ProFilePostList from "./views/ProFiles/commons/ProFilePostList";
+import TestPostPage from "./views/PostPage/TestPostPage";
 function App() {
   const LandingPage1 = Auth(LandingPage, null);
   const LoginPage1 = Auth(LoginPage, null);
@@ -55,6 +56,7 @@ function App() {
           <Route path="/myProFile" element={<MyProfile1 />} />
           <Route path="/uploadVideoPage" element={<UploadVideoPage1 />} />
           <Route path="/videoList" element={<VideoList1 />} />
+          <Route path="/testPostPage" element={<TestPostPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
