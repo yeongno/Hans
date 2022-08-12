@@ -1,9 +1,8 @@
 import navBar from "./NavBar.module.css";
 import Drop from "./Drop/Drop";
 import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useResolvedPath } from "react-router-dom";
 import axios from "axios";
-import { getUserProfile } from "../../../_actions/user_action";
 import { useEffect } from "react";
 
 export default function NavBar() {
@@ -11,6 +10,25 @@ export default function NavBar() {
   const goToLogin = () => {
     navigate("./login");
   };
+
+  const [FilePath, setFilePath] = useState("");
+  useEffect(() => {
+    fetchUserList();
+  }, []);
+  const fetchUserList = () => {
+    axios
+      .post("/api/users/getProFile", {
+        userFrom: localStorage.getItem("userId"),
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setFilePath(response.data.userInfo[0].proFileImg);
+        } else {
+          alert("유저 정보를 가져오는데 실패하였습니다.");
+        }
+      });
+  };
+
   const goToLogout = () => {
     axios.get("/api/users/logout").then((response) => {
       if (response.data.success) {
@@ -18,23 +36,22 @@ export default function NavBar() {
         window.localStorage.setItem("userId", " ");
         alert("로그아웃 하는데 성공했습니다.");
       } else {
-        navigate("./login");
+        navigate(window.history.back());
         alert("로그아웃 하는데 실패했습니다.");
       }
     });
   };
-  const goToRegister = () => {
-    navigate("./register");
-  };
   const goToHome = () => {
-    navigate("/");
+    navigate("/homeSection");
+  };
+  const goProfile = () => {
+    navigate("/myProFile");
   };
   //로그인 여부 확인 변수
-  const userFrom = localStorage.getItem("userId");
   const isUser = window.localStorage.getItem("userId") === " ";
   const currentUser = localStorage.getItem("name");
 
-  //console.log("userFrom", userFrom);
+  //console.log("profileImg : ", FilePath);
   //console.log("name", currentUser);
   return (
     <div className={navBar.body}>
@@ -49,8 +66,22 @@ export default function NavBar() {
               )}
               {!isUser && (
                 <>
-                  <li></li>
                   <li>
+                    <img
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        border: "1px solid lightgray",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: "50px",
+                        boxShadow: "1px 1px 1px 1px inset",
+                      }}
+                      src={`http://localhost:5000/${FilePath}`}
+                      alt="thumbnail"
+                    />
+                  </li>
+                  <li onClick={goProfile}>
                     <a>{currentUser}</a>
                   </li>
                   <li>

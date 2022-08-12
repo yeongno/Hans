@@ -9,6 +9,7 @@ import {
   TOPIC_GO,
   POST_TOPIC_SEARCH,
   POST_GET_TOPIC,
+  FRIEND_GO,
 } from "./types";
 
 export function postGo(dataToSubmit1) {
@@ -29,6 +30,17 @@ export function commentGo(dataToSubmit1) {
 
   return {
     type: COMMENT_GO,
+    payload: request,
+  };
+}
+//친구 추가
+export function addFriendGo(dataToSubmit1) {
+  const request = axios
+    .post("/api/users/addFriend", dataToSubmit1)
+    .then((response) => response.data);
+
+  return {
+    type: FRIEND_GO,
     payload: request,
   };
 }

@@ -3,13 +3,14 @@ const router = express.Router();
 
 const { Post } = require("../models/Post");
 
-const multer = require("multer");
-const path = require("path");
-const mime = require("mime-types");
-const { v4: uuid } = require("uuid");
-
 router.post("/getPost", (req, res) => {
   Post.find({ public: req.body.public }).exec((err, posts) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, posts });
+  });
+});
+router.post("/getPostList", (req, res) => {
+  Post.find({ userFrom: req.body.userFrom }).exec((err, posts) => {
     if (err) return res.status(400).send(err);
     return res.status(200).json({ success: true, posts });
   });
@@ -34,19 +35,6 @@ router.post("/removePost", (req, res) => {
     title: req.body.title,
     userFrom: req.body.userFrom,
   }).exec((err, result) => {
-    if (err) return res.status(400).send(err);
-    return res.status(200).json({ success: true });
-  });
-});
-
-router.post("/LPost", (req, res) => {
-  const lpost = new Post(req.body);
-  Post.findOneAndUpdate(
-    { userFrom: req.body.userFrom, title: req.body.title },
-    {
-      ownerSelect: true,
-    }
-  ).exec((err, result) => {
     if (err) return res.status(400).send(err);
     return res.status(200).json({ success: true });
   });

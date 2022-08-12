@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getPost, getTopic } from "../../../_actions/post_action";
-import { Button } from "antd";
+import { Button, Select, Form } from "antd";
+import moment from "moment";
+const { Option } = Select;
 
 function PostList() {
   const userFrom = localStorage.getItem("userId");
@@ -12,6 +14,7 @@ function PostList() {
   const navigate = useNavigate();
   const [Topics, setTopics] = useState([]); //토픽 데이터 불러오기 위한 변수
   const [Topic, setTopic] = useState(""); //토픽 설정 변수
+  const [View, SetView] = useState(0); //조회수 변수
 
   const goPost = () => {
     navigate("/postPage");
@@ -35,11 +38,8 @@ function PostList() {
       }
     });
   };
-  const onTopicHandler = (event) => {
-    setTopic(event.currentTarget.value);
-  };
   const topicList = Topics.map((topics, index) => {
-    return <option value={topics.topicName}>{topics.topicName}</option>;
+    return <Option value={topics.topicName}>{topics.topicName}</Option>;
   });
 
   useEffect(() => {
@@ -83,63 +83,91 @@ function PostList() {
   const renderCards = Posts.map((posts, index) => {
     const isAuthor = posts.userFrom === userFrom; //로그인 체크 변수
     return (
-      <tr key={index}>
-        <td>{posts.topic}</td>
-        <Link to={`/postPage/${posts._id}`}>
-          <font color="black">
-            <tr>{posts.title}</tr>
-          </font>
-        </Link>
-        <td>{posts.content} </td>
-        <td>{posts.createdAt}</td>
-        <td>{posts.favoriteNumber}</td>
-        <td>{posts.writer}</td>
-        <td>
-          {/* <button onClick={() => onClickArticle(posts.title, posts.userFrom)}> */}
+      <tr key={index} style={{ backgroundColor: "white" }}>
+        <td style={{ textAlign: "center", width: "8%" }}>{posts.topic}</td>
+        <td style={{ width: "70%" }}>
+          <div
+            style={{
+              position: "absolute",
+              marginTop: "-0.25%",
+              width: "53.5%",
+              textAlign: "right",
+            }}
+          >
+            {isAuthor && (
+              <>
+                <Button>수정</Button>
+                <Button
+                  className="delete-button"
+                  onClick={() =>
+                    onClickDelete(posts.title, posts.userFrom, posts.postFrom)
+                  }
+                >
+                  삭제
+                </Button>
+              </>
+            )}
+          </div>
           <Link to={`/postPage/${posts._id}`}>
-            <Button>글 보기 </Button>
+            <font color="black">{posts.title} </font>
           </Link>
-          {/* </button> */}
-          {/*글 작성자와 로그인한 사용자가 일치할때 버튼 표시*/}
-          {isAuthor && (
-            <>
-              <Button>수정</Button>
-              <Button
-                className="delete-button"
-                onClick={() =>
-                  onClickDelete(posts.title, posts.userFrom, posts.postFrom)
-                }
-              >
-                삭제
-              </Button>
-            </>
-          )}
+        </td>
+        <td style={{ textAlign: "center", width: "8%" }}>
+          <Link to={`/${posts.userFrom}`}>
+            <label style={{ color: "black" }}>{posts.writer}</label>
+          </Link>
+        </td>
+        <td style={{ textAlign: "center", width: "10%" }}>
+          {moment(posts.createdAt).format("M[월] D[일]")}
+        </td>
+        <td style={{ textAlign: "center", width: "3%" }}>{View}</td>
+        <td style={{ textAlign: "center", width: "3%" }}>
+          {posts.favoriteNumber}
         </td>
       </tr>
     );
   });
 
+  const onTopicHandler = (event) => {
+    setTopic(event.currentTarget.value);
+  };
   return (
     <div>
-      <div style={{ width: "85", margin: "3rem auto" }}>
+      <div
+        style={{
+          margin: "3rem auto",
+
+          marginLeft: "10%",
+          marginRight: "10%",
+        }}
+      >
         <h2>게시글 목록</h2>
         <Button onClick={goPost}>게시글 작성</Button>
         <Button onClick={goFavoriteList}>My FavoriteList</Button>
-        <select onChange={onTopicHandler} value={Topic}>
-          <option>Select Topic</option>
+        <Select
+          style={{
+            borderRadius: "8px",
+            width: 120,
+          }}
+          onChange={onTopicHandler}
+          value={Topic}
+          defaultValue=""
+        >
+          <Option value="">Select Topic</Option>
           {topicList}
-        </select>
+        </Select>
         <hr />
         <table>
           <thead>
             <tr>
-              <th>Topic</th>
-              <th>Title</th>
-              <th>Content</th>
-              <th width="200">Date</th>
-              <th>Like</th>
-              <th>Writer</th>
-              <th>Remove from Articles</th>
+              <th style={{ textAlign: "center" }}>Topic</th>
+              <th style={{ textAlign: "center" }}>Title</th>
+              <th style={{ textAlign: "center" }}>Writer</th>
+              <th width="200" style={{ textAlign: "center" }}>
+                Date
+              </th>
+              <th style={{ textAlign: "center" }}>View</th>
+              <th style={{ textAlign: "center" }}>Like</th>
             </tr>
           </thead>
           <tbody>{renderCards}</tbody>

@@ -17,6 +17,12 @@ export default function Drop() {
   const goFavorite = () => {
     navigate("/favorite");
   };
+  const goProfile = () => {
+    navigate("/myProFile");
+  };
+  const goProfileList = () => {
+    navigate("/proFileList");
+  };
   return (
     <div>
       <ul className={drop.main_menu}>
@@ -80,6 +86,14 @@ export default function Drop() {
                   <ul>
                     <li onClick={goPost}>게시글</li>
                     <li onClick={goTopic}>Topic</li>
+                    <li></li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>프로필</h4>
+                  <ul>
+                    <li onClick={goProfile}>프로필1</li>
+                    <li onClick={goProfileList}>프로필 리스트</li>
                   </ul>
                 </li>
               </ul>

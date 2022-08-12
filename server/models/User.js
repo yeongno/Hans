@@ -3,43 +3,49 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
-const userSchema = mongoose.Schema({
-  name: {
-    type: String,
-    maxlength: 50,
+const userSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      maxlength: 50,
+    },
+    email: {
+      type: String,
+      trim: true,
+      unique: 1,
+    },
+    password: {
+      type: String,
+      minlength: 5,
+    },
+    lastname: {
+      type: String,
+      maxlength: 50,
+    },
+    role: {
+      type: Number,
+      default: 0,
+    },
+    image: String,
+    token: {
+      type: String,
+    },
+    tokenExp: {
+      type: Number,
+    },
+    //프로필 설정
+    proFileImg: {
+      type: String,
+      default: "uploads/postImg/default-profile-img.png",
+      //기본 프로필 파일
+    },
+    friends: {
+      type: Number,
+      default: 0,
+    },
   },
-  email: {
-    type: String,
-    trim: true,
-    unique: 1,
-  },
-  password: {
-    type: String,
-    minlength: 5,
-  },
-  lastname: {
-    type: String,
-    maxlength: 50,
-  },
-  role: {
-    type: Number,
-    default: 0,
-  },
-  image: String,
-  token: {
-    type: String,
-  },
-  tokenExp: {
-    type: Number,
-  },
-  //프로필 설정
-  profileImage: {
-    type: String,
-    default:
-      "http://localhost:3000/images/c9de67e2-7d7c-4d14-a3f5-b850c3dd17be.png",
-    //기본 프로필 파일
-  },
-});
+  { timestamps: true }
+);
 
 userSchema.pre("save", function (next) {
   var user = this;

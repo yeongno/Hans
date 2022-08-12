@@ -23,6 +23,10 @@ const commentSchema = mongoose.Schema(
     writer: {
       type: String,
     },
+    //작성자 프로필 사진
+    writerProfileImg: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

@@ -1,8 +1,109 @@
 const express = require("express");
 const router = express.Router();
 const { User } = require("../models/User");
+const { Friend } = require("../models/Friend");
 
 const { auth } = require("../middleware/auth");
+const multer = require("multer");
+const path = require("path");
+
+//STORAGE MULTER CONFIG
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/proFileImg/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+  fileFilter: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    if (ext !== ".jpg" || ext !== ".png") {
+      return cb(res.status(400).end("only jpg, png, mp4 is allowed"), false);
+    }
+    cb(null, true);
+  },
+});
+var upload = multer({ storage: storage }).single("file");
+//글 이미지 첨부(테스트)
+let postStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/postImg/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+  fileFilter: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    if (ext !== ".jpg" || ext !== ".png") {
+      return cb(res.status(400).end("only jpg, png, mp4 is allowed"), false);
+    }
+    cb(null, true);
+  },
+});
+
+var postImgUpload = multer({ postStorage: postStorage }).single("postFile");
+router.post("/uploadPostImgfiles", (req, res) => {
+  postImgUpload(req, res, (err) => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+    return res.json({
+      success: true,
+      url: res.req.file.path,
+      fileName: res.req.file.filename,
+    });
+  });
+});
+router.use(
+  "/uploads/postImg",
+  express.static(path.join(__dirname, "/uploads/postImg"))
+);
+//---------------------------------------------
+router.post("/uploadfiles", (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+    return res.json({
+      success: true,
+      url: res.req.file.path,
+      fileName: res.req.file.filename,
+    });
+  });
+});
+
+router.post("/uploadProFileImg", (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.body._id },
+    {
+      proFileImg: req.body.proFileImg,
+    }
+  ).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, result });
+  });
+});
+//포스트 이미지 첨부 라우터(테스트 중)
+router.post("/uploadPostFileImg", (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.body._id },
+    {
+      postFileImg: req.body.postFileImg,
+    }
+  ).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, result });
+  });
+});
+router.get("/getVideos", (req, res) => {
+  //비디오를 DB에서 가져와 클라이언트에 보낸다.
+  Video.find()
+    .populate("writer")
+    .exec((err, videos) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, videos });
+    });
+});
 
 router.post("/register", (req, res) => {
   //회원 가입 할 때 필요한 정보들을 client에서 가져오면
@@ -17,7 +118,12 @@ router.post("/register", (req, res) => {
     });
   });
 });
-
+router.post("/getProFileImg", (req, res) => {
+  User.findOne({ _id: req.body._id }).exec((err, user) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, proFileImg: user.proFileImg });
+  });
+});
 router.post("/login", (req, res) => {
   //요청된 이메일을 데이터베이스에서 있는지 찾는다.
   User.findOne({ email: req.body.email }, (err, user) => {
@@ -73,12 +179,54 @@ router.get("/logout", auth, (req, res) => {
   });
 });
 
-//프로필 사진 설정 라우트
-/*router.post("/getUserProfile", (req, res) => {
-  User.findOne({ _id: localStorage.getItem("userId") }).exec((err, user) => {
+router.post("/updateName", (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.body._id },
+    { name: req.body.name },
+    (err, user) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).send({
+        success: true,
+      });
+    }
+  );
+});
+
+router.post("/getProFile", (req, res) => {
+  User.find({ _id: req.body.userFrom }).exec((err, userInfo) => {
     if (err) return res.status(400).send(err);
-    return res.status(200).json({ success: true, user });
+    return res.status(200).json({ success: true, userInfo });
   });
-});*/
+});
+
+router.get("/getUsers", (req, res) => {
+  User.find({ role: 0 }).exec((err, userInfo) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, userInfo });
+  });
+});
+//친구 추가
+router.post("/addFriend", (req, res) => {
+  const friend = new Friend(req.body);
+
+  friend.save((err, req) => {
+    if (err) return res.json({ addSuccess: false, err });
+    return res.status(200).json({
+      addSuccess: true,
+    });
+  });
+});
+//친구 수 업데이트
+router.post("/updateFriend", (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.body._id },
+    {
+      friends: req.body.friends,
+    }
+  ).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
+  });
+});
 
 module.exports = router;

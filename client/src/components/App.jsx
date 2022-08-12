@@ -13,6 +13,12 @@ import PostUpdatePage from "./views/PostPage/PostUpdatePage";
 import DetailPost from "./views/PostPage/DetailPost";
 import MyFavoriteList from "./views/PostPage/MyFavoriteList";
 import TopicManagementPage from "../topic/TopicManagement";
+import MyProfile from "./views/ProFiles/MyProfile";
+import ProFileList from "./views/ProFiles/ProFileList";
+import ProFile from "./views/ProFiles/ProFile";
+import ModiFyProFile from "./views/ProFiles/ModifyProFile";
+import Buttons from "./views/ProFiles/commons/Buttons";
+import HomeSection from "./views/LandingPage/HomeLandering/HomeSection";
 function App() {
   const LandingPage1 = Auth(LandingPage, null);
   const LoginPage1 = Auth(LoginPage, null);
@@ -22,6 +28,11 @@ function App() {
   const FavoritePage1 = Auth(FavoritePage, true);
   const MyFavoriteList1 = Auth(MyFavoriteList, true);
   const TopicManagementPage1 = Auth(TopicManagementPage, true);
+  const MyProfile1 = Auth(MyProfile, true);
+  const ProFileList1 = Auth(ProFileList, true);
+  const ProFile1 = Auth(ProFile, true);
+  const ModiFyProFile1 = Auth(ModiFyProFile, true);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -37,6 +48,12 @@ function App() {
           <Route path="/favorite" element={<FavoritePage1 />} />
           <Route path="/topic" element={<TopicManagementPage1 />} />
           <Route path="/movie/:movieId" element={<MovieDetail1 />} />
+          <Route path="/proFileList" element={<ProFileList1 />} />
+          <Route path="/:profileId" element={<ProFile1 />} />
+          <Route path="/myProFile" element={<MyProfile1 />} />
+          <Route path="/modifyProFile" element={<ModiFyProFile1 />} />
+          <Route path="/buttons" element={<Buttons />} />
+          <Route path="/homeSection" element={<HomeSection />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -34,7 +34,7 @@ function LoginPage(props) {
       window.localStorage.setItem("userId", response.payload.userId);
       window.localStorage.setItem("name", response.payload.name);
       if (response.payload.loginSuccess) {
-        navigate("/");
+        navigate(window.history.back());
       } else {
         alert("Error");
       }
