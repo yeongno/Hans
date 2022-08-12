@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { postGo } from "../../../_actions/post_action";
 import "./Post.css";
 
-function PostPage() {
+function MyPostPage() {
   const dispatch = useDispatch();
 
   const [Title, setTitle] = useState("");
@@ -67,12 +67,10 @@ function PostPage() {
         alert("Failed to post up");
       }
     });
-    // if (page.page === "myProFile") {
-    //   navigate("/myProFile");
-    // }
+
     message.success("게시글을 작성하였습니다.");
 
-    window.location.reload();
+    navigate(window.history.back());
   };
 
   const { TextArea } = Input;
@@ -247,4 +245,4 @@ function PostPage() {
   );
 }
 
-export default PostPage;
+export default MyPostPage;

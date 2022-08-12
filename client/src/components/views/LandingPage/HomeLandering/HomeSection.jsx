@@ -29,7 +29,7 @@ function HomeSection(props) {
   }, []);
   const fetchPostList = () => {
     if (window.localStorage.getItem("onModify")) {
-      window.localStorage.setItem("onModify", "");
+      window.localStorage.setItem("onModify", true);
       navigate("/myproFile");
     }
     dispatch(getPost({ public: "public" })).then((response) => {

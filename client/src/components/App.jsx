@@ -20,6 +20,7 @@ import UploadVideoPage from "./views/UploadVideoPage/UploadVideoPage";
 import VideoList from "./views/PostPage/VideoList";
 import ProFilePostList from "./views/ProFiles/commons/ProFilePostList";
 import HomeSection from "./views/LandingPage/HomeLandering/HomeSection";
+import MyPostPage from "./views/PostPage/MyPostPage";
 function App() {
   const LandingPage1 = Auth(LandingPage, null);
   const LoginPage1 = Auth(LoginPage, null);
@@ -34,6 +35,7 @@ function App() {
   const ModiFyProFile1 = Auth(ModiFyProFile, true);
   const UploadVideoPage1 = Auth(UploadVideoPage, true);
   const VideoList1 = Auth(VideoList, true);
+  const MyPostPage1 = Auth(MyPostPage, true);
 
   return (
     <BrowserRouter>
@@ -44,6 +46,7 @@ function App() {
           <Route path="/postList" element={<PostList />} />
           <Route path="/myFavoriteList" element={<MyFavoriteList1 />} />
           <Route path="/PostPage" element={<PostPage />} />
+          <Route path="/myProFile/PostPage" element={<MyPostPage1 />} />
           <Route path="/PostPage/:postId" element={<DetailPost />} />
           <Route path="/movie" element={<MoviePage1 />} />
           <Route path="/favorite" element={<FavoritePage1 />} />

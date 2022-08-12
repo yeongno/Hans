@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 function MyProFile() {
   const navigate = useNavigate();
   const onWrite = () => {
-    navigate("/PostPage");
+    navigate("/myProFile/PostPage");
   };
   return (
     <div
