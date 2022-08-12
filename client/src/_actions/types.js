@@ -14,3 +14,5 @@ export const TOPIC_GET = "topic_get";
 export const FRIEND_GO = "friend_go";
 export const PAGE_ModifyMy = "page_modify";
 export const PAGE_FAVORITE = "page_favorite";
+export const VisitBooks_GO = "visitbooks_go";
+export const VisitBooks_GET = "visitbooks_get";

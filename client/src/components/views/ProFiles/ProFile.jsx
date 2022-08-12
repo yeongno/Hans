@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ProFileUserPostList from "./commons/ProFileUserPostList";
 import ProFileInfo from "./commons/ProFileInfo";
+import ProFileVisitorBooks from "./commons/ProfileVisitorBooks"; //방명록 파일 경로
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { addFriendGo } from "../../../_actions/post_action";
@@ -21,6 +22,7 @@ function ProFile() {
   const [OnUserPost, setOnPost] = useState(true);
   const [OnUserInfo, setOnUserInfo] = useState(false);
   const [OnPostList, setOnPostList] = useState(true);
+  const [OnVisitorBooks, setOnVisitorBooks] = useState(false);
 
   const MyName = localStorage.getItem("userId");
 
@@ -28,11 +30,20 @@ function ProFile() {
     setOnUserInfo(true);
     setOnPost(false);
     setOnPostList(false);
+    setOnVisitorBooks(false);
   };
   const onMyPostList = () => {
     setOnPost(true);
     setOnPostList(true);
     setOnUserInfo(false);
+    setOnVisitorBooks(false);
+  };
+
+  const onVisitorBooks = () => {
+    setOnPost(false);
+    setOnPostList(false);
+    setOnUserInfo(false);
+    setOnVisitorBooks(true);
   };
 
   useEffect(() => {
@@ -258,7 +269,7 @@ function ProFile() {
             <Button onClick={onMyPostList}>
               <OrderedListOutlined /> 게시물
             </Button>
-            <Button>
+            <Button onClick={onVisitorBooks}>
               <OrderedListOutlined /> 방명록
             </Button>
           </div>
@@ -275,6 +286,9 @@ function ProFile() {
             <br />
             {OnUserPost && <div>{OnPostList && <ProFileUserPostList />}</div>}
             {OnUserInfo && <div>{OnUserInfo && <ProFileInfo />}</div>}
+            {OnVisitorBooks && (
+              <div>{OnVisitorBooks && <ProFileVisitorBooks />}</div>
+            )}
           </div>
         </Form>
       </div>

@@ -18,6 +18,7 @@ import ProFilePostList from "./commons/ProFilePostList";
 import ProFileFriendList from "./commons/ProFileFriendList";
 import ProFileFriendAway from "./commons/ProFileFriendAway";
 import ProFileMyInfo from "./commons/ProFileMyInfo";
+import ProFilePictureList from "./commons/ProFilePictureList";
 
 function MyProFile() {
   const [Name, setName] = useState("");
@@ -36,6 +37,7 @@ function MyProFile() {
   const [OnMyBanFriends, setOnMyBanFriends] = useState(false);
   const [OnPostList, setOnPostList] = useState(false);
   const [OnFavoritList, setOnFavoritList] = useState(false);
+  const [OnPictureList, setOnFictureList] = useState(false);
 
   const onPostList = () => {
     setOnMyInfo(false);
@@ -43,24 +45,28 @@ function MyProFile() {
     setOnPost(true);
     setOnFriends(false);
     setOnMyFriends(false);
+    setOnFictureList(false);
   };
   const onMyInfo = () => {
     setOnMyInfo(true);
     setOnPost(false);
     setOnFriends(false);
     setOnMyFriends(false);
+    setOnFictureList(false);
   };
   const onMyPostList = () => {
     setOnMyInfo(false);
     setOnFavoritList(false);
     setOnPostList(true);
     setOnMyFriends(false);
+    setOnFictureList(false);
   };
   const onMyFavoriteList = () => {
     setOnMyInfo(false);
     setOnPostList(false);
     setOnFavoritList(true);
     setOnMyFriends(false);
+    setOnFictureList(false);
   };
   const onFriends = () => {
     setOnMyInfo(false);
@@ -70,14 +76,7 @@ function MyProFile() {
     setOnFavoritList(false);
     setOnMyBanFriends(false);
     setOnPost(false);
-  };
-
-  const onAwayFriends = () => {
-    setOnMyInfo(false);
-    setOnMyFriends(false);
-    setOnAwayFriends(true);
-    setOnMyBanFriends(false);
-    setOnPost(false);
+    setOnFictureList(false);
   };
 
   const onMyFriends = () => {
@@ -86,15 +85,20 @@ function MyProFile() {
     setOnAwayFriends(false);
     setOnMyBanFriends(false);
     setOnPost(false);
+    setOnFictureList(false);
   };
 
-  const onMyBanFriends = () => {
+  const onMyPicture = () => {
+    setOnFictureList(true);
     setOnMyInfo(false);
+    setOnFriends(false);
     setOnMyFriends(false);
-    setOnAwayFriends(false);
-    setOnMyBanFriends(true);
+    setOnPostList(false);
+    setOnFavoritList(false);
+    setOnMyBanFriends(false);
     setOnPost(false);
   };
+
   const onDrop = (files) => {
     let formData = new FormData();
     const config = {
@@ -264,7 +268,7 @@ function MyProFile() {
               <TeamOutlined />
               친구
             </Button>
-            <Button>
+            <Button onClick={onMyPicture}>
               <PictureOutlined />
               사진
             </Button>
@@ -311,6 +315,9 @@ function MyProFile() {
             {OnFriends && <div>{OnAwayFriends && <ProFileFriendAway />}</div>}
             {OnFriends && <div>{OnMyBanFriends && <ProFileFriendList />}</div>}
             {OnMyInfo && <div>{OnMyInfo && <ProFileMyInfo />}</div>}
+            {OnPictureList && (
+              <div>{OnPictureList && <ProFilePictureList />}</div>
+            )}
           </div>
         </Form>
       </div>

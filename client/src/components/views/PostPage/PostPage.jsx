@@ -41,6 +41,7 @@ function PostPage() {
   const [image, setImage] = useState(""); //이미지 첨부 관련 변수
   const [Topics, setTopics] = useState([]); //토픽 데이터 불러오기 위한 변수
   const [Topic, setTopic] = useState(""); //토픽 설정 변수
+  const [Thumbnail, setThumbnail] = useState("");
 
   const [flag, setFlag] = useState(false);
   const imgLink = "http://localhost:5000"; //이미지 경로 설정 변수
@@ -80,6 +81,7 @@ function PostPage() {
                 if (response.data.success) {
                   setFlag(true);
                   setFilePath(response.data.url);
+                  setThumbnail(response.data.url);
                   const postFileImg = response.data.url;
                   axios
                     .post("/api/users/uploadPostFileImg", {
@@ -146,6 +148,7 @@ function PostPage() {
         content: Content,
         userFrom: userFrom,
         writer: userName,
+        thumbnail: Thumbnail,
       };
       dispatch(postGo(body)).then((response) => {
         if (response.payload.success) {

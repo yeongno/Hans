@@ -33,6 +33,7 @@ function DetailPost() {
   const [Writer, setWriter] = useState();
   const [FavoriteNumber, setFavoriteNumber] = useState();
   const [Favorited, setFavorited] = useState(false);
+  const [ViewNumber, setViewNumber] = useState();
   //댓글 내용(댓글 등록)
   const [Comment, setComment] = useState("");
   //댓글 작성자
@@ -42,39 +43,6 @@ function DetailPost() {
   const userFrom = localStorage.getItem("userId");
   const userName = localStorage.getItem("name");
 
-  const [likes, setLikes] = useState(0);
-  const [dislikes, setDislikes] = useState(0);
-  const [action, setAction] = useState(null);
-
-  const like = () => {
-    setLikes(1);
-    setDislikes(0);
-    setAction("liked");
-  };
-
-  const dislike = () => {
-    setLikes(0);
-    setDislikes(1);
-    setAction("disliked");
-  };
-
-  const actions = [
-    <Tooltip key="comment-basic-like" title="좋아요">
-      <span onClick={like}>
-        {createElement(action === "liked" ? LikeFilled : LikeOutlined)}
-        <span className="comment-action">{likes}</span>
-      </span>
-    </Tooltip>,
-    <Tooltip key="comment-basic-dislike" title="싫어요">
-      <span onClick={dislike}>
-        {React.createElement(
-          action === "disliked" ? DislikeFilled : DislikeOutlined
-        )}
-        <span className="comment-action">{dislikes}</span>
-      </span>
-    </Tooltip>,
-    <span key="comment-basic-reply-to">Reply to</span>,
-  ];
   const [FilePath, setFilePath] = useState("");
   useEffect(() => {
     fetchUserList();
@@ -92,7 +60,6 @@ function DetailPost() {
         }
       });
   };
-  const [display, setDisplay] = useState(false);
   useEffect(() => {
     fetchCommentList();
   }, []);
@@ -240,11 +207,13 @@ function DetailPost() {
 
   useEffect(() => {
     fetchPostList();
+    fetchpostView();
   }, []);
   const fetchPostList = () => {
     dispatch(getOnePost({ _id: postId })).then((response) => {
       if (response.payload.success) {
         setPosts(response.payload.posts);
+        console.log("info", response.payload.posts);
         setTitle(response.payload.posts[0].title);
         setContent(response.payload.posts[0].content);
         setCreated(response.payload.posts[0].createdAt);
@@ -252,10 +221,21 @@ function DetailPost() {
         setTopic(response.payload.posts[0].topic);
         setWriter(response.payload.posts[0].writer);
         setFavoriteNumber(response.payload.posts[0].favoriteNumber);
+        setViewNumber(response.payload.posts[0].viewNumber);
       } else {
         alert("게시글 정보를 가져오는데 실패하였습니다.");
       }
     });
+    axios
+      .post("/api/posts/updateView", {
+        _id: postId,
+        viewNumber: ViewNumber + 1,
+      })
+      .then((response) => {
+        if (response.data.success) {
+        }
+      });
+
     axios
       .post("/api/favoriteList/favorited", {
         postFrom: postId,
@@ -266,6 +246,19 @@ function DetailPost() {
           setFavorited(Favorited);
         } else {
           alert("Favorited를 가져오는데 실패했습니다.");
+        }
+      });
+  };
+  const fetchpostView = () => {
+    axios
+      .post("/api/posts/updateView", {
+        _id: postId,
+        userFrom: UserFrom,
+        view: ViewNumber + 1,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          console.log("view", ViewNumber);
         }
       });
   };
@@ -368,7 +361,7 @@ function DetailPost() {
                   position: "absolute",
                 }}
               >
-                조회수 : <font color="#BCBCBC">|</font> 좋아요 :{" "}
+                조회수 : {ViewNumber} <font color="#BCBCBC">|</font> 좋아요 :{" "}
                 {FavoriteNumber}{" "}
               </div>
               <div>

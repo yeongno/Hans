@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const VisitorsBookSchema = mongoose.Schema(
   {
     userFrom: {
+      //방명록 작성자
       type: Schema.Types.ObjectId,
     },
     comment: {
@@ -17,7 +18,8 @@ const VisitorsBookSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    thisPostID: {
+    //누구의 방명록에 적을지 구분하는 스키마
+    thisUserID: {
       type: String,
     },
     writer: {

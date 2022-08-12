@@ -27,6 +27,13 @@ const postSchema = mongoose.Schema(
     writer: {
       type: String,
     },
+    viewNumber: {
+      type: Number,
+      default: 0,
+    },
+    thumbnail: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

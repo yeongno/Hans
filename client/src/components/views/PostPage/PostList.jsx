@@ -14,7 +14,7 @@ function PostList() {
   const navigate = useNavigate();
   const [Topics, setTopics] = useState([]); //토픽 데이터 불러오기 위한 변수
   const [Topic, setTopic] = useState(""); //토픽 설정 변수
-  const [View, SetView] = useState(0); //조회수 변수
+  const [View, SetView] = useState(); //조회수 변수
 
   const goPost = () => {
     navigate("/postPage");
@@ -91,26 +91,29 @@ function PostList() {
               position: "absolute",
               marginTop: "-0.25%",
               width: "53.5%",
-              textAlign: "right",
             }}
           >
-            {isAuthor && (
-              <>
-                <Button>수정</Button>
-                <Button
-                  className="delete-button"
-                  onClick={() =>
-                    onClickDelete(posts.title, posts.userFrom, posts.postFrom)
-                  }
-                >
-                  삭제
-                </Button>
-              </>
-            )}
+            <label style={{ textAlign: "left" }}>
+              <Link to={`/postPage/${posts._id}`}>
+                <font color="black">{posts.title} </font>
+              </Link>
+            </label>
+            <label style={{ textAlign: "right", float: "right" }}>
+              {isAuthor && (
+                <>
+                  <Button>수정</Button>
+                  <Button
+                    className="delete-button"
+                    onClick={() =>
+                      onClickDelete(posts.title, posts.userFrom, posts.postFrom)
+                    }
+                  >
+                    삭제
+                  </Button>
+                </>
+              )}
+            </label>
           </div>
-          <Link to={`/postPage/${posts._id}`}>
-            <font color="black">{posts.title} </font>
-          </Link>
         </td>
         <td style={{ textAlign: "center", width: "8%" }}>
           <Link to={`/${posts.userFrom}`}>
@@ -120,7 +123,7 @@ function PostList() {
         <td style={{ textAlign: "center", width: "10%" }}>
           {moment(posts.createdAt).format("M[월] D[일]")}
         </td>
-        <td style={{ textAlign: "center", width: "3%" }}>{View}</td>
+        <td style={{ textAlign: "center", width: "3%" }}>{posts.viewNumber}</td>
         <td style={{ textAlign: "center", width: "3%" }}>
           {posts.favoriteNumber}
         </td>
@@ -166,7 +169,7 @@ function PostList() {
               <th width="200" style={{ textAlign: "center" }}>
                 Date
               </th>
-              <th style={{ textAlign: "center" }}>View</th>
+              <th style={{ textAlign: "center" }}>Views</th>
               <th style={{ textAlign: "center" }}>Like</th>
             </tr>
           </thead>
