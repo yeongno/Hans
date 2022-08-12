@@ -19,14 +19,10 @@ const counterPersistConfig = {
   storage: storage,
 };
 
-// const rootReducer = combineReducers({
-//   counterReducer: persistReducer(counterPersistConfig, counterReducer),
-// });
 const rootReducer = combineReducers({
-  // user,
-  // post,
+  user,
+  post,
   page1: persistReducer(persistConfig, page),
 });
 
-// export default persistReducer(persistConfig, rootReducer);
-export default rootReducer;
+export default persistReducer(persistConfig, rootReducer);

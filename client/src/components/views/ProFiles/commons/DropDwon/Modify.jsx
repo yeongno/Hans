@@ -22,7 +22,6 @@ function Modify(props) {
   }, []);
 
   const fetchPostList = () => {
-    dispatch(myFavorite({ mymodify: "false" }));
     axios
       .post("/api/posts/getImgeFile", { _id: props.postFrom })
       .then((response) => {
@@ -31,7 +30,6 @@ function Modify(props) {
         }
       });
   };
-  console.log(page.myModify1);
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
@@ -75,7 +73,9 @@ function Modify(props) {
         } else {
           alert("게시글을 업로드하지 못하였습니다.");
         }
+        window.localStorage.setItem("userId", response.payload.userId);
       });
+    window.localStorage.setItem("onModify", true);
     message.success("게시글을 수정하였습니다.");
     window.location.reload();
   };

@@ -3,6 +3,8 @@ const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
 const multer = require("multer");
+const { Friend } = require("../models/Friend");
+const path = require("path");
 
 //STORAGE MULTER CONFIG
 let storage = multer.diskStorage({
@@ -113,7 +115,7 @@ router.post("/login", (req, res) => {
         res
           .cookie("x_auth", user.token)
           .status(200)
-          .json({ loginSuccess: true, userId: user._id });
+          .json({ loginSuccess: true, userId: user._id, name: user.name });
       });
     });
   });
@@ -175,6 +177,31 @@ router.get("/getUsers", (req, res) => {
   User.find({ role: 0 }).exec((err, userInfo) => {
     if (err) return res.status(400).send(err);
     return res.status(200).json({ success: true, userInfo });
+  });
+});
+
+//친구 추가
+router.post("/addFriend", (req, res) => {
+  const friend = new Friend(req.body);
+
+  friend.save((err, req) => {
+    if (err) return res.json({ addSuccess: false, err });
+    return res.status(200).json({
+      addSuccess: true,
+      req,
+    });
+  });
+});
+//친구 수 업데이트
+router.post("/updateFriend", (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.body._id },
+    {
+      friends: req.body.friends,
+    }
+  ).exec((err, result) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true });
   });
 });
 

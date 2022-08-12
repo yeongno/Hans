@@ -14,6 +14,7 @@ import Dropzone from "react-dropzone";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProFileFavoriteList from "./commons/ProFileFavoriteList";
+import ProFileFriendList from "./commons/ProFileFriendList";
 import ProFilePostList from "./commons/ProFilePostList";
 import ModifyProFile from "./ModifyProFile";
 
@@ -28,22 +29,35 @@ function MyProFile() {
   const [OnPostList, setOnPostList] = useState(true);
   const [OnFavoritList, setOnFavoritList] = useState(false);
   const [OnInformation, setOnInformation] = useState(false);
+  const [OnFriend, setOnFriend] = useState(false);
 
   const onPostList = () => {
     setOnInformation(false);
+    setOnFriend(false);
     setOnPost(true);
   };
   const onMyPostList = () => {
     setOnFavoritList(false);
+    setOnFriend(false);
     setOnPostList(true);
   };
   const onMyFavoriteList = () => {
     setOnPostList(false);
+    setOnFriend(false);
     setOnFavoritList(true);
   };
   const onInfor = () => {
     setOnPost(false);
+    setOnFriend(false);
     setOnInformation(true);
+    console.log("onfriend", OnFriend);
+  };
+
+  const onFriend = () => {
+    setOnPost(false);
+    setOnInformation(false);
+    setOnFriend(true);
+    console.log("onfriend", OnFriend);
   };
 
   const onDrop = (files) => {
@@ -206,7 +220,7 @@ function MyProFile() {
               <InfoCircleOutlined />
               정보
             </Button>
-            <Button>
+            <Button onClick={onFriend}>
               <TeamOutlined />
               친구
             </Button>
@@ -229,17 +243,23 @@ function MyProFile() {
             }}
           >
             <div></div>
-            <Button onClick={onMyPostList} style={{ width: "50%" }}>
-              MyPostList
-            </Button>
-            <Button onClick={onMyFavoriteList} style={{ width: "50%" }}>
-              FavoriteList
-            </Button>
+
             <br />
             <br />
-            {OnPost && <div>{OnPostList && <ProFilePostList />}</div>}
+            {OnPost && (
+              <div>
+                <Button onClick={onMyPostList} style={{ width: "50%" }}>
+                  MyPostList
+                </Button>
+                <Button onClick={onMyFavoriteList} style={{ width: "50%" }}>
+                  FavoriteList
+                </Button>{" "}
+                {OnPostList && <ProFilePostList />}
+              </div>
+            )}
             {OnPost && <div>{OnFavoritList && <ProFileFavoriteList />}</div>}
             {OnInformation && <ModifyProFile />}
+            {OnFriend && <ProFileFriendList />}
           </div>
         </Form>
       </div>

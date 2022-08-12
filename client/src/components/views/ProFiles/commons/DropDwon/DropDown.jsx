@@ -35,6 +35,7 @@ function DropDown(props) {
       postFrom: props.postFrom,
       userFrom: localStorage.getItem("userId"),
     });
+    window.localStorage.setItem("onModify", true);
     window.location.reload();
   };
 

@@ -1,9 +1,7 @@
-// import { Axios } from "axios";
-// import { response } from 'express'
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginPage(props) {
   const dispatch = useDispatch();
@@ -30,11 +28,22 @@ function LoginPage(props) {
       password: Password,
     };
 
+    // dispatch(loginUser(body)).then((response) => {
+    //   window.localStorage.setItem("userId", response.payload.userId);
+    //   window.localStorage.setItem("name", response.payload.name);
+    //   if (response.payload.loginSuccess) {
+    //     navigate(window.history.back());
+    //   } else {
+    //     alert("Error");
+    //   }
+    // });
+
     dispatch(loginUser(body)).then((response) => {
       window.localStorage.setItem("userId", response.payload.userId);
+      window.localStorage.setItem("name", response.payload.name);
       if (response.payload.loginSuccess) {
-        // navigate("/");
-        window.location.reload("/");
+        // navigate(window.history.back());
+        navigate("/homeSection");
       } else {
         alert("Error");
       }
@@ -58,6 +67,9 @@ function LoginPage(props) {
         <input type="email" value={Email} onChange={onEmailHandler} />
         <label>password</label>
         <input type="password" value={Password} onChange={onPasswordHandler} />
+        <br />
+        <label>Not a member?</label>
+        <Link to="/register">Register</Link>
         <br />
         <button type="submit">Login</button>
       </form>

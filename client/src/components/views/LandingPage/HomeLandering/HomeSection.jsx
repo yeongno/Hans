@@ -2,6 +2,7 @@ import { Button, Col, Input, Menu, Upload } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { myFavorite, myProfileModify } from "../../../../_actions/page_action";
 import { getPost } from "../../../../_actions/post_action";
 import HomeLandingList from "./HomeLandingList";
@@ -13,16 +14,20 @@ function HomeSection(props) {
   const user = useSelector((state) => state.user);
   const page = useSelector((state) => state.page);
   const [replyOpen, setreplyOpen] = useState(false);
+  const navigate = useNavigate();
   const onReply = () => {
     setreplyOpen(true);
   };
+
   const dispatch = useDispatch();
   useEffect(() => {
     fetchPostList();
   }, []);
   const fetchPostList = () => {
-    // dispatch(myFavorite({ modify: true }));
-    console.log(page.myModify);
+    if (window.localStorage.getItem("onModify")) {
+      window.localStorage.setItem("onModify", "");
+      navigate("/myproFile");
+    }
     dispatch(getPost({ public: "public" })).then((response) => {
       if (response.payload.success) {
         setPosts(response.payload.posts);
@@ -33,16 +38,48 @@ function HomeSection(props) {
   };
   const renderCards = Posts.map((posts, index) => {
     return (
-      <Col key={index}>
-        <div>
-          <HomeLandingList postFrom={posts._id} userFrom={posts.userFrom} />
-        </div>
-      </Col>
+      <div>
+        <Col key={index}>
+          <div style={{ marginLeft: "10%", marginRight: "10%" }}>
+            <div
+              style={{
+                background: "white",
+                width: "100%",
+                height: "100%",
+                marginRight: "10%",
+                borderRadius: "2.5px",
+                boxShadow: "0px 0px 0px 1px #E2E2E2",
+                marginBottom: "10px",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  // display: "flex",
+                  justifyContent: "center",
+                  position: "relative",
+                }}
+              >
+                <div>
+                  <HomeLandingList
+                    postFrom={posts._id}
+                    userFrom={posts.userFrom}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </div>
     );
   });
 
   return (
     <div>
+      <div
+        style={{ height: "300px", background: "yellow", marginBottom: "20px" }}
+      ></div>
       <div>{renderCards}</div>
     </div>
   );
