@@ -69,10 +69,7 @@ function HomeLandingList(props) {
         }}
       >
         <div>
-          <div
-            style={{ display: "flex", marginBottom: "10px" }}
-            onClick={onProfile1}
-          >
+          <div style={{ display: "flex", marginBottom: "10px" }}>
             {FilePath && (
               <img
                 style={{
@@ -87,6 +84,7 @@ function HomeLandingList(props) {
                   marginLeft: "5px",
                   marginRight: "10px",
                 }}
+                onClick={onProfile1}
                 src={`http://localhost:5000/${FilePath}`}
               />
             )}
