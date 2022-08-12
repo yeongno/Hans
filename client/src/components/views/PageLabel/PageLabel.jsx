@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Home from "./Home";
+import Login from "./Login";
 import MyProFile from "./MyProFile";
 import ProFile from "./ProFile";
 import Register from "./Register";
@@ -17,7 +18,8 @@ function PageLabel() {
       {page.page === "home" && <Home />}
       {page.page === "myProFile" && <MyProFile />}
       {page.page === "proFile" && <ProFile />}
-      {page.page === "register" && <Register />}
+      {page.page === "Register" && <Register />}
+      {page.page === "login" && <Login />}
     </div>
   );
 }

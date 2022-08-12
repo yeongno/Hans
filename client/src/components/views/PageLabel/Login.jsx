@@ -1,13 +1,10 @@
-import {
-  EditOutlined,
-  FormOutlined,
-  HomeOutlined,
-  SolutionOutlined,
-  TeamOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, HomeOutlined, KeyOutlined } from "@ant-design/icons";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function Register() {
+function Login() {
+  const navigate = useNavigate();
+
   return (
     <div
       style={{
@@ -16,7 +13,7 @@ function Register() {
         display: "flex",
       }}
     >
-      <FormOutlined
+      <KeyOutlined
         height={"100px"}
         style={{
           fontSize: "50px",
@@ -33,10 +30,10 @@ function Register() {
           color: "white",
         }}
       >
-        <span>Register</span>
+        <span>Login</span>
       </div>
     </div>
   );
 }
 
-export default Register;
+export default Login;

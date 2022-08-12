@@ -85,9 +85,7 @@ function HomeSection(props) {
 
   return (
     <div>
-      <div
-        style={{ height: "300px", background: "yellow", marginBottom: "20px" }}
-      ></div>
+      <div style={{ marginTop: "20px" }} />
       <div>{renderCards}</div>
     </div>
   );

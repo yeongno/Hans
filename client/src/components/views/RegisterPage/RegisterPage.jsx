@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../../_actions/user_action";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import logo from "../../../logo.svg";
 import Regist from "./RegisterPage.module.css";
-import { register } from "../../../_actions/page_action";
+import { home, register } from "../../../_actions/page_action";
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
@@ -14,7 +14,9 @@ function RegisterPage(props) {
   const [Name, setName] = useState("");
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
-  dispatch(register({ page: "Register" }));
+  useEffect(() => {
+    dispatch(register({ page: "Register" }));
+  }, []);
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);

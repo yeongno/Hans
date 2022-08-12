@@ -6,18 +6,27 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { home } from "../../../_actions/page_action";
+import { useSelector } from "react-redux";
 
 export default function NavBar() {
+  const [onOut, setOnOut] = useState(false);
   let navigate = useNavigate();
   const goToLogin = () => {
     navigate("./login");
   };
+  const page = useSelector((state) => state.page.currentPage);
+  const user = useSelector((state) => state.user);
 
   const [FilePath, setFilePath] = useState("");
   useEffect(() => {
     fetchUserList();
   }, []);
   const fetchUserList = () => {
+    if (page.page === "login" || page.page == "Ragister") {
+      setOnOut(true);
+    } else {
+      setOnOut(false);
+    }
     axios
       .post("/api/users/getProFile", {
         userFrom: localStorage.getItem("userId"),
@@ -38,10 +47,13 @@ export default function NavBar() {
         window.localStorage.setItem("userId", " ");
         window.localStorage.setItem("name", " ");
         alert("로그아웃 하는데 성공했습니다.");
-      } else {
-        // navigate(window.history.back());
-        alert("로그아웃 하는데 실패했습니다.");
       }
+      // else {
+      //   // navigate(window.history.back());
+      //   alert("로그아웃 하는데 실패했습니다.");
+      // }
+
+      navigate("/login");
     });
   };
   const dispatch = useDispatch();
@@ -67,12 +79,12 @@ export default function NavBar() {
         <div className={navBar.navBar_inner}>
           <div className={navBar.sub_menu}>
             <ul className={navBar.menu}>
-              {isUser && (
+              {onOut && (
                 <li>
                   <a onClick={goToLogin}>Sign In</a>
                 </li>
               )}
-              {!isUser && (
+              {!onOut && (
                 <>
                   <li>
                     <img

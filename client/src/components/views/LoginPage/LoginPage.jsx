@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
 import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../../_actions/page_action";
+import loginPage from "./LoginPage.module.css";
+import { Button } from "antd";
 
+import {
+  RightSquareOutlined,
+  BorderOuterOutlined,
+  QrcodeOutlined,
+} from "@ant-design/icons";
 function LoginPage(props) {
   const dispatch = useDispatch();
   const [Email, setEmail] = useState("");
@@ -15,6 +23,12 @@ function LoginPage(props) {
   const onPasswordHandler = (event) => {
     setPassword(event.currentTarget.value);
   };
+  useEffect(() => {
+    dispatch(login({ page: "login" }));
+    console.log("los");
+  }, []);
+
+  dispatch(login({ page: "login" }));
 
   const navigate = useNavigate();
   const onSubmitHandler = (event) => {
@@ -28,21 +42,10 @@ function LoginPage(props) {
       password: Password,
     };
 
-    // dispatch(loginUser(body)).then((response) => {
-    //   window.localStorage.setItem("userId", response.payload.userId);
-    //   window.localStorage.setItem("name", response.payload.name);
-    //   if (response.payload.loginSuccess) {
-    //     navigate(window.history.back());
-    //   } else {
-    //     alert("Error");
-    //   }
-    // });
-
     dispatch(loginUser(body)).then((response) => {
       window.localStorage.setItem("userId", response.payload.userId);
       window.localStorage.setItem("name", response.payload.name);
       if (response.payload.loginSuccess) {
-        // navigate(window.history.back());
         navigate("/homeSection");
       } else {
         alert("Error");
@@ -50,29 +53,44 @@ function LoginPage(props) {
     });
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
-      <form
-        style={{ display: "flex", flexDirection: "column" }}
-        onSubmit={onSubmitHandler}
-      >
-        <label>Email</label>
-        <input type="email" value={Email} onChange={onEmailHandler} />
-        <label>password</label>
-        <input type="password" value={Password} onChange={onPasswordHandler} />
-        <br />
-        <label>Not a member?</label>
-        <Link to="/register">Register</Link>
-        <br />
-        <button type="submit">Login</button>
-      </form>
+    <div className={loginPage.wrapper}>
+      <div className={loginPage.lwrap}>
+        <ul className={loginPage.login_type}>
+          <Button className={loginPage.bt1}>
+            <RightSquareOutlined />
+            ID 로그인
+          </Button>
+          <Button className={loginPage.bt2}>
+            <BorderOuterOutlined /> 1회용 로그인
+          </Button>
+          <Button className={loginPage.bt3}>
+            <QrcodeOutlined />
+            QR코드
+          </Button>
+        </ul>
+        <div className={loginPage.loginfrm}>
+          <form className={loginPage.form} onSubmit={onSubmitHandler}>
+            <input
+              type="email"
+              value={Email}
+              onChange={onEmailHandler}
+              placeholder="이메일"
+              className={loginPage.email}
+            />
+            <input
+              type="password"
+              value={Password}
+              onChange={onPasswordHandler}
+              placeholder="비밀번호"
+              className={loginPage.password}
+            />
+            <br />
+            <button className={loginPage.lobb} type="submit">
+              로그인
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
