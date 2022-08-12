@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Home from "./Home";
 import MyProFile from "./MyProFile";
 import ProFile from "./ProFile";
+import Register from "./Register";
 
 function PageLabel() {
   const [first, setfirst] = useState(true);
@@ -16,6 +17,7 @@ function PageLabel() {
       {page.page === "home" && <Home />}
       {page.page === "myProFile" && <MyProFile />}
       {page.page === "proFile" && <ProFile />}
+      {page.page === "register" && <Register />}
     </div>
   );
 }

@@ -53,14 +53,12 @@ function MyProFile() {
     setOnPost(false);
     setOnFriend(false);
     setOnInformation(true);
-    console.log("onfriend", OnFriend);
   };
 
   const onFriend = () => {
     setOnPost(false);
     setOnInformation(false);
     setOnFriend(true);
-    console.log("onfriend", OnFriend);
   };
 
   const onDrop = (files) => {

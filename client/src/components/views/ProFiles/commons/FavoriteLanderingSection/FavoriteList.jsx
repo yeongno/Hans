@@ -49,7 +49,6 @@ function FavoriteList(props) {
         });
       if (userFrom1 === localStorage.getItem("userId")) {
         steCompare(true);
-        console.log("yes~~");
       }
     });
   };

@@ -42,7 +42,6 @@ function ProFile() {
       .post("/api/users/getProFile", { userFrom: profileId })
       .then((response) => {
         if (response.data.success) {
-          console.log(response.data.userInfo);
           setName(response.data.userInfo[0].name);
           setEmail(response.data.userInfo[0].email);
           setProfileImg(response.data.userInfo[0].proFileImg);
@@ -56,7 +55,6 @@ function ProFile() {
       })
       .then((response) => {
         if (response.data.success) {
-          console.log(response.data.userInfo);
           setAddFriendNumber(response.data.userInfo[0].friends);
         } else {
           alert("유저 정보를 가져오는데 실패하였습니다.");
@@ -70,7 +68,6 @@ function ProFile() {
       .then((response) => {
         if (response.data.success) {
           setMyFriend(response.data.result[0].myFriend);
-          console.log("myFriend", response.data.result[0].myFriend);
         } else {
           alert("MyFriend를 가져오는데 실패했습니다.");
         }
@@ -90,10 +87,7 @@ function ProFile() {
         alert("친구 추가에 성공했습니다.");
         // fetchMyUserList();
         fetchUserList();
-        console.log(response);
-        console.log("addfriend", response.data.req.myFriend);
       } else {
-        console.log(response.data);
         alert("친구 추가에 실패했습니다.");
       }
     });
@@ -121,7 +115,6 @@ function ProFile() {
           // fetchMyUserList();
           fetchUserList();
           setMyFriend(0);
-          console.log(response);
         } else {
           alert("리스트에서 지우는데 실패 했습니다.");
         }

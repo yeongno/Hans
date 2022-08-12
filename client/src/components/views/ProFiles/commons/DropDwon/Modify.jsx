@@ -75,7 +75,7 @@ function Modify(props) {
         }
         window.localStorage.setItem("userId", response.payload.userId);
       });
-    window.localStorage.setItem("onModify", true);
+    // window.localStorage.setItem("onModify", true);
     message.success("게시글을 수정하였습니다.");
     window.location.reload();
   };

@@ -21,7 +21,6 @@ function ProFileFriendList() {
       .then((response) => {
         if (response.data.success) {
           setFriends(response.data.users);
-          console.log(response.data.users);
         } else {
           alert("친구 정보를 가져오는데 실패하였습니다.");
         }

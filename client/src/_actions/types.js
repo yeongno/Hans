@@ -8,3 +8,5 @@ export const PAGE_MYPROFILE = "page_myProFile";
 export const PAGE_HOME = "page_home";
 export const PAGE_WRITE = "page_write";
 export const PAGE_PROFILE = "page_proFile";
+export const PAGE_LOGIN = "page_login";
+export const PAGE_REGISTER = "page_register";

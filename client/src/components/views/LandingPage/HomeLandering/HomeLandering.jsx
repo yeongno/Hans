@@ -8,8 +8,8 @@ import HomeSection from "./HomeSection";
 
 function HomeLandering() {
   const page = useSelector((state) => state.page);
-  const [onModify, setModify] = useState(false);
-  const [onHandler, setOnHandler] = useState(false);
+  // const [onModify, setModify] = useState(false);
+  // const [onHandler, setOnHandler] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     // console.log(page.myModify);

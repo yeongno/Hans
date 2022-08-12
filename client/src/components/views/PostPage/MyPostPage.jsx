@@ -61,9 +61,7 @@ function MyPostPage() {
     dispatch(postGo(body)).then((response) => {
       if (response.payload.success) {
         alert("Successed to post up");
-        console.log(response);
       } else {
-        console.log(response.payload.req);
         alert("Failed to post up");
       }
     });

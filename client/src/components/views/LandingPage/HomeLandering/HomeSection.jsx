@@ -28,8 +28,11 @@ function HomeSection(props) {
     fetchPostList();
   }, []);
   const fetchPostList = () => {
-    if (window.localStorage.getItem("onModify")) {
-      window.localStorage.setItem("onModify", true);
+    // if (window.localStorage.getItem("onModify")) {
+    //   window.localStorage.setItem("onModify", true);
+    //   navigate("/myproFile");
+    // }
+    if (page.page === "myProFile") {
       navigate("/myproFile");
     }
     dispatch(getPost({ public: "public" })).then((response) => {

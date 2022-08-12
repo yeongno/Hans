@@ -42,7 +42,6 @@ function ProFileUserPostList(props) {
       .then((response) => {
         if (response.data.success) {
           setPosts(response.data.posts);
-          console.log(Posts[0]);
         } else {
           alert("게시글 정보를 가져오는데 실패하였습니다.");
         }
@@ -58,9 +57,7 @@ function ProFileUserPostList(props) {
   };
   dispatch(proFile({ page: "proFile", name: userName }));
 
-  const onClickLike = (id) => {
-    console.log(id);
-  };
+  const onClickLike = (id) => {};
   const [Favorited, setFavorited] = useState(0);
 
   const renderCards = Posts.map((posts, index) => {

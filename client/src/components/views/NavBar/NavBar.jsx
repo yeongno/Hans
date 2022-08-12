@@ -4,6 +4,8 @@ import { React, useState } from "react";
 import { useNavigate, useResolvedPath } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { home } from "../../../_actions/page_action";
 
 export default function NavBar() {
   let navigate = useNavigate();
@@ -32,18 +34,23 @@ export default function NavBar() {
   const goToLogout = () => {
     axios.get("/api/users/logout").then((response) => {
       if (response.data.success) {
-        navigate("./login");
+        navigate("/login");
         window.localStorage.setItem("userId", " ");
         window.localStorage.setItem("name", " ");
         alert("로그아웃 하는데 성공했습니다.");
       } else {
-        navigate(window.history.back());
+        // navigate(window.history.back());
         alert("로그아웃 하는데 실패했습니다.");
       }
     });
   };
+  const dispatch = useDispatch();
   const goToHome = () => {
-    navigate("/homeSection");
+    dispatch(home({ page: "home" }));
+    window.localStorage.setItem("onModify", false);
+    window.location.reload();
+
+    // navigate("/homeSection");
   };
   const goProfile = () => {
     navigate("/myProFile");
@@ -99,7 +106,7 @@ export default function NavBar() {
               <div className={navBar.icon}></div>
             </div> */}
           </div>
-          <Drop />
+          {/* <Drop /> */}
         </div>
       </div>
     </div>
