@@ -6,6 +6,7 @@ import { ProfileOutlined, SmileOutlined } from "@ant-design/icons";
 import DropDown from "../../ProFiles/commons/DropDwon/DropDown";
 import ReplyButton from "../../ProFiles/commons/ReplySection/ReplyButton";
 import LikeButton from "../../ProFiles/commons/LikeButton";
+import { useNavigate } from "react-router-dom";
 
 function HomeLandingList(props) {
   const postFrom = props.postFrom;
@@ -49,7 +50,11 @@ function HomeLandingList(props) {
       }
     });
   };
+  const navigate = useNavigate();
 
+  const onProfile1 = () => {
+    navigate(`/${userFrom}`);
+  };
   return (
     <div>
       <div
@@ -64,7 +69,10 @@ function HomeLandingList(props) {
         }}
       >
         <div>
-          <div style={{ display: "flex", marginBottom: "10px" }}>
+          <div
+            style={{ display: "flex", marginBottom: "10px" }}
+            onClick={onProfile1}
+          >
             {FilePath && (
               <img
                 style={{

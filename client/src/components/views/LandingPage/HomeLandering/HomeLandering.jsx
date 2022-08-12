@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../NavBar/NavBar";
+import PageLabel from "../../PageLabel/PageLabel";
 import HomeSection from "./HomeSection";
 
 function HomeLandering() {
@@ -22,6 +23,7 @@ function HomeLandering() {
   return (
     <div>
       <NavBar />
+      <PageLabel />
     </div>
   );
 }

@@ -31,33 +31,6 @@ function ProFileFavoriteList(props) {
         }
       });
   };
-  // const onOption = () => {};
-
-  // // 해당 기능은 상세페이지에서 구현
-  // const onClickDelete = (title, userFrom, postFrom) => {
-  //   const variables = {
-  //     title,
-  //     userFrom,
-  //     postFrom,
-  //   };
-
-  //   axios.post("/api/posts/removePost", variables).then((response) => {
-  //     if (response.data.success) {
-  //       fetchPostList();
-  //     } else {
-  //       alert("리스트에서 지우는데 실패 했습니다.");
-  //     }
-  //   });
-  //   axios
-  //     .post("/api/favoriteList/removeFavorites", variables)
-  //     .then((response) => {
-  //        .log(variables);
-  //     });
-  // };
-  // const onClickLike = (id) => {
-  //    .log(id);
-  // };
-  // const [Favorited, setFavorited] = useState(0);
 
   const renderCards = Posts.map((posts, index) => {
     return (

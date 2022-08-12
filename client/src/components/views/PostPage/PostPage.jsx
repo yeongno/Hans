@@ -1,6 +1,7 @@
-import { CameraOutlined } from "@ant-design/icons";
-import { Button, Form } from "antd";
+import { CameraOutlined, PlusSquareOutlined } from "@ant-design/icons";
+import { Button, Col, Form, Input, Row } from "antd";
 import axios from "axios";
+import { title } from "process";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
@@ -12,10 +13,8 @@ function PostPage() {
 
   const [Title, setTitle] = useState("");
   const [Content, setContent] = useState("");
-  const [Contentset, setContents] = useState("");
-
   const [FilePath, setFilePath] = useState("");
-
+  const userFrom = localStorage.getItem("userId");
   const onTitleHandler = (event) => {
     setTitle(event.currentTarget.value);
   };
@@ -48,16 +47,7 @@ function PostPage() {
     });
   };
 
-  const onContent = (event) => {
-    setContents(event.currentTarget.value);
-  };
-  const userFrom = localStorage.getItem("userId");
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-
-    console.log("Title", Title);
-    console.log("Content", Content);
-    console.log("FilePath", FilePath);
+  const onPost = () => {
     let body = {
       title: Title,
       content: Content,
@@ -75,72 +65,174 @@ function PostPage() {
     });
   };
 
+  const { TextArea } = Input;
+
   return (
     <div>
-      <Form>
-        <div>
-          {/* Drop Zone */}
-          <div
-            style={{
-              width: "100px",
-              height: "100px",
-              display: "flex",
-              justifyContent: "center",
-              position: "relative",
-            }}
-            // className={top.dropZone}
-          >
-            {FilePath && (
-              <div>
-                <img
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                    border: "1px solid lightgray",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: "50px",
-                    boxShadow: "1px 1px 1px 1px inset",
-                  }}
-                  src={`http://localhost:5000/${FilePath}`}
-                  alt="thumbnail"
-                />
-              </div>
-            )}
-            <Dropzone onDrop={onDrop} multiple={false} maxSize={10000000}>
-              {({ getRootProps, getInputProps }) => (
+      <div style={{ display: "flex", width: "1500px" }}>
+        <div style={{ width: "100px" }}>
+          <div style={{ marginLeft: "30px" }}>
+            <div
+              style={{
+                marginTop: "10px",
+                border: "2px solid black",
+                fontSize: "30px",
+                borderRadius: "10px",
+              }}
+            >
+              <span>제목</span>
+            </div>
+            <div
+              style={{
+                marginTop: "15px",
+                border: "2px solid black",
+                borderRadius: "10px",
+                fontSize: "30px",
+              }}
+            >
+              <span>내용</span>
+            </div>
+            <div
+              style={{
+                marginTop: "180px",
+                border: "2px solid black",
+                borderRadius: "10px",
+                fontSize: "30px",
+              }}
+            >
+              <span>사진</span>
+            </div>
+          </div>
+        </div>
+        <Form style={{ width: "1400px" }}>
+          <Row justify="start" style={{ margin: 10 }}>
+            <Col span={20}>
+              <TextArea
+                style={{
+                  borderRadius: "5px",
+                  width: "calc(100%)",
+                  height: "calc(100%)",
+                  overflow: "auto",
+                  scrollbarWidth: "none",
+                  resize: "none",
+                  border: "2px solid black",
+                }}
+                placeholder="제목을 입력하세요"
+                onChange={onTitleHandler}
+                value={Title}
+              />
+            </Col>
+          </Row>
+          <Row justify="start" style={{ margin: 10, height: "200px" }}>
+            <Col span={20}>
+              <TextArea
+                style={{
+                  borderRadius: "5px",
+                  width: "calc(100%)",
+                  height: "calc(100%)",
+                  overflow: "auto",
+                  scrollbarWidth: "none",
+                  border: "2px solid black",
+                  resize: "none",
+                }}
+                placeholder="내용을 입력하세요"
+                onChange={onContentHandler}
+                value={Content}
+              />
+            </Col>
+          </Row>
+
+          <div style={{ display: "flex" }}>
+            {/* <div style={{ width: "200px", height: "200px", background: "blue" }}>
+          <button style={{ margin: "5.2rem 5.2rem" }}>
+            <PlusSquareOutlined />
+          </button>
+        </div> */}
+
+            <div
+              style={{
+                position: "relative",
+                marginLeft: "15px",
+                marginTop: "20px",
+                width: "250px",
+                height: "250px",
+                paddingLeft: "25px",
+                paddingTop: "25px",
+                borderRadius: "30px",
+                border: "5px solid gray",
+              }}
+            >
+              {FilePath && (
                 <div
                   style={{
-                    width: "10px",
-                    height: "10px",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    width: "200px",
+                    height: "200px",
                     position: "absolute",
-                    top: "67%",
-                    left: "67%",
-                    opacity: "75%",
                   }}
-                  {...getRootProps()}
                 >
-                  <input {...getInputProps()} />
-                  <Button
-                    icon={<CameraOutlined />}
-                    style={{ fontSize: "3rem" }}
+                  <img
+                    style={{
+                      alignItems: "center",
+                      width: "200px",
+                      height: "200px",
+                      justifyContent: "center",
+                      boxShadow: "1px 1px 1px 1px inset",
+                    }}
+                    src={`http://localhost:5000/${FilePath}`}
+                    alt="thumbnail"
                   />
                 </div>
               )}
-            </Dropzone>
+              <div
+                style={{
+                  position: "absoulte",
+                  width: "200px",
+                  height: "200px",
+                }}
+              >
+                <Dropzone onDrop={onDrop} multiple={false} maxSize={10000000}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div
+                      style={{
+                        width: "10px",
+                        height: "10px",
+                      }}
+                      {...getRootProps()}
+                    >
+                      <input {...getInputProps()} />
+                      <Button
+                        icon={<CameraOutlined />}
+                        style={{ fontSize: "3rem", margin: "5rem 5rem" }}
+                      />
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
+            </div>
+            <div
+              style={{
+                width: "900px",
+                paddingLeft: "795px",
+                paddingTop: "40px",
+                justifyContent: "center",
+              }}
+            >
+              <button
+                style={{
+                  width: "100px",
+                  height: "70px",
+                  border: "2px solid black",
+                  background: "none",
+                  borderRadius: "5px",
+                }}
+                onClick={onPost}
+              >
+                Submit
+              </button>
+            </div>
           </div>
-          <label>Title</label>
-          <input type="text" value={Title} onChange={onTitleHandler} />
-        </div>
-        <div>
-          <label>Content</label>
-          <input type="text" value={Content} onChange={onContentHandler} />
-        </div>
-        <button onClick={onSubmitHandler}>Submit1</button>
-        <input type="text" value={Contentset} onChange={onContent} />
-      </Form>
+        </Form>
+      </div>
     </div>
   );
 }

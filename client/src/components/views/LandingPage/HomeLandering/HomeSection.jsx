@@ -3,7 +3,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { myFavorite, myProfileModify } from "../../../../_actions/page_action";
+import {
+  home,
+  myFavorite,
+  myProfileModify,
+} from "../../../../_actions/page_action";
 import { getPost } from "../../../../_actions/post_action";
 import HomeLandingList from "./HomeLandingList";
 
@@ -35,6 +39,7 @@ function HomeSection(props) {
         alert("게시글 정보를 가져오는데 실패하였습니다.");
       }
     });
+    dispatch(home({ page: "home" }));
   };
   const renderCards = Posts.map((posts, index) => {
     return (

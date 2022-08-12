@@ -22,7 +22,7 @@ const counterPersistConfig = {
 const rootReducer = combineReducers({
   user,
   post,
-  page1: persistReducer(persistConfig, page),
+  page,
 });
 
 export default persistReducer(persistConfig, rootReducer);

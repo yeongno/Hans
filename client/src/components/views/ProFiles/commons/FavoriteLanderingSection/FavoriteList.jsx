@@ -7,6 +7,7 @@ import { ProfileOutlined, SmileOutlined } from "@ant-design/icons";
 import ReplyButton from "../ReplySection/ReplyButton";
 import LikeButton from "../LikeButton";
 import { Default_img } from "../../../../Config";
+import { useNavigate } from "react-router-dom";
 
 function FavoriteList(props) {
   const postFrom = props.postFrom;
@@ -52,7 +53,11 @@ function FavoriteList(props) {
       }
     });
   };
-  // console.logK(userFrom, " user f ro m");
+  const navigate = useNavigate();
+
+  const onProfile1 = () => {
+    navigate(`/${userFrom}`);
+  };
   const onErrorHandler = (e) => {
     e.targetsrc = Default_img;
   };
@@ -69,6 +74,7 @@ function FavoriteList(props) {
           boxShadow: "0px 0px 0px 1px #E2E2E2",
           marginBottom: "10px",
         }}
+        onClick={onProfile1}
       >
         <div>
           <div style={{ display: "flex", marginBottom: "10px" }}>

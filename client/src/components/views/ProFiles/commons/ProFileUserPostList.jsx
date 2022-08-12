@@ -15,6 +15,7 @@ import moment from "moment";
 import LikeButton from "./LikeButton";
 import ReplyButton from "./ReplySection/ReplyButton";
 import DropDown from "./DropDwon/DropDown";
+import { myProFile, proFile } from "../../../../_actions/page_action";
 
 function ProFileUserPostList(props) {
   const profileId = useParams().profileId;
@@ -24,6 +25,8 @@ function ProFileUserPostList(props) {
   const [Ondefault, setdefault] = useState(false);
   const user = useSelector((state) => state.user);
   const [replyOpen, setreplyOpen] = useState(false);
+  const [userName, setUserName] = useState("");
+  const dispatch = useDispatch();
   const onReply = () => {
     setreplyOpen(true);
   };
@@ -49,9 +52,12 @@ function ProFileUserPostList(props) {
       .then((response) => {
         if (response.data.success) {
           setFilePath(response.data.proFileImg);
+          setUserName(response.data.userInfo.name);
         }
       });
   };
+  dispatch(proFile({ page: "proFile", name: userName }));
+
   const onClickLike = (id) => {
     console.log(id);
   };

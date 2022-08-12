@@ -11,8 +11,9 @@ import { Button, Form, Input } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { myProFile } from "../../../_actions/page_action";
 import ProFileFavoriteList from "./commons/ProFileFavoriteList";
 import ProFileFriendList from "./commons/ProFileFriendList";
 import ProFilePostList from "./commons/ProFilePostList";
@@ -30,6 +31,8 @@ function MyProFile() {
   const [OnFavoritList, setOnFavoritList] = useState(false);
   const [OnInformation, setOnInformation] = useState(false);
   const [OnFriend, setOnFriend] = useState(false);
+
+  const dispatch = useDispatch();
 
   const onPostList = () => {
     setOnInformation(false);
@@ -104,6 +107,7 @@ function MyProFile() {
           alert("유저 정보를 가져오는데 실패하였습니다.");
         }
       });
+    dispatch(myProFile({ page: "myProFile" }));
   };
 
   return (
