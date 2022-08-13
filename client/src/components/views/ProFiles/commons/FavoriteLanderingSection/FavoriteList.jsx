@@ -73,7 +73,6 @@ function FavoriteList(props) {
           boxShadow: "0px 0px 0px 1px #E2E2E2",
           marginBottom: "10px",
         }}
-        onClick={onProfile1}
       >
         <div>
           <div style={{ display: "flex", marginBottom: "10px" }}>
@@ -92,6 +91,7 @@ function FavoriteList(props) {
                   marginRight: "10px",
                 }}
                 src={`http://localhost:5000/${FilePath}`}
+                onClick={onProfile1}
               />
             )}
             {!FilePath && (

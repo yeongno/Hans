@@ -22,7 +22,7 @@ export default function NavBar() {
     fetchUserList();
   }, []);
   const fetchUserList = () => {
-    if (page.page === "login" || page.page == "Ragister") {
+    if (page.page === "login" || page.page == "Register") {
       setOnOut(true);
     } else {
       setOnOut(false);

@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { myProFile } from "../../../_actions/page_action";
 import ProFileFavoriteList from "./commons/ProFileFavoriteList";
 import ProFileFriendList from "./commons/ProFileFriendList";
+import ProFilePictureList from "./commons/ProFilePictureList";
 import ProFilePostList from "./commons/ProFilePostList";
 import ModifyProFile from "./ModifyProFile";
 
@@ -31,25 +32,30 @@ function MyProFile() {
   const [OnFavoritList, setOnFavoritList] = useState(false);
   const [OnInformation, setOnInformation] = useState(false);
   const [OnFriend, setOnFriend] = useState(false);
+  const [OnPicture, setOnPictures] = useState(false);
 
   const dispatch = useDispatch();
 
   const onPostList = () => {
+    setOnPictures(false);
     setOnInformation(false);
     setOnFriend(false);
     setOnPost(true);
   };
   const onMyPostList = () => {
+    setOnPictures(false);
     setOnFavoritList(false);
     setOnFriend(false);
     setOnPostList(true);
   };
   const onMyFavoriteList = () => {
+    setOnPictures(false);
     setOnPostList(false);
     setOnFriend(false);
     setOnFavoritList(true);
   };
   const onInfor = () => {
+    setOnPictures(false);
     setOnPost(false);
     setOnFriend(false);
     setOnInformation(true);
@@ -58,7 +64,16 @@ function MyProFile() {
   const onFriend = () => {
     setOnPost(false);
     setOnInformation(false);
+    setOnFriend(false);
+    setOnPictures(false);
     setOnFriend(true);
+  };
+
+  const onPictures = () => {
+    setOnPost(false);
+    setOnInformation(false);
+    setOnFriend(false);
+    setOnPictures(true);
   };
 
   const onDrop = (files) => {
@@ -226,7 +241,7 @@ function MyProFile() {
               <TeamOutlined />
               친구
             </Button>
-            <Button>
+            <Button onClick={onPictures}>
               <PictureOutlined />
               사진
             </Button>
@@ -262,6 +277,7 @@ function MyProFile() {
             {OnPost && <div>{OnFavoritList && <ProFileFavoriteList />}</div>}
             {OnInformation && <ModifyProFile />}
             {OnFriend && <ProFileFriendList />}
+            {OnPicture && <ProFilePictureList />}
           </div>
         </Form>
       </div>
