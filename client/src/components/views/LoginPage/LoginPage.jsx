@@ -31,6 +31,9 @@ function LoginPage(props) {
   dispatch(login({ page: "login" }));
 
   const navigate = useNavigate();
+  const onRegister = () => {
+    navigate("/register");
+  };
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
@@ -47,6 +50,7 @@ function LoginPage(props) {
       window.localStorage.setItem("name", response.payload.name);
       if (response.payload.loginSuccess) {
         navigate("/homeSection");
+        window.location.reload();
       } else {
         alert("Error");
       }
@@ -87,6 +91,9 @@ function LoginPage(props) {
             <br />
             <button className={loginPage.lobb} type="submit">
               로그인
+            </button>
+            <button className={loginPage.lobb} onClick={onRegister}>
+              회원가입
             </button>
           </form>
         </div>

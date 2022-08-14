@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { home } from "../../../_actions/page_action";
 import { useSelector } from "react-redux";
 
-export default function NavBar() {
+export default function NavBar1() {
   const [onOut, setOnOut] = useState(false);
   let navigate = useNavigate();
   const goToLogin = () => {
@@ -22,7 +22,8 @@ export default function NavBar() {
     fetchUserList();
   }, []);
   const fetchUserList = () => {
-    if (page.page === "login" || page.page == "Register") {
+    // if (page.page === "login" || page.page == "Register") {
+    if (isUser) {
       setOnOut(true);
     } else {
       setOnOut(false);
@@ -52,7 +53,8 @@ export default function NavBar() {
       //   // navigate(window.history.back());
       //   alert("로그아웃 하는데 실패했습니다.");
       // }
-
+      window.localStorage.setItem("userId", " ");
+      window.localStorage.setItem("name", " ");
       navigate("/login");
     });
   };
@@ -74,62 +76,49 @@ export default function NavBar() {
   //console.log("profileImg : ", FilePath);
   //console.log("name", currentUser);
   return (
-    <div className={navBar.body}>
-      <div className={navBar.navBar}>
-        <div className={navBar.navBar_inner}>
-          <div className={navBar.sub_menu}>
-            <div className={navBar.menu}>
-              <div>
-                {onOut && (
-                  <li>
-                    <a onClick={goToLogin}>Sign In</a>
-                  </li>
-                )}
-              </div>
-            </div>
-            <ul className={navBar.menu}>
-              {onOut && (
-                <li>
-                  <a onClick={goToLogin}>Sign In</a>
-                </li>
-              )}
-              {!onOut && (
-                <>
-                  <li>
-                    <img
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        border: "1px solid lightgray",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: "50px",
-                        boxShadow: "1px 1px 1px 1px inset",
-                      }}
-                      src={`http://localhost:5000/${FilePath}`}
-                      alt="thumbnail"
-                    />
-                  </li>
-                  <li onClick={goProfile}>
-                    <a>{currentUser}</a>
-                  </li>
-                  <li>
-                    <a onClick={goToLogout}>Logout</a>
-                  </li>
-                </>
-              )}
-              <li>
-                <a onClick={goToHome}>Home</a>
-              </li>
-            </ul>
-            {/* <div className={navBar.search}>
-              <input type="text" />
-              <div className={navBar.icon}></div>
-            </div> */}
-          </div>
-          {/* <Drop /> */}
+    <div style={{ display: "flex", marginTop: "5px", marginBottom: "5px" }}>
+      {onOut && (
+        <div style={{ marginLeft: "1450px" }}>
+          <a style={{ color: "blue", fontWeight: "bold" }} onClick={goToLogin}>
+            Sign In
+          </a>
         </div>
-      </div>
+      )}
+      {!onOut && (
+        <div style={{ display: "flex", marginLeft: "9%" }}>
+          <img
+            style={{
+              width: "30px",
+              height: "30px",
+              border: "1px solid lightgray",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "50px",
+              boxShadow: "1px 1px 1px 1px inset",
+            }}
+            src={`http://localhost:5000/${FilePath}`}
+            alt="thumbnail"
+          />
+          <span onClick={goProfile} style={{ marginLeft: "7px" }}>
+            {currentUser}님 환영합니다.{" "}
+          </span>
+          <div style={{ marginLeft: "1000px" }}>
+            <a
+              onClick={goToLogout}
+              style={{ color: "blue", fontWeight: "bold", marginLeft: "7px" }}
+            >
+              {" "}
+              Logout
+            </a>
+            <a
+              onClick={goToHome}
+              style={{ marginLeft: "20px", color: "blue", fontWeight: "bold" }}
+            >
+              Home
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
