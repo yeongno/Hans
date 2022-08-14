@@ -22,7 +22,7 @@ export default function NavBar() {
     fetchUserList();
   }, []);
   const fetchUserList = () => {
-    if (page.page === "login" || page.page == "Register") {
+    if (page.page === "login" || page.page === "Register") {
       setOnOut(true);
     } else {
       setOnOut(false);
@@ -79,12 +79,12 @@ export default function NavBar() {
         <div className={navBar.navBar_inner}>
           <div className={navBar.sub_menu}>
             <ul className={navBar.menu}>
-              {onOut && (
+              {isUser && (
                 <li>
                   <a onClick={goToLogin}>Sign In</a>
                 </li>
               )}
-              {!onOut && (
+              {!isUser && (
                 <>
                   <li>
                     <img

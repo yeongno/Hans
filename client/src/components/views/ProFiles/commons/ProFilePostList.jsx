@@ -170,6 +170,7 @@ function ProFilePostList(props) {
                   postFrom={posts._id}
                   title={posts.title}
                   content={posts.content}
+                  topic={posts.topic}
                 />
               </div>
             </div>
@@ -202,17 +203,15 @@ function ProFilePostList(props) {
                 />
               )}
             </div>
-            <span
+            <div
               style={{
-                marginLeft: "10px",
+                marginLeft: "17px",
                 border: "none",
                 fontSize: "12px",
                 background: "none",
-                marginLeft: "1%",
               }}
-            >
-              {posts.content}
-            </span>
+              dangerouslySetInnerHTML={{ __html: posts.content }}
+            ></div>
             <div
               style={{
                 width: "100%",

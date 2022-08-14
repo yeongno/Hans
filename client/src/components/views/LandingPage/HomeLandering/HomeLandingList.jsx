@@ -184,17 +184,15 @@ function HomeLandingList(props) {
               />
             )}
           </div>
-          <span
+          <div
             style={{
-              marginLeft: "10px",
+              marginLeft: "17px",
               border: "none",
               fontSize: "12px",
               background: "none",
-              marginLeft: "1%",
             }}
-          >
-            {PostContent}
-          </span>
+            dangerouslySetInnerHTML={{ __html: PostContent }}
+          ></div>
           <div
             style={{
               width: "100%",

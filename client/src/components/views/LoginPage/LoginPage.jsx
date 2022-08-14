@@ -89,6 +89,10 @@ function LoginPage(props) {
               로그인
             </button>
           </form>
+          <div style={{ textAlign: "center" }}>
+            <label>Not a member? </label>
+            <Link to="/register">Register</Link>
+          </div>
         </div>
       </div>
     </div>

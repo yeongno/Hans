@@ -21,6 +21,7 @@ import VideoList from "./views/PostPage/VideoList";
 import ProFilePostList from "./views/ProFiles/commons/ProFilePostList";
 import HomeSection from "./views/LandingPage/HomeLandering/HomeSection";
 import MyPostPage from "./views/PostPage/MyPostPage";
+import TopicManagementPage from "../topic/TopicManagement";
 function App() {
   const LandingPage1 = Auth(LandingPage, null);
   const LoginPage1 = Auth(LoginPage, null);
@@ -36,6 +37,7 @@ function App() {
   const UploadVideoPage1 = Auth(UploadVideoPage, true);
   const VideoList1 = Auth(VideoList, true);
   const MyPostPage1 = Auth(MyPostPage, true);
+  const TopicManagementPage1 = Auth(TopicManagementPage, true);
 
   return (
     <BrowserRouter>
@@ -60,6 +62,7 @@ function App() {
           <Route path="/uploadVideoPage" element={<UploadVideoPage1 />} />
           <Route path="/videoList" element={<VideoList1 />} />
           <Route path="/homeSection" element={<HomeSection />} />
+          <Route path="/topic" element={<TopicManagementPage1 />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -2,7 +2,7 @@ import { DownOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Menu, message, Modal, Space } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Modify from "./Modify";
 
 function DropDown(props) {
@@ -11,6 +11,7 @@ function DropDown(props) {
   const postFrom = props.postFrom;
   const title = props.title;
   const content = props.content;
+  const topic = props.topic;
 
   const [OnModal, setOnModal] = useState(false);
 
@@ -56,6 +57,17 @@ function DropDown(props) {
           label: <a onClick={onModify}>게시글 수정하기</a>,
           key: "1",
         },
+        {
+          type: "divider",
+        },
+        {
+          label: (
+            <Link to={`/postPage/${props.postFrom}`}>
+              <label>게시글 상세보기</label>
+            </Link>
+          ),
+          key: "2",
+        },
       ]}
     />
   );
@@ -84,6 +96,7 @@ function DropDown(props) {
           postFrom={postFrom}
           title={props.title}
           content={props.content}
+          topic={props.topic}
         />{" "}
       </Modal>
     </div>

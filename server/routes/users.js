@@ -5,6 +5,15 @@ const { auth } = require("../middleware/auth");
 const multer = require("multer");
 const { Friend } = require("../models/Friend");
 const path = require("path");
+const controller = require("../controller");
+let nodemailer = require("nodemailer");
+
+router.post("/sendEmail", controller.search.pw);
+
+/*router.post("/sendEmail", async function (req, res) {
+  let user_email = req.body.email;
+  console.log(user_email);
+});*/
 
 //STORAGE MULTER CONFIG
 let storage = multer.diskStorage({
@@ -119,6 +128,9 @@ router.post("/login", (req, res) => {
       });
     });
   });
+});
+router.get("/emailsend", auth, (req, res) => {
+  res.status(200).json({});
 });
 
 router.get("/auth", auth, (req, res) => {

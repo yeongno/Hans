@@ -24,6 +24,7 @@ function MyProFile() {
   const [Name, setName] = useState("");
   const [Email, setEmail] = useState("");
   const user = useSelector((state) => state.user);
+  const [FriendNum, setFriendsNum] = useState("");
 
   const [FilePath, setFilePath] = useState("");
   const navigate = useNavigate();
@@ -116,6 +117,7 @@ function MyProFile() {
           setName(response.data.userInfo[0].name);
           setEmail(response.data.userInfo[0].email);
           setFilePath(response.data.userInfo[0].proFileImg);
+          setFriendsNum(response.data.userInfo[0].friends);
         } else {
           alert("유저 정보를 가져오는데 실패하였습니다.");
         }
@@ -216,7 +218,7 @@ function MyProFile() {
                   readOnly
                   style={{ width: "calc(99%)", border: "none" }}
                   placeholder="Name"
-                  value={`친구 : ${Name}명`}
+                  value={`친구 : ${FriendNum}명`}
                 />
               </div>
             </div>

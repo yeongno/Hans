@@ -17,3 +17,19 @@ th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+/*에디터 내용 입력란 사이즈 조정*/
+.ck-editor__editable {
+  font-size: 20px;
+  min-height: 70vh;
+  max-height: 70vh;
+  min-width: 120vh;
+  max-width: 120vh;
+  height: 100%;
+  box-sizing: border-box;
+}
+/*툴바 사이즈 조정*/
+.ck-toolbar_grouping {
+  min-width: 120vh;
+  max-width: 120vh;
+}

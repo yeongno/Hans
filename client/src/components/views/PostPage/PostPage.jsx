@@ -1,244 +1,222 @@
-import { CameraOutlined, PlusSquareOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Input, message, Row } from "antd";
-import axios from "axios";
-import { title } from "process";
-import React, { useState } from "react";
-import Dropzone from "react-dropzone";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { postGo } from "../../../_actions/post_action";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
+import { postGo, getTopic } from "../../../_actions/post_action";
+import { Select, Input, Button, Form } from "antd";
 import "./Post.css";
+//에디터 생성에 필요한 모듈을 불러오기
+import axios from "axios";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Dropzone from "react-dropzone";
+import {
+  CameraOutlined,
+  InfoCircleOutlined,
+  OrderedListOutlined,
+  PictureOutlined,
+  PlaySquareOutlined,
+  SyncOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
+const { Option } = Select;
+//텍스트 에디터로 CK에디터5를 사용했습니다
+//CKEditor를 사용하기 위해서는 아래 명령어를 통해 해당 모듈을 설치해야 합니다.
+//종합설치
+//npm install --save multer dotenv path mime-types uuid @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
+//개별 설치
+//npm install --save @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
+//npm install multer --save
+//npm install dotenv --save
+//npm install path --save
+//npm install mime-types --save
+//npm install uuid --save
+//*클라이언트 폴더에도 설치할 것
 
 function PostPage() {
   const dispatch = useDispatch();
-
-  const [Title, setTitle] = useState("");
-  const [Content, setContent] = useState("");
-  const [FilePath, setFilePath] = useState("");
-  const userFrom = localStorage.getItem("userId");
-  const page = useSelector((state) => state.page.currentPage);
   const navigate = useNavigate();
 
+  const [FilePath, setFilePath] = useState("");
+  const [Title, setTitle] = useState(""); //제목 변수
+  const [Content, setContent] = useState(""); //내용 변수
+  const [image, setImage] = useState(""); //이미지 첨부 관련 변수
+  const [Topics, setTopics] = useState([]); //토픽 데이터 불러오기 위한 변수
+  const [Topic, setTopic] = useState(""); //토픽 설정 변수
+  const [Thumbnail, setThumbnail] = useState(
+    "uploads/postImg/default-profile-img.png"
+  );
+
+  const [flag, setFlag] = useState(false);
+  const imgLink = "http://localhost:5000"; //이미지 경로 설정 변수
+  const userFrom = localStorage.getItem("userId"); //ID불러오기
+  const userName = localStorage.getItem("name"); //이름(닉네임) 불러오기
+
+  //토픽 불러오기
+  useEffect(() => {
+    fetchTopicList();
+  }, []);
+  const fetchTopicList = () => {
+    dispatch(getTopic({ type: "TOPIC" })).then((response) => {
+      if (response.payload.success) {
+        setTopics(response.payload.topics);
+      } else {
+        alert("Load Error");
+      }
+    });
+  };
+  //이미지 첨부하기 위한 코드입니다.
+  //어뎁터 정의 함수
+  const customUploadAdapter = (files) => {
+    return {
+      upload() {
+        //메소드 선언
+        return new Promise((resolve, reject) => {
+          let formdata = new FormData();
+          const config = {
+            header: { "content-type": "multipart/form-data" },
+          };
+          files.file.then((postFile) => {
+            formdata.append("file", postFile);
+
+            axios
+              .post("/api/users/uploadfiles", formdata, config)
+              .then((response) => {
+                if (response.data.success) {
+                  setFlag(true);
+                  setFilePath(response.data.url);
+                  setThumbnail(response.data.url);
+                  const postFileImg = response.data.url;
+                  axios
+                    .post("/api/users/uploadPostFileImg", {
+                      _id: localStorage.getItem("userId"),
+                      postFileImg: postFileImg,
+                    })
+                    .then((response) => {
+                      if (response.data.success) {
+                        console.log(response.data.result);
+                      } else {
+                        alert("이미지 업로드를 실패했습니다.");
+                      }
+                    });
+                }
+                resolve({
+                  //이미지 첨부 후 에디터에 해당 이미지의 링크가 담긴 태그(<img src="...">)를 자동으로 생성합니다.
+                  default: `${imgLink}/${response.data.url}`,
+                });
+              })
+              .catch((err) => reject(err));
+          });
+        });
+      },
+    };
+  };
+
+  function uploadPlugin(editor) {
+    //에디터에 어뎁터를 활성화하기 위한 팩토리 메소드
+    editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+      return customUploadAdapter(loader);
+    };
+  }
+  //------------------------------
+  function Cancel1() {
+    navigate("../PostList");
+  }
+  const onTopicHandler = (value) => {
+    setTopic(value);
+  };
   const onTitleHandler = (event) => {
     setTitle(event.currentTarget.value);
   };
 
+  const topicList = Topics.map((topics, index) => {
+    return <Option value={topics.topicName}>{topics.topicName}</Option>;
+  });
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+
+    console.log("Title", Title);
+    console.log("Content", Content);
+    console.log("Topic", Topic);
+    if (Topic === "") {
+      return alert("토픽을 선택하세요.");
+    } else if (Title === "") {
+      return alert("제목을 입력하세요.");
+    } else if (Content === "") {
+      return alert("내용을 입력하세요.");
+    } else {
+      let body = {
+        topic: Topic,
+        title: Title,
+        content: Content,
+        userFrom: userFrom,
+        writer: userName,
+        imagePath: Thumbnail,
+      };
+      dispatch(postGo(body)).then((response) => {
+        if (response.payload.success) {
+          alert("Successed to post up");
+          console.log(response);
+          navigate("../PostList");
+        } else {
+          console.log(response.payload);
+          alert("Failed to post up");
+        }
+      });
+    }
+  };
   const onContentHandler = (event) => {
     setContent(event.currentTarget.value);
   };
-  const onDrop = (files) => {
-    let formData = new FormData();
-    const config = {
-      header: { "content-type": "multipart/form-data" },
-    };
-    formData.append("file", files[0]);
-
-    axios.post("/api/users/uploadfiles", formData, config).then((response) => {
-      if (response.data.success) {
-        setFilePath(response.data.url);
-        axios
-          .post("/api/users/uploadFileImg", {
-            _id: localStorage.getItem("userId"),
-            tempImg: FilePath,
-          })
-          .then((response) => {
-            if (response.data.success) {
-            }
-          });
-      } else {
-        alert("비디오 업로드를 실패했습니다.");
-      }
-    });
-  };
-
-  const onPost = () => {
-    let body = {
-      title: Title,
-      content: Content,
-      userFrom: userFrom,
-      imagePath: FilePath,
-    };
-    dispatch(postGo(body)).then((response) => {
-      if (response.payload.success) {
-        alert("Successed to post up");
-      } else {
-        alert("Failed to post up");
-      }
-    });
-    // if (page.page === "myProFile") {
-    //   navigate("/myProFile");
-    // }
-    message.success("게시글을 작성하였습니다.");
-
-    window.location.reload();
-  };
-
-  const { TextArea } = Input;
-
   return (
     <div>
-      <div style={{ display: "flex", width: "1500px", marginLeft: "120px" }}>
-        <div style={{ width: "100px" }}>
-          <div style={{ marginLeft: "30px" }}>
-            <div
+      <div style={{ marginLeft: "17%", marginRight: "17%" }}>
+        <Form>
+          <div>
+            <br />
+            <Select
               style={{
-                marginTop: "10px",
-                border: "2px solid black",
-                fontSize: "30px",
-                borderRadius: "10px",
+                borderRadius: "8px",
+                width: 120,
               }}
+              onChange={onTopicHandler}
+              value={Topic}
+              defaultValue=""
             >
-              <span>제목</span>
-            </div>
-            <div
+              <Option value="">Select Topic</Option>
+              {topicList}
+            </Select>
+            <Input
               style={{
-                marginTop: "15px",
-                border: "2px solid black",
-                borderRadius: "10px",
-                fontSize: "30px",
+                borderRadius: "8px",
+                width: 1043,
               }}
-            >
-              <span>내용</span>
-            </div>
-            <div
-              style={{
-                marginTop: "180px",
-                border: "2px solid black",
-                borderRadius: "10px",
-                fontSize: "30px",
+              placeholder="제목을 입력하세요"
+              type="text"
+              value={Title}
+              onChange={onTitleHandler}
+            />
+            <br />
+            <CKEditor
+              editor={ClassicEditor}
+              config={{
+                //에디터에 업로드 플러그인을 적용시킵니다.
+                language: "ko",
+                extraPlugins: [uploadPlugin],
               }}
-            >
-              <span>사진</span>
-            </div>
+              data={Content}
+              placeholder="내용을 입력하세요"
+              onReady={(editor) => {}}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                setContent(data);
+              }}
+              onBlur={(event, editor) => {}}
+              onFocus={(event, editor) => {}}
+            />
           </div>
-        </div>
-        <Form style={{ width: "1400px" }}>
-          <Row justify="start" style={{ margin: 10 }}>
-            <Col span={20}>
-              <TextArea
-                style={{
-                  borderRadius: "5px",
-                  width: "calc(100%)",
-                  height: "calc(100%)",
-                  overflow: "auto",
-                  scrollbarWidth: "none",
-                  resize: "none",
-                  border: "2px solid black",
-                }}
-                placeholder="제목을 입력하세요"
-                onChange={onTitleHandler}
-                value={Title}
-              />
-            </Col>
-          </Row>
-          <Row justify="start" style={{ margin: 10, height: "200px" }}>
-            <Col span={20}>
-              <TextArea
-                style={{
-                  borderRadius: "5px",
-                  width: "calc(100%)",
-                  height: "calc(100%)",
-                  overflow: "auto",
-                  scrollbarWidth: "none",
-                  border: "2px solid black",
-                  resize: "none",
-                }}
-                placeholder="내용을 입력하세요"
-                onChange={onContentHandler}
-                value={Content}
-              />
-            </Col>
-          </Row>
-
-          <div style={{ display: "flex" }}>
-            {/* <div style={{ width: "200px", height: "200px", background: "blue" }}>
-          <button style={{ margin: "5.2rem 5.2rem" }}>
-            <PlusSquareOutlined />
-          </button>
-        </div> */}
-
-            <div
-              style={{
-                position: "relative",
-                marginLeft: "15px",
-                marginTop: "20px",
-                width: "250px",
-                height: "250px",
-                paddingLeft: "25px",
-                paddingTop: "25px",
-                borderRadius: "30px",
-                border: "5px solid gray",
-              }}
-            >
-              {FilePath && (
-                <div
-                  style={{
-                    width: "200px",
-                    height: "200px",
-                    position: "absolute",
-                  }}
-                >
-                  <img
-                    style={{
-                      alignItems: "center",
-                      width: "200px",
-                      height: "200px",
-                      justifyContent: "center",
-                      boxShadow: "1px 1px 1px 1px inset",
-                    }}
-                    src={`http://localhost:5000/${FilePath}`}
-                    alt="thumbnail"
-                  />
-                </div>
-              )}
-              <div
-                style={{
-                  position: "absoulte",
-                  width: "200px",
-                  height: "200px",
-                }}
-              >
-                <Dropzone onDrop={onDrop} multiple={false} maxSize={10000000}>
-                  {({ getRootProps, getInputProps }) => (
-                    <div
-                      style={{
-                        width: "10px",
-                        height: "10px",
-                      }}
-                      {...getRootProps()}
-                    >
-                      <input {...getInputProps()} />
-                      <Button
-                        icon={<CameraOutlined />}
-                        style={{ fontSize: "3rem", margin: "5rem 5rem" }}
-                      />
-                    </div>
-                  )}
-                </Dropzone>
-              </div>
-            </div>
-            <div
-              style={{
-                width: "900px",
-                paddingLeft: "795px",
-                paddingTop: "40px",
-                justifyContent: "center",
-              }}
-            >
-              <button
-                style={{
-                  width: "100px",
-                  height: "70px",
-                  border: "2px solid black",
-                  background: "none",
-                  borderRadius: "5px",
-                }}
-                onClick={onPost}
-              >
-                Submit
-              </button>
-            </div>
-          </div>
+          <Button onClick={onSubmitHandler}>Submit1</Button>
+          <Button onClick={Cancel1}>Cancel</Button>
         </Form>
       </div>
     </div>

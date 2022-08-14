@@ -46,7 +46,7 @@ function ProFilePictureList() {
   };
   const renderCards = Posts.map((posts, index) => {
     return (
-      <div
+      <td
         key={index}
         style={{
           background: "white",
@@ -55,28 +55,32 @@ function ProFilePictureList() {
           float: "left",
         }}
       >
-        <div>
-          <Link to={`/Postpage/${posts._id}`}>
-            {posts.imagePath && (
-              <img
-                style={{
-                  maxWidth: "50%",
-                  maxHeight: "50%",
-                  boxShadow: "0px 0px 0px 1px #E2E2E2",
-                }}
-                src={`http://localhost:5000/${posts.imagePath}`}
-                alt="FileImg"
-              />
-            )}
-          </Link>
-        </div>
-      </div>
+        <Link to={`/Postpage/${posts._id}`}>
+          {posts.imagePath && (
+            <img
+              style={{
+                width: "150px",
+                height: "150px",
+                marginLeft: "15px",
+                marginRight: "15px",
+                marginTop: "15px",
+                marginBottom: "15px",
+                boxShadow: "0px 0px 0px 1px #E2E2E2",
+              }}
+              src={`http://localhost:5000/${posts.imagePath}`}
+              alt="FileImg"
+            />
+          )}
+        </Link>
+      </td>
     );
   });
 
   return (
     <div>
-      <div>{renderCards}</div>
+      <table>
+        <tr>{renderCards}</tr>
+      </table>
     </div>
   );
 }

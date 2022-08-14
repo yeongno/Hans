@@ -4,8 +4,11 @@ import { registerUser } from "../../../_actions/user_action";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import logo from "../../../logo.svg";
+import axios from "axios";
 import Regist from "./RegisterPage.module.css";
 import { home, register } from "../../../_actions/page_action";
+//이메일 인증 관련 모듈 설치
+//npm install nodemailer --save
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
@@ -18,6 +21,37 @@ function RegisterPage(props) {
     dispatch(register({ page: "Register" }));
   }, []);
 
+  //-------------------------------------------------
+  const _searchPassword = async function () {
+    const user_email = Email;
+
+    const obj = { user_email: user_email };
+    const res = await axios("/search/pw", {
+      method: "POST",
+      data: obj,
+      headers: new Headers(),
+    });
+
+    alert(Email + "의 주소로 \n6자리의 숫자코드가 수신되었습니다.");
+    return this.setState({
+      result: true,
+      secret: res.data.secret,
+      user_data: res.data.result[0],
+    });
+  };
+  //--------------------------------------------------
+  const sendEmail = () => {
+    axios
+      .post("/api/users/sendEmail", {
+        user_email: Email,
+      })
+      .then((response) => {
+        if (response.data.success) {
+        } else {
+          alert("유저 정보를 가져오는데 실패하였습니다.");
+        }
+      });
+  };
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
   };
@@ -48,6 +82,7 @@ function RegisterPage(props) {
       email: Email,
       password: Password,
       name: Name,
+      proFileImg: "uploads/postImg/default-profile-img.png",
     };
     dispatch(registerUser(body)).then((response) => {
       if (response.payload.success) {
@@ -91,7 +126,9 @@ function RegisterPage(props) {
             className={Regist.email}
           />
           <div className={Regist.emailck}>
-            <span class="">인증</span>
+            <span class="" onClick={() => _searchPassword()}>
+              인증
+            </span>
           </div>
         </div>
         <span style={{ fontWeight: "bold" }}>Name</span>

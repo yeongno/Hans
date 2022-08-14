@@ -30,6 +30,13 @@ const postSchema = mongoose.Schema(
     imagePath: {
       type: String,
     },
+    writer: {
+      type: String,
+    },
+    viewNumber: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
