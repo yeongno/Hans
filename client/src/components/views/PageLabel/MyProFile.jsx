@@ -44,7 +44,7 @@ function MyProFile() {
         style={{
           fontSize: "50px",
           marginTop: "8.5px",
-          marginLeft: "940px",
+          marginLeft: "1100px",
 
           color: "white",
         }}

@@ -40,7 +40,9 @@ export default function NavBar1() {
         }
       });
   };
-
+  const goMyProFile = () => {
+    navigate("/myProFile");
+  };
   const goToLogout = () => {
     axios.get("/api/users/logout").then((response) => {
       if (response.data.success) {
@@ -102,7 +104,14 @@ export default function NavBar1() {
           <span onClick={goProfile} style={{ marginLeft: "7px" }}>
             {currentUser}님 환영합니다.{" "}
           </span>
-          <div style={{ marginLeft: "1000px" }}>
+          <div style={{ marginLeft: "950px" }}>
+            <a
+              onClick={goMyProFile}
+              style={{ color: "blue", fontWeight: "bold", marginLeft: "7px" }}
+            >
+              {" "}
+              MyProFile
+            </a>
             <a
               onClick={goToLogout}
               style={{ color: "blue", fontWeight: "bold", marginLeft: "7px" }}

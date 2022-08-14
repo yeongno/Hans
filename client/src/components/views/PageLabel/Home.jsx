@@ -38,7 +38,7 @@ function Home() {
         style={{
           fontSize: "50px",
           marginTop: "8.5px",
-          marginLeft: "940px",
+          marginLeft: "1070px",
 
           color: "white",
         }}
