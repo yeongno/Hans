@@ -2,10 +2,11 @@ import { CameraOutlined, PlusSquareOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Input, message, Row } from "antd";
 import axios from "axios";
 import { title } from "process";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { register } from "../../../_actions/page_action";
 import { postGo } from "../../../_actions/post_action";
 import "./Post.css";
 
@@ -18,6 +19,10 @@ function MyPostPage() {
   const userFrom = localStorage.getItem("userId");
   const page = useSelector((state) => state.page.currentPage);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(register({ page: "myProFile" }));
+  }, []);
 
   const onTitleHandler = (event) => {
     setTitle(event.currentTarget.value);
