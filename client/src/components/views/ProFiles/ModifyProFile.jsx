@@ -52,11 +52,10 @@ function ModifyProFile(props) {
   };
   return (
     <div>
-      <Buttons />
-      <div style={{ width: "85", margin: "3rem auto" }}>
-        <h2>Modify Your ProFile</h2>
+      <div style={{ width: "85", margin: "1rem auto" }}>
+        <h2>Your Information</h2>
         <hr />
-        <Divider orientation="left">개인 정보 변경</Divider>
+        <Divider orientation="left">개인 정보</Divider>
         <Row justify="center" style={{ margin: 10 }}>
           <Col span={15}>
             <Input.Group>
@@ -68,7 +67,7 @@ function ModifyProFile(props) {
                 value={Name}
               />
               <Button type="primary" onClick={submitName}>
-                확인
+                변경 하기
               </Button>
             </Input.Group>
           </Col>
@@ -83,7 +82,7 @@ function ModifyProFile(props) {
                 onChange={onChangeEmail}
                 value={Email}
               />
-              <Button type="primary">중복 확인</Button>
+              {/* <Button type="primary">중복 확인</Button> */}
             </Input.Group>
           </Col>
         </Row>

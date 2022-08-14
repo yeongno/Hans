@@ -257,10 +257,7 @@ function MyProFile() {
             <Button onClick={onPostList}>
               <OrderedListOutlined /> 게시물
             </Button>
-            <Button onClick={onInfor}>
-              <InfoCircleOutlined />
-              정보
-            </Button>
+
             <Button onClick={onFriend}>
               <TeamOutlined />
               친구
@@ -269,9 +266,9 @@ function MyProFile() {
               <PictureOutlined />
               사진
             </Button>
-            <Button>
-              <PlaySquareOutlined />
-              동영상
+            <Button onClick={onInfor}>
+              <InfoCircleOutlined />
+              정보
             </Button>
           </div>
           <div
