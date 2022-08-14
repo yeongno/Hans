@@ -40,6 +40,11 @@ export default function NavBar1() {
         }
       });
   };
+  const onChangeHandler = (event) => {
+    setOnOut(event.currentTarget.value);
+    setOnOut(page.page !== "login" || page.page === "Register");
+    setOnOut(true);
+  };
   const goMyProFile = () => {
     navigate("/myProFile");
   };
@@ -78,15 +83,18 @@ export default function NavBar1() {
   //console.log("profileImg : ", FilePath);
   //console.log("name", currentUser);
   return (
-    <div style={{ display: "flex", marginTop: "5px", marginBottom: "5px" }}>
-      {onOut && (
+    <div
+      style={{ display: "flex", marginTop: "5px", marginBottom: "5px" }}
+      onChange={onChangeHandler}
+    >
+      {isUser && (
         <div style={{ marginLeft: "1450px" }}>
           <a style={{ color: "blue", fontWeight: "bold" }} onClick={goToLogin}>
             Sign In
           </a>
         </div>
       )}
-      {!onOut && (
+      {currentUser && !isUser && (
         <div style={{ display: "flex", marginLeft: "9%" }}>
           <img
             style={{

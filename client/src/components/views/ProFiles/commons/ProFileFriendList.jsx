@@ -3,12 +3,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { myProFile } from "../../../../_actions/page_action";
 
 function ProFileFriendList() {
   const navigate = useNavigate();
   const [Friends, setFriends] = useState([]);
   const [AddFriendNumber, setAddFriendNumber] = useState();
+  const [FriendNum, setFriendNum] = useState(0);
   const myId = localStorage.getItem("userId");
+
+  const dispatch = useDispatch();
   useEffect(() => {
     fetchFriendList();
   }, []);
@@ -32,6 +37,7 @@ function ProFileFriendList() {
       .then((response) => {
         if (response.data.success) {
           setAddFriendNumber(response.data.userInfo[0].friends);
+          setFriendNum(response.data.userInfo[0].friends);
         } else {
           alert("친구 정보를 가져오는데 실패하였습니다.");
         }
@@ -44,6 +50,7 @@ function ProFileFriendList() {
       myName,
       theyUser,
     };
+    dispatch(myProFile({ page: "myProFile", FriendNum }));
 
     axios.post("/api/friends/removeFriend", variables).then((response) => {
       if (response.data.success) {

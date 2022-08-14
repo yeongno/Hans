@@ -1,9 +1,15 @@
 import { EditOutlined, HomeOutlined, KeyOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../../_actions/page_action";
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(login({ page: "login" }));
+  }, []);
 
   return (
     <div

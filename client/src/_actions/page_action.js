@@ -10,9 +10,11 @@ import {
 } from "./types";
 
 export function myProFile(dataToSubmit1) {
+  const friendNum = dataToSubmit1.friendNum - 1;
   return {
     type: PAGE_MYPROFILE,
     payload: dataToSubmit1,
+    friendNum,
   };
 }
 

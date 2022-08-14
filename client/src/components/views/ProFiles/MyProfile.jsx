@@ -24,7 +24,7 @@ function MyProFile() {
   const [Name, setName] = useState("");
   const [Email, setEmail] = useState("");
   const user = useSelector((state) => state.user);
-
+  const [FriendNum, setFriendsNum] = useState("");
   const [FilePath, setFilePath] = useState("");
   const navigate = useNavigate();
   const [OnPost, setOnPost] = useState(false);
@@ -33,6 +33,7 @@ function MyProFile() {
   const [OnInformation, setOnInformation] = useState(false);
   const [OnFriend, setOnFriend] = useState(false);
   const [OnPicture, setOnPictures] = useState(false);
+  const page = useSelector((state) => state.page.currentPage);
 
   const dispatch = useDispatch();
 
@@ -116,11 +117,23 @@ function MyProFile() {
           setName(response.data.userInfo[0].name);
           setEmail(response.data.userInfo[0].email);
           setFilePath(response.data.userInfo[0].proFileImg);
+          setFriendsNum(response.data.userInfo[0].friends);
+          dispatch(
+            myProFile({
+              page: "myProFile",
+              FriendNum: response.data.userInfo[0].friends,
+            })
+          );
         } else {
           alert("유저 정보를 가져오는데 실패하였습니다.");
         }
       });
-    dispatch(myProFile({ page: "myProFile" }));
+
+    // dispatch(myProFile({ page: "myProFile" }));
+  };
+  const onFriendNum = (event) => {
+    setFriendsNum(event.currentTarget.value);
+    setFriendsNum(page.FriendNum);
   };
 
   return (
@@ -212,12 +225,23 @@ function MyProFile() {
                   value={`이름 : ${Name}`}
                 />
                 <br />
-                <Input
-                  readOnly
-                  style={{ width: "calc(99%)", border: "none" }}
-                  placeholder="Name"
-                  value={`친구 : ${Name}명`}
-                />
+                {page.FriendNum && (
+                  <Input
+                    readOnly
+                    style={{ width: "calc(99%)", border: "none" }}
+                    placeholder="Name"
+                    value={`친구 : ${page.FriendNum}명`}
+                  />
+                )}
+                {!page.FriendNum && (
+                  <Input
+                    readOnly
+                    style={{ width: "calc(99%)", border: "none" }}
+                    placeholder="Name"
+                    onChange={onFriendNum}
+                    value={`친구 : ${page.FriendNum}명`}
+                  />
+                )}
               </div>
             </div>
           </div>
