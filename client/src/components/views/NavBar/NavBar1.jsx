@@ -87,7 +87,7 @@ export default function NavBar1() {
       style={{ display: "flex", marginTop: "5px", marginBottom: "5px" }}
       onChange={onChangeHandler}
     >
-      {isUser && (
+      {(isUser || !currentUser) && (
         <div style={{ marginLeft: "1450px" }}>
           <a style={{ color: "blue", fontWeight: "bold" }} onClick={goToLogin}>
             Sign In
