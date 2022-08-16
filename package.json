@@ -8,7 +8,7 @@
     "backend": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\"",
-    "heroku-prebuild": "npm install"
+    "heroku-prebuild": "cd client && npm install && npm run build"
   },
   "browser": {
     "zlib": false
@@ -40,6 +40,7 @@
     "react-refresh": "^0.14.0",
     "react-router-dom": "^6.3.0",
     "redux-persist": "^6.0.0",
+    "serve": "^14.0.1",
     "url": "^0.11.0",
     "uuid": "^8.3.2",
     "yup": "^0.32.11"
